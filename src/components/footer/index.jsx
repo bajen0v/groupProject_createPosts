@@ -1,9 +1,10 @@
-// import s from './styles.module.css'
+//import s from './styles.module.css'
+
 
 export function Footer() {
     return (
         <>
-            <footer>
+           <footer>
                 Этот проект выполнен командой: 
             </footer>
         </>
