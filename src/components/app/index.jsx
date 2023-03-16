@@ -6,6 +6,7 @@ import { Header } from '../header';
 export function App() {
     return (
       <>
+      console.log('work')
       <Header>
 
       </Header>

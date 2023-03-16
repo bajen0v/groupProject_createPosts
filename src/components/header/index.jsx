@@ -2,6 +2,9 @@
 
 export function Header() {
     return (
+        <>
             <Header>Шапка</Header>
+        </>
+
     )
 }

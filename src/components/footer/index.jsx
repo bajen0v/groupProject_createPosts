@@ -2,8 +2,11 @@
 
 export function Footer() {
     return (
-        <footer>
-            Этот проект выполнен командой: 
-        </footer>
+        <>
+            <footer>
+                Этот проект выполнен командой: 
+            </footer>
+        </>
+
     )
 }
