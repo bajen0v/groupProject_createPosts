@@ -1,10 +1,8 @@
-// import s from './styles.module.css'
+import s from './styles.module.css'
 
 export function Header() {
     return (
-        <>
-            <Header>Шапка</Header>
-        </>
-
-    )
-}
+      <header className={s.header}>
+      </header>
+    );
+  };
