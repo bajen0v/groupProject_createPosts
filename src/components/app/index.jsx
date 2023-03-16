@@ -1,3 +1,5 @@
+import { CssBaseline } from '@mui/material';
+import { Container } from '@mui/system';
 import { Footer } from '../footer';
 import { Header } from '../header';
 // import s from './styles.module.css';
@@ -6,8 +8,11 @@ import { Header } from '../header';
 export function App() {
   return (
     <>
-      <Header />
-      <Footer />
-    </>
+        <CssBaseline/>
+        <Container>
+        <Header/>
+        <Footer></Footer>
+        </Container>
+      </>
   );
 };
