@@ -9,10 +9,11 @@ export function App() {
   return (
     <>
         <CssBaseline/>
-        <Container>
         <Header/>
-        <Footer></Footer>
+        <Container>
+        
         </Container>
+        <Footer/>
       </>
   );
 };
