@@ -11,12 +11,12 @@ import { PostList } from '../post-list';
 export function App() {
   return (
     <>
-      <CssBaseline/>
-      <Container>
-        <Header/>
-        <PostList/>
-        <Footer></Footer>
-      </Container>
-    </>
+        <CssBaseline/>
+        <Container>
+          <Header/>
+          <PostList/>
+          <Footer></Footer>
+        </Container>
+      </>
   );
 };
