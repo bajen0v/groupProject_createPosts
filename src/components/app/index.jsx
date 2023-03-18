@@ -12,11 +12,11 @@ export function App() {
   return (
     <>
         <CssBaseline/>
+        <Header/>
         <Container>
-          <Header/>
           <PostList/>
-          <Footer></Footer>
         </Container>
+        <Footer/>
       </>
   );
 };
