@@ -67,7 +67,7 @@ export function Post ({author, created_at, image, title, text, ...props}) {
                     {title}
                     </Typography>
                     <Typography variant="body2" color="text.secondary" align="right">
-                        {<Date created_at={created_at}/>}
+                        <Date created_at={created_at}/>
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
