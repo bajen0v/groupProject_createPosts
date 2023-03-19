@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { Date } from '../date';
 
 
 /* import s from './styles.module.css' */
@@ -66,7 +67,7 @@ export function Post ({author, created_at, image, title, text, ...props}) {
                     {title}
                     </Typography>
                     <Typography variant="body2" color="text.secondary" align="right">
-                        {created_at}
+                        <Date created_at={created_at}/>
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
@@ -90,6 +91,6 @@ export function Post ({author, created_at, image, title, text, ...props}) {
             </Card>
 
         </Grid>
-        
+    
     );
 }
