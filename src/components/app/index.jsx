@@ -14,8 +14,6 @@ export function App() {
     <>
         <CssBaseline/>
         <Container>
-        <Header/>
-        <Footer></Footer>
           <Header/>
           <PostList/>
           <Footer></Footer>

@@ -1,13 +1,9 @@
-import { Dayjs } from 'dayjs'
-import s from './styles.module.css'
+import 'dayjs';
+// import s from './styles.module.css'
 
-export function Date({ createdAt }) {
-    // const date = require('dayjs')
-    // dateInnerText.innerText = date('2023-02-02').format('YY')
+export function Date({created_at}) {
+    const dayjs = require('dayjs');
     return (
-        <>
-        <div>{Dayjs(createdAt).format('YY MM DD')}</div>
-        </>
+        dayjs(created_at).format('DD-MM-YYYY HH:mm:ss')
     )
 }
-Date();
