@@ -3,6 +3,9 @@ import { Container } from '@mui/system';
 import { Date } from '../date';
 import { Footer } from '../footer';
 import { Header } from '../header';
+import { PostList } from '../post-list';
+
+
 // import s from './styles.module.css';
 
 
@@ -12,8 +15,10 @@ export function App() {
         <CssBaseline/>
         <Container>
         <Header/>
-        <Date />
         <Footer></Footer>
+          <Header/>
+          <PostList/>
+          <Footer></Footer>
         </Container>
       </>
   );
