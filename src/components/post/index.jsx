@@ -16,7 +16,8 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Date } from '../date';
 
 
-/* import s from './styles.module.css' */
+
+import s from './styles.module.css'
 
 
 const ExpandMore = styled((props) => {
@@ -40,8 +41,8 @@ export function Post ({author, created_at, image, title, text, ...props}) {
   
     return (
 
-        <Grid item xs={12} sm={6} lg={4}>
-            <Card /* sx={{ maxWidth: 345 }} */ >
+        <Grid sx={{display: 'flex'}} item xs={12} sm={6} lg={4}>
+            <Card className={s.card}/* sx={{ maxWidth: 345 }} */ >
                 <CardHeader
                     avatar={
                         <Avatar aria-label="recipe">
