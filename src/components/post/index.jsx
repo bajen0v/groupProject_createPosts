@@ -41,8 +41,8 @@ export function Post ({author, created_at, image, title, text, ...props}) {
   
     return (
 
-        <Grid sx={{display: 'flex'}} item xs={12} sm={6} lg={4}>
-            <Card className={s.card}/* sx={{ maxWidth: 345 }} */ >
+        <Grid sx={{display: 'flex'}} justifyContent="center" item xs={12} sm={6} md={4}>
+            <Card className={s.card} sx={{ width: 345 }} >
                 <CardHeader
                     avatar={
                         <Avatar aria-label="recipe">
