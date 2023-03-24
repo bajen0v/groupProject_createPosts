@@ -38,7 +38,7 @@ export function PostList() {
     return (
         <Container>
             <Grid container spacing={4} className={s.content__posts}>
-                {pageData.map((dataItem, index) => <Post key={index} {...dataItem} />)}
+                {pageData.map((dataItem) => <Post key={dataItem._id} {...dataItem} />)}
             </Grid> 
             <Box justifyContent={"center"} alignItems={"center"} display={"flex"} sx={{margin: "20px 0px"}}>
                 <Pagination

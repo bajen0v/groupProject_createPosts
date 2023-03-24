@@ -18,6 +18,7 @@ import { Date } from '../date';
 
 
 import s from './styles.module.css'
+import { Tag } from '../tag';
 
 
 const ExpandMore = styled((props) => {
@@ -31,7 +32,7 @@ const ExpandMore = styled((props) => {
     }),
 }));
 
-export function Post ({author, created_at, image, title, text, ...props}) {
+export function Post ({author, created_at, image, title, text, tags, ...props}) {
 
     const [expanded, setExpanded] = React.useState(false);
   
@@ -70,6 +71,7 @@ export function Post ({author, created_at, image, title, text, ...props}) {
                     <Typography variant="body2" color="text.secondary" align="right">
                         <Date created_at={created_at}/>
                     </Typography>
+                    <Tag tags={tags}/>
                 </CardContent>
                 <CardActions disableSpacing>
                 <IconButton aria-label="add to favorites">
