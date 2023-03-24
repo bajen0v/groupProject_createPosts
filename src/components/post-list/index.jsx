@@ -3,6 +3,7 @@ import { Box } from '@mui/system';
 import { useEffect, useState } from 'react';
 import api from '../../api';
 import s from './styles.module.css';
+import { Post } from '../post/index'
 
 
 
