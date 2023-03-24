@@ -1,8 +1,8 @@
-import "dayjs";
+import dayjs from "dayjs";
 // import s from './styles.module.css'
 
 export function Date({ created_at }) {
-  const dayjs = require("dayjs");
+  
   const dateCreated = dayjs(created_at);
   const dayCreated = dateCreated.date();
   const today = dayjs().date()
