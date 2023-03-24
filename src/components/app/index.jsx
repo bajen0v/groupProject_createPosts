@@ -7,10 +7,10 @@ import { PostList } from '../post-list';
 export function App() {
   return (
     <>
-        <CssBaseline/>
-        <Header/>      
-        <PostList/>
-        <Footer/>
-      </>
+      <CssBaseline/>
+      <Header/>      
+      <PostList/>
+      <Footer/>
+    </>
   );
 };

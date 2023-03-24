@@ -5,6 +5,7 @@
     background-color: rgb(64, 138, 64);
     border-radius: 10px;
     display: inline-block;
+    font-size: 10px;
 }
 
 .tag__name:hover {

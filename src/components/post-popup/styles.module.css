@@ -1,0 +1,36 @@
+.title:hover {
+    cursor: pointer;
+}
+
+.authorInfo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.authorName {
+    font-size: 16px;
+}
+
+.authorAbout {
+    font-size: 14px;
+    opacity: 0.6;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.date {
+    align-self: flex-end;
+}
+
+.image {
+    width: 100%;
+}
+
+.tagIcon {
+    display: flex;
+    justify-content: space-between;
+}
