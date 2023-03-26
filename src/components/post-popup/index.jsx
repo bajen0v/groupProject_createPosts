@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { Avatar } from '@mui/material';
+import { Avatar, CardMedia } from '@mui/material';
 import { Tag } from '../tag';
 import { Date } from '../date';
 
@@ -64,9 +64,14 @@ export default function PostPoupFull({title, ...props}) {
 
     return (
         <div>
-            <Typography variant="h6" color="black" onClick={handleClickOpen} className={s.title}>
-                {title}
-            </Typography>
+            <CardMedia
+                    component="img"
+                    height="194"
+                    image={props.image}
+                    alt="Картинка"
+                    onClick={handleClickOpen}
+                    className={s.post_img}
+            />
             <PostPopup
                 onClose={handleClose}
                 aria-labelledby="customized-dialog-title"

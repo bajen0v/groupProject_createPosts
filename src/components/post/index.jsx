@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Grid } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
@@ -37,14 +36,12 @@ export function Post ({...props}) {
                     title={props.author.name}
                     subheader={props.author.about}
                 />
-                <CardMedia
-                    component="img"
-                    height="194"
-                    image={props.image}
-                    alt="Картинка"
-                />
+                
+                <PostPoupFull {...props}/>
                 <CardContent>
-                    <PostPoupFull {...props}/>
+                    <Typography variant="h6" color="black">
+                        {props.title}
+                    </Typography>
                     <Typography variant="body2" color="text.secondary" align="right">
                         <Date created_at={props.created_at}/>
                     </Typography>
