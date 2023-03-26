@@ -1,94 +1,52 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
 import { Grid } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Date } from '../date';
-
+import { Tag } from '../tag';
+import PostPoupFull from '../post-popup';
 
 
 import s from './styles.module.css'
 
+export function Post ({...props}) {
 
-const ExpandMore = styled((props) => {
-    const { expand, ...other } = props;
-    return <IconButton {...other} />;
-  })(({ theme, expand }) => ({
-    transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-}));
-
-export function Post ({author, created_at, image, title, text, ...props}) {
-
-    const [expanded, setExpanded] = React.useState(false);
-  
-    const handleExpandClick = () => {
-      setExpanded(!expanded);
-    };
-  
     return (
 
-        <Grid sx={{display: 'flex'}} item xs={12} sm={6} lg={4}>
-            <Card className={s.card}/* sx={{ maxWidth: 345 }} */ >
+        <Grid sx={{display: 'flex'}} justifyContent="center" item xs={12} sm={6} md={4}>
+            <Card className={s.card} sx={{ width: 345 }} >
                 <CardHeader
                     avatar={
-                        <Avatar aria-label="recipe">
-                            <img src={author.avatar} alt="Аватар" width="100"/>
-                        </Avatar>
+                        <Avatar
+                            sx={{ width: 56, height: 56}}
+                            src={props.author.avatar}
+                            alt="Аватар"
+                        />
                     }
                     action={
-                        <IconButton aria-label="settings">
-                        <MoreVertIcon />
+                        <IconButton aria-label="add to favorites">
+                            <FavoriteIcon />
                         </IconButton>
                     }
-                    title={author.name}
-                    subheader={author.about}
+                    title={props.author.name}
+                    subheader={props.author.about}
                 />
-                <CardMedia
-                    component="img"
-                    height="194"
-                    image={image}
-                    alt="Paella dish"
-                />
+                
+                <PostPoupFull {...props}/>
                 <CardContent>
                     <Typography variant="h6" color="black">
-                    {title}
+                        {props.title}
                     </Typography>
                     <Typography variant="body2" color="text.secondary" align="right">
-                        <Date created_at={created_at}/>
+                        <Date created_at={props.created_at}/>
                     </Typography>
-                </CardContent>
-                <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
-                    <FavoriteIcon />
-                </IconButton>
-                <ExpandMore
-                    expand={expanded}
-                    onClick={handleExpandClick}
-                    aria-expanded={expanded}
-                    aria-label="show more"
-                >
-                    <ExpandMoreIcon />
-                </ExpandMore>
-                </CardActions>
-                <Collapse in={expanded} timeout="auto" unmountOnExit>
-                    <CardContent>
-                        <Typography paragraph>{text}</Typography>
-                    </CardContent>
-                </Collapse>
+                    <Tag tags={props.tags}/>
+                </CardContent>                
             </Card>
 
         </Grid>

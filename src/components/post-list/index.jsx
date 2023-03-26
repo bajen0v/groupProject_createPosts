@@ -13,7 +13,7 @@ export function PostList() {
 
     const [postData, setPostData] = useState([]);
     const [pageData, setPageData] = useState([]);
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(1);
 
     useEffect(() => {
 
@@ -24,8 +24,8 @@ export function PostList() {
     },[]);
 
     useEffect(() => {   
-        const from = page * pageSize;
-        const to =page * pageSize + pageSize;
+        const from = (page - 1) * pageSize;
+        const to =(page - 1) * pageSize + pageSize;
 
         api.getPostList()
             .then(data => setPageData(data.slice(from,to)))       
@@ -38,7 +38,7 @@ export function PostList() {
     return (
         <Container>
             <Grid container spacing={4} className={s.content__posts}>
-                {pageData.map((dataItem, index) => <Post key={index} {...dataItem} />)}
+                {pageData.map((dataItem) => <Post key={dataItem._id} {...dataItem} />)}
             </Grid> 
             <Box justifyContent={"center"} alignItems={"center"} display={"flex"} sx={{margin: "20px 0px"}}>
                 <Pagination
