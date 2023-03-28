@@ -2,9 +2,11 @@
 class Api {
     #baseurl;
     #headers;
-    constructor({ baseUrl, headers }) {
+
+    constructor({ baseUrl, headers}) {
         this.#baseurl = baseUrl;
         this.#headers = headers;
+       
     }
 
     #onResponse(res) {
@@ -17,6 +19,14 @@ class Api {
         })
             .then(this.#onResponse)
     }
+
+    getUsersInfo(userid) {
+        return fetch(`${this.#baseurl}/users/${userid}`, {
+            headers: this.#headers
+        })
+            .then(this.#onResponse)
+    }
+    
 }
 
 const api = new Api({
@@ -24,11 +34,12 @@ const api = new Api({
     headers: {
         'content-type': 'application/json',
         authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDEwN2UwOWFhMzk3MTIxODM4ZjI4ZTQiLCJncm91cCI6Imdyb3VwLTExIiwiaWF0IjoxNjc4ODAyNDQ2LCJleHAiOjE3MTAzMzg0NDZ9.BSjB0YkM8SKyUHfrK25KEHQsmBpJi8zCuhddzkP4eT8'
-    }
+    },
+
+
 })
 
 export default api;   
-
 
   
    
