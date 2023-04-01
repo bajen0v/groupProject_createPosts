@@ -19,26 +19,37 @@ class Api {
             .then(this.#onResponse)
     }
 
-    getUsersInfo(userid) {
+    getUserInfo(userid, token) {
+        console.log(token)
         return fetch(`${this.#baseurl}/users/${userid}`, {
-            headers: this.#headers
+            headers: {
+                'Content-Type': 'application/json',
+                authorization: token, 
+                },
         })
             .then(this.#onResponse)
     }
 
-    setUserInfo(data) {
-        return fetch(`${this.#baseurl}/v2/group-11/users/me`, {
+    setUserInfo(data, token) {
+        console.log(token)
+        return fetch(`${this.#baseurl}/users/me`, {
             method: 'PATCH',
-            headers: this.#headers,
+            headers: {
+                    'Content-Type': 'application/json',
+                    authorization: token, 
+                    },
             body: JSON.stringify(data)
         })
             .then(this.#onResponse)
     }
 
-    setUserNewPost(data) {
-        return fetch(`${this.#baseurl}/posts`, {
+    setUserNewPost(data, token) {
+        return fetch(`${this.#baseurl}/v2/group-11/posts`, {
             method: 'POST',
-            headers: this.#headers,
+            headers: {
+                'Content-Type': 'application/json',
+                authorization: token, 
+                },
             body: JSON.stringify(data)
         })
             .then(this.#onResponse)

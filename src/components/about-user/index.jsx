@@ -9,10 +9,10 @@ import api from '../../api';
 
 
 export function AboutUser() {
-  const {currentUser, onUpdateUserId, onUpdateUserName} = useContext(UserContext);
+  const {currentUser, token, onUpdateUserName} = useContext(UserContext);
   const [open, setOpen] = useState(false);
-
   const [edit, setEdit]= useState(false);
+
 
   const handleClickOpen = () => {
       setOpen(true);
@@ -25,10 +25,11 @@ export function AboutUser() {
   const handleEdit = () => {
     setEdit(true);
 };
-
     const { register, handleSubmit } = useForm();
-    const onSubmit = data => {
-      api.setUserInfo (data)
+    const onSubmit = (data) => {
+      setOpen(false);
+      setEdit(false)
+      api.setUserInfo (data, token)
         .then((updateUserFromServer) => {
           onUpdateUserName(updateUserFromServer)
       })
@@ -43,23 +44,19 @@ export function AboutUser() {
               <Box className={open ? s.popup_aktive : s.invisible}>
               <Box className={s.popup_container}>
               <Button ><CancelIcon onClick={handleClose} className={s.close}/> </Button>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                {edit 
-                ? <>
-                    <TextField label="Имя" {...register("name", { required: true })} sx={{ m: 1,  p: 0 }} /> 
-                    <TextField label="О себе"   {...register("about", { required: true })} sx={{ m: 1,  p: 0 }} />
-                    <Button variant="contained" type="submit">Сохранить изменения</Button>
-                  </>
-                  :<>
-                    <TextField label="Имя" value={currentUser?.name}  sx={{ m: 1,  p: 0 }} /> 
-                    <TextField label="О себе" value={currentUser?.about}  sx={{ m: 1,  p: 0 }}/>
-                    <Button variant="contained" onClick={handleEdit} >Редактировать</Button>
-                  </>
-                }
-
-                
-                </form>
-                
+              <img src={currentUser.avatar}></img>
+              {edit
+              ?<form onSubmit={handleSubmit(onSubmit)}>
+                <TextField label="Имя" {...register("name", { required: true })} sx={{ m: 1,  p: 0 }} /> 
+                <TextField label="О себе"  {...register("about", { required: true })} sx={{ m: 1,  p: 0 }} />
+                <Button variant="contained" type="submit">Сохранить изменения</Button>
+              </form>
+              :<>
+                <TextField label="Имя"  value={currentUser.name} contentEditable={false} sx={{ m: 1,  p: 0 }} /> 
+                <TextField label="О себе" value={currentUser.about} contentEditable={false}  sx={{ m: 1,  p: 0 }} />
+                <Button variant="contained" onClick={handleEdit}>Редактировать</Button>
+              </>
+              }
               </Box>
              </Box>
         </>
