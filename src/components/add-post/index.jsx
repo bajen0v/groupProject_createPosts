@@ -1,16 +1,18 @@
 import { Button, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import CancelIcon from '@mui/icons-material/Cancel';
 import s from './styles.module.css'
 import React from "react";
 import { useForm } from "react-hook-form";
 import AddIcon from '@mui/icons-material/Add';
 import api from "../../api";
+import { UserContext } from "../context/context";
 
 
 
 export function AddPost() {
+    const {token} = useContext(UserContext);
     const [open, setOpen] = useState(false);
     
     const handleClickOpen = () => {
@@ -23,13 +25,13 @@ export function AddPost() {
     const { register, handleSubmit } = useForm();
     
     const onSubmit = data => {
-      
+      setOpen(false);
       const NewData = {
         title: data.title, 
         text: data.text, 
         image: data.image, 
         tags: data.tags.split(',')}
-      api.setUserNewPost(NewData)
+      api.setUserNewPost(NewData, token)
     };
   
  
