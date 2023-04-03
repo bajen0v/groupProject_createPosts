@@ -55,6 +55,19 @@ class Api {
         })
             .then(this.#onResponse)
     }
+    
+    setUserAvatar(avatar, token) {
+        return fetch(`${this.#baseurl}/users/me/avatar`, {
+            method: 'PATCH',
+            headers: {
+                    'Content-Type': 'application/json',
+                    authorization: token, 
+                    },
+            body: JSON.stringify(avatar)
+        })
+            .then(this.#onResponse)
+    }
+
 
     setUserNewPost(data, token) {
         return fetch(`${this.#baseurl}/v2/group-11/posts`, {

@@ -20,8 +20,8 @@
     flex-direction: column;
     border: 2px solid #D9E4E6;
     border-radius: 20px;
-    height: 600px;
-    width: 400px;
+    height: 500px;
+    width: 500px;
     background-color: #fff;
     padding: 15px;
     position: relative;
@@ -35,11 +35,19 @@
     font-size: large;
   }
 
-  .aboutme {
-    cursor: pointer;
-    
+  .input {
+    width: 440px;
   }
 
-  .Typography {
-    color: #1976d2;
+  .button {
+    margin: auto;
+    display: block;
+    margin-bottom: 15px;
+  }
+
+  .img {
+    height: 300px;
+    width: 400px;
+    object-fit: cover;
+    margin: auto;
   }
