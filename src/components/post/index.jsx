@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Button, ButtonGroup, Grid, TextField } from '@mui/material';
+import { Box, Button, ButtonGroup, Grid } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
@@ -37,10 +37,11 @@ export function Post ({...props}) {
      });
 
      function DeletPost() {
+        handleClose()
         const from = (page - 1) * pageSize;
         const to =(page - 1) * pageSize + pageSize;
         api.deleteUserPost(props._id, token)
-            .then(UpdatePageData(from,to))  
+            .then(UpdatePageData(from,to))          
      }
     
 
