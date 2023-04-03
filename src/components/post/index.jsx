@@ -37,10 +37,12 @@ export function Post ({...props}) {
      });
 
      function DeletPost() {
+        handleClose()
         const from = (page - 1) * pageSize;
         const to =(page - 1) * pageSize + pageSize;
         api.deleteUserPost(props._id, token)
-            .then(UpdatePageData(from,to))  
+        .then(data => UpdatePageData(from,to))
+           
      }
     
 

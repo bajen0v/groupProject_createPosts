@@ -21,7 +21,7 @@
     flex-direction: column;
     border: 2px solid #D9E4E6;
     border-radius: 20px;
-    height: 200px;
+    height: 300px;
     width: 360px;
     background-color: #fff;
     padding: 15px;
@@ -36,6 +36,6 @@
     font-size: large;
   }
 
-  .user {
-    margin: 20px;
+  .input {
+    width: 300px;
   }
