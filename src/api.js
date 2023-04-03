@@ -12,8 +12,20 @@ class Api {
         return res.ok ? res.json() : res.json().then(err => Promise.reject(err))
     }
 
+    getLogIn(data) {
+        return fetch(`${this.#baseurl}/signin`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+                },
+            body: JSON.stringify(data)
+        })
+            .then(this.#onResponse)
+    }
+    
+
     getPostList(token) {
-        return fetch(`${this.#baseurl}/posts`, {
+        return fetch(`${this.#baseurl}/v2/group-11/posts`, {
             headers: {
                 'Content-Type': 'application/json',
                 authorization: token, 

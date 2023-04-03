@@ -34,7 +34,7 @@ export function AddPost() {
         tags: data.tags.split(',')}
 
       api.setUserNewPost(NewData, token)
-      .then(UpdatePageData(0,pageSize))
+      .then(data => UpdatePageData(0,pageSize))
      };
   
   return (
