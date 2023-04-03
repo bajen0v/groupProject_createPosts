@@ -1,4 +1,4 @@
-import { Button, TextField } from "@mui/material";
+import { Button, MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { useContext, useState } from "react";
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -11,7 +11,7 @@ import { UserContext } from "../context/context";
 
 
 
-export function AddPost() {
+export function AddPost({closeMenu}) {
     const {token, UpdatePageData, pageSize} = useContext(UserContext);
     const [open, setOpen] = useState(false);
 
@@ -21,6 +21,7 @@ export function AddPost() {
     };
     const handleClose = () => {
       setOpen(false);
+      closeMenu();
     };
 
     const { register, handleSubmit } = useForm();
@@ -35,20 +36,28 @@ export function AddPost() {
 
       api.setUserNewPost(NewData, token)
       .then(data => UpdatePageData(0,pageSize))
+      closeMenu();
      };
   
   return (
     <>
-    <Button variant="contained" onClick={handleClickOpen}><AddIcon/></Button>
+    <MenuItem onClick={handleClickOpen} disableRipple>
+        Добавить пост
+    </MenuItem>
     <Box className={open ? s.popup_aktive : s.invisible}>
               <Box className={s.popup_container}>
                 <Button ><CancelIcon onClick={handleClose} className={s.close}/> </Button>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <TextField label="Заголовок" {...register("title", { required: true })} sx={{ m: 1,  p: 0 }} />
-                  <TextField label="Текст" {...register("text", { required: true })} sx={{ m: 1,  p: 0 }} />
-                  <TextField label="Ссылка на изображение"  {...register("image")} sx={{ m: 1,  p: 0 }}/>
-                  <TextField label="Тэги" {...register("tags")} sx={{ m: 1,  p: 0 }}/>
-                  <Button variant="contained" type="submit">Добавить пост</Button>
+                  <TextField className={s.input} label="Заголовок *" {...register("title", { required: true })} sx={{ m: 1,  p: 0 }} />
+                  <TextField className={s.input} label="Текст *" {...register("text", { required: true })} sx={{ m: 1,  p: 0 }} 
+                    id="outlined-multiline-static"
+                    multiline
+                    rows={4}
+                    defaultValue=""
+                  />
+                  <TextField className={s.input} label="Ссылка на изображение"  {...register("image")} sx={{ m: 1,  p: 0 }}/>
+                  <TextField className={s.input} label="Тэги, вводите через запятую" {...register("tags")} sx={{ m: 1,  p: 0 }}/>
+                  <Button className={s.button} variant="contained" type="submit" >Добавить пост</Button>
                 </form>
               </Box>
             </Box>

@@ -21,8 +21,6 @@ export function Login() {
 
     const { register, handleSubmit } = useForm();
     const onSubmit = data => {
-      document.cookie1=("email", data.email)
-      console.log(document.cookie)
       onUpdateUserId(data)
       handleClose()
      };
