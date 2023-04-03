@@ -12,8 +12,9 @@ import { UserContext } from "../context/context";
 
 
 export function AddPost() {
-    const {token} = useContext(UserContext);
+    const {token, UpdatePageData, pageSize} = useContext(UserContext);
     const [open, setOpen] = useState(false);
+
     
     const handleClickOpen = () => {
       setOpen(true);
@@ -31,11 +32,11 @@ export function AddPost() {
         text: data.text, 
         image: data.image, 
         tags: data.tags.split(',')}
-      api.setUserNewPost(NewData, token)
-    };
-  
- 
 
+      api.setUserNewPost(NewData, token)
+      .then(UpdatePageData(0,pageSize))
+     };
+  
   return (
     <>
     <Button variant="contained" onClick={handleClickOpen}><AddIcon/></Button>
@@ -43,7 +44,7 @@ export function AddPost() {
               <Box className={s.popup_container}>
                 <Button ><CancelIcon onClick={handleClose} className={s.close}/> </Button>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <TextField label="Заголовок"  defaultValue="" {...register("title", { required: true })} sx={{ m: 1,  p: 0 }} />
+                  <TextField label="Заголовок" {...register("title", { required: true })} sx={{ m: 1,  p: 0 }} />
                   <TextField label="Текст" {...register("text", { required: true })} sx={{ m: 1,  p: 0 }} />
                   <TextField label="Ссылка на изображение"  {...register("image")} sx={{ m: 1,  p: 0 }}/>
                   <TextField label="Тэги" {...register("tags")} sx={{ m: 1,  p: 0 }}/>
