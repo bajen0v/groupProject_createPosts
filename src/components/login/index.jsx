@@ -2,7 +2,7 @@ import s from './styles.module.css'
 import { Box,  Button,  TextField } from "@mui/material";
 import { useContext, useState } from 'react';
 import CancelIcon from '@mui/icons-material/Cancel';
-
+import LogoutIcon from '@mui/icons-material/Logout';
 import { UserContext } from '../context/context';
 import { group_11 } from '../../group-11';
 
@@ -38,7 +38,7 @@ export function Login() {
     return (
       <>
         <Button variant="contained" onClick={handleClickOpen}>
-              { !!currentUser ? 'Сменить ID' : 'Login'}
+              { !!currentUser ? <LogoutIcon/> : 'Login'}
         </Button>
         <Box className={open ? s.popup_aktive : s.invisible}>
             <Box className={s.popup_container}>

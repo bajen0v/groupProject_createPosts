@@ -37,5 +37,9 @@
 
   .aboutme {
     cursor: pointer;
-    margin: 20px;
+    
+  }
+
+  .Typography {
+    color: #1976d2;
   }

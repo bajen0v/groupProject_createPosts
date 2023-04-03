@@ -1,11 +1,13 @@
 import s from './styles.module.css'
-import {  Box,  Button,  TextField } from "@mui/material";
+import {  Avatar, Box,  Button, IconButton,  TextField, Typography } from "@mui/material";
 import { useContext, useState } from 'react';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { AddPost } from '../add-post';
 import { UserContext } from '../context/context';
-import { useForm } from 'react-hook-form';
 import api from '../../api';
+import { useForm } from 'react-hook-form';
+import EditIcon from '@mui/icons-material/Edit';
+import { Login } from '../login';
 
 
 export function AboutUser() {
@@ -37,27 +39,38 @@ export function AboutUser() {
  
     return (
       <>
+
               <Box className={ !!currentUser ? s.user: s.invisible}>
-                <span onClick={handleClickOpen} className={s.aboutme} >{currentUser?.about} {currentUser?.name}</span>
-                <AddPost/>
+                                 <IconButton sx={{ m: 1,  p: 0 }}>
+                    <Avatar src={currentUser.avatar} alt="Аватар"/>
+                    </IconButton>
+                  <span onClick={handleClickOpen} className={s.aboutme} >{currentUser?.name} {currentUser?.about} </span>
+
+                  <AddPost sx={{ m: 1,  p: 0 }}/>
+                  <Login sx={{ m: 1,  p: 0 }}/>
+
               </Box>
               <Box className={open ? s.popup_aktive : s.invisible}>
-              <Box className={s.popup_container}>
-              <Button ><CancelIcon onClick={handleClose} className={s.close}/> </Button>
-              <img src={currentUser.avatar}></img>
-              {edit
-              ?<form onSubmit={handleSubmit(onSubmit)}>
-                <TextField label="Имя" {...register("name", { required: true })} sx={{ m: 1,  p: 0 }} /> 
-                <TextField label="О себе"  {...register("about", { required: true })} sx={{ m: 1,  p: 0 }} />
-                <Button variant="contained" type="submit">Сохранить изменения</Button>
-              </form>
-              :<>
-                <TextField label="Имя"  value={currentUser.name} contentEditable={false} sx={{ m: 1,  p: 0 }} /> 
-                <TextField label="О себе" value={currentUser.about} contentEditable={false}  sx={{ m: 1,  p: 0 }} />
-                <Button variant="contained" onClick={handleEdit}>Редактировать</Button>
-              </>
-              }
-              </Box>
+                <Box className={s.popup_container}>
+                <Button ><CancelIcon onClick={handleClose} className={s.close}/> </Button>
+                <img src={currentUser.avatar} alt={currentUser.name}></img>
+                {edit
+                ?<form onSubmit={handleSubmit(onSubmit)}>                
+                  <TextField label="Имя" {...register("name", { required: true })} sx={{ m: 1,  p: 0 }} /> 
+                  <TextField label="О себе" {...register("about", { required: true })} sx={{ m: 1,  p: 0 }} />
+                  <Button variant="contained" type="submit">Сохранить Изменения</Button>
+                  </form>
+                :<>
+                <Typography label="Имя" variant="h5" component="div"  className={s.Typography}>
+                  {currentUser?.name}
+                </Typography>
+                <Typography label="Имя" variant="h5" component="div"  className={s.Typography}>
+                  {currentUser?.about}
+                </Typography>
+                  <IconButton  onClick={handleEdit}><EditIcon/></IconButton>
+                </>
+                }
+                </Box>
              </Box>
         </>
     )

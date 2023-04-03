@@ -12,15 +12,17 @@ class Api {
         return res.ok ? res.json() : res.json().then(err => Promise.reject(err))
     }
 
-    getPostList() {
+    getPostList(token) {
         return fetch(`${this.#baseurl}/posts`, {
-            headers: this.#headers
+            headers: {
+                'Content-Type': 'application/json',
+                authorization: token, 
+                },
         })
             .then(this.#onResponse)
     }
 
     getUserInfo(userid, token) {
-        console.log(token)
         return fetch(`${this.#baseurl}/users/${userid}`, {
             headers: {
                 'Content-Type': 'application/json',
@@ -31,7 +33,6 @@ class Api {
     }
 
     setUserInfo(data, token) {
-        console.log(token)
         return fetch(`${this.#baseurl}/users/me`, {
             method: 'PATCH',
             headers: {
@@ -54,7 +55,19 @@ class Api {
         })
             .then(this.#onResponse)
     }
-    
+
+    deleteUserPost(postid, token) {
+        return fetch(`${this.#baseurl}/v2/group-11/posts/${postid}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                authorization: token, 
+                },
+        })
+            .then(this.#onResponse)
+    }
+
+  
 }
 
 const api = new Api({
