@@ -14,7 +14,10 @@ import PostPoupFull from '../post-popup';
 
 import s from './styles.module.css'
 
-export function Post ({...props}) {
+export function Post ({onProductLike, likes, _id, ...props}) {
+    function handleClickButtonLike() {
+        onProductLike({likes, _id})
+    }
 
     return (
 
@@ -29,7 +32,7 @@ export function Post ({...props}) {
                         />
                     }
                     action={
-                        <IconButton aria-label="add to favorites">
+                        <IconButton aria-label="add to favorites" onClick={handleClickButtonLike}>
                             <FavoriteIcon />
                         </IconButton>
                     }

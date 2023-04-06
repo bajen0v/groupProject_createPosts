@@ -54,6 +54,14 @@ class Api {
         })
             .then(this.#onResponse)
     }
+
+    changeLikeProductStatus(productId, like) {
+        return fetch(`${this.#baseurl}/products/likes/${productId}`, {
+            method: like ? 'DELETE' : 'PUT',
+            headers: this.#headers,
+        })
+            .then(this.#onResponse)
+    }
     
 }
 
@@ -61,7 +69,7 @@ const api = new Api({
     baseUrl: 'https://api.react-learning.ru',
     headers: {
         'Content-Type': 'application/json',
-        authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDEwN2UwOWFhMzk3MTIxODM4ZjI4ZTQiLCJncm91cCI6Imdyb3VwLTExIiwiaWF0IjoxNjc4ODAyNDQ2LCJleHAiOjE3MTAzMzg0NDZ9.BSjB0YkM8SKyUHfrK25KEHQsmBpJi8zCuhddzkP4eT8'
+        authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDEwN2UwOWFhMzk3MTIxODM4ZjI5MWMiLCJncm91cCI6Imdyb3VwLTExIiwiaWF0IjoxNjc4ODAyNDQ5LCJleHAiOjE3MTAzMzg0NDl9.dvWkHpISMy3ox6hb58sbRlPZ61ceeAPeqshkZQwxgGQ'
     },
 })
 

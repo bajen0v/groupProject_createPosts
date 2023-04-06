@@ -18,6 +18,13 @@ export function App() {
             .then(data => setCurrentUser(data))
             .catch(err => console.log(err))   
     }
+  function handleProductLike(product) {
+    const isLiked = product.likes.some(id => id === currentUser._id);
+    api.changeLikeProductStatus(product._id, isLiked)
+      .then((updateCard) => {
+        console.log(updateCard);
+      })
+  }
 
 
   return (
@@ -25,7 +32,7 @@ export function App() {
       <CssBaseline/>
       <UserContext.Provider value={{currentUser, token,  onUpdateUserId: handleUserInfo, onUpdateUserName: setCurrentUser}}>
       <Header/>      
-      <PostList/>
+      <PostList onProductLike={handleProductLike}/>
       </UserContext.Provider>
       <Footer/>
     </>

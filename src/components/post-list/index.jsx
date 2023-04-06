@@ -7,7 +7,7 @@ import { Post } from '../post/index'
 
 
 
-export function PostList() {
+export function PostList(onProductLike) {
 
     const pageSize=12;
 
@@ -38,7 +38,7 @@ export function PostList() {
     return (
         <Container>
             <Grid container spacing={4} className={s.content__posts}>
-                {pageData.map((dataItem) => <Post key={dataItem._id} {...dataItem} />)}
+                {pageData.map((dataItem) => <Post key={dataItem._id} {...dataItem} onProductLike={onProductLike} />)}
             </Grid> 
             <Box justifyContent={"center"} alignItems={"center"} display={"flex"} sx={{margin: "20px 0px"}}>
                 <Pagination
