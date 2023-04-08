@@ -9,9 +9,7 @@ import { UserContext } from '../context/context';
 
 
 export function PostList() {
-    const { pageData, UpdatePageData, page, onPage, onPostLike, currentUser} = useContext(UserContext);
-
-    const pageSize=12;
+    const { pageData, UpdatePageData, page, onPage, onPostLike, currentUser, pageSize} = useContext(UserContext);
 
     const [postData, setPostData] = useState([]);
 
