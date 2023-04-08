@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 
 
 export function EditAvatar({closeMenu}) {
-  const {currentUser, token, onUpdateUserName} = useContext(UserContext);
+  const {currentUser, onUpdateUserName} = useContext(UserContext);
   const [open, setOpen] = useState(false);
   const [avatar, setAvatar] = useState();
 
@@ -28,7 +28,7 @@ export function EditAvatar({closeMenu}) {
   const { register, handleSubmit } = useForm();
   const onSubmit = (data) => {
     setOpen(false);
-    api.setUserAvatar (data, token)
+    api.setUserAvatar (data)
         .then((updateUserFromServer) => {
           onUpdateUserName(updateUserFromServer)
       })

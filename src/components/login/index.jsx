@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 
 
 export function Login() {
-  const {currentUser, token, onUpdateUserId} = useContext(UserContext);
+  const {currentUser, onUpdateUserId} = useContext(UserContext);
   const [open, setOpen] = useState(false);
     
   const handleClickOpen = () => {

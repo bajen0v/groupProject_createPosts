@@ -9,14 +9,14 @@ import { UserContext } from '../context/context';
 
 
 export function PostList() {
-    const { token, pageData, UpdatePageData, page, onPage, onPostLike, currentUser} = useContext(UserContext);
+    const { pageData, UpdatePageData, page, onPage, onPostLike, currentUser} = useContext(UserContext);
 
     const pageSize=12;
 
     const [postData, setPostData] = useState([]);
 
     useEffect(() => {   
-        api.getPostList(token)
+        api.getPostList()
         .then(data => setPostData(data))       
         .catch(err => console.log(err))
     },[]);

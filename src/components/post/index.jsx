@@ -19,7 +19,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 
 
 export function Post ({onPostLike, ...props}) {
-    const { currentUser, token, page, pageSize, UpdatePageData} = useContext(UserContext);
+    const { currentUser, page, pageSize, UpdatePageData} = useContext(UserContext);
     const[me, setMe] = useState(false);
     const [open, setOpen] = useState(false);
 
@@ -40,7 +40,7 @@ export function Post ({onPostLike, ...props}) {
         handleClose()
         const from = (page - 1) * pageSize;
         const to =(page - 1) * pageSize + pageSize;
-        api.deleteUserPost(props._id, token)
+        api.deleteUserPost(props._id)
         .then(data => UpdatePageData(from,to))
            
      }

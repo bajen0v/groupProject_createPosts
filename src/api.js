@@ -22,21 +22,19 @@ class Api {
         })
             .then(this.#onResponse).then((res) => {
                 this.#headers.authorization = res.token;
-                console.log('this.#headers', this.#headers)
                 return res;
             });
     }
     
 
     getPostList() {
-        console.log('this.headers in getPostList', this.#headers);
         return fetch(`${this.#baseurl}/v2/group-11/posts`, {
             headers: {...this.#headers},
         })
             .then(this.#onResponse)
     }
 
-    getUserInfo(userid, token) {
+    getUserInfo(userid) {
         return fetch(`${this.#baseurl}/users/${userid}`, {
             headers: {...this.#headers},
 
@@ -72,7 +70,7 @@ class Api {
             .then(this.#onResponse)
     }
 
-    deleteUserPost(postid, token) {
+    deleteUserPost(postid) {
         return fetch(`${this.#baseurl}/v2/group-11/posts/${postid}`, {
             method: 'DELETE',
             headers: {...this.#headers},
@@ -81,7 +79,6 @@ class Api {
     }
 
     changeLikePost(postID, like) {
-        console.log('like', like)
         return fetch(`${this.#baseurl}/v2/group-11/posts/likes/${postID}`, {
             method: like ? 'DELETE' : 'PUT',
             headers: {...this.#headers},

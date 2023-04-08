@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 
 
 export function EditUser({closeMenu}) {
-  const {currentUser, token, onUpdateUserName} = useContext(UserContext);
+  const {currentUser, onUpdateUserName} = useContext(UserContext);
   const [open, setOpen] = useState(false);
 
 
@@ -26,7 +26,7 @@ export function EditUser({closeMenu}) {
     const { register, handleSubmit } = useForm();
     const onSubmit = (data) => {
       setOpen(false);
-      api.setUserInfo (data, token)
+      api.setUserInfo (data)
         .then((updateUserFromServer) => {
           onUpdateUserName(updateUserFromServer)
       })

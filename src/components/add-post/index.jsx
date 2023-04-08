@@ -12,7 +12,7 @@ import { UserContext } from "../context/context";
 
 
 export function AddPost({closeMenu}) {
-    const {token, UpdatePageData, pageSize} = useContext(UserContext);
+    const { UpdatePageData, pageSize} = useContext(UserContext);
     const [open, setOpen] = useState(false);
 
     
@@ -34,7 +34,7 @@ export function AddPost({closeMenu}) {
         image: data.image, 
         tags: data.tags.split(',')}
 
-      api.setUserNewPost(NewData, token)
+      api.setUserNewPost(NewData)
       .then(data => UpdatePageData(0,pageSize))
       closeMenu();
      };
