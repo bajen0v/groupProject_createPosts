@@ -5,29 +5,21 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import s from './styles.module.css'
 import React from "react";
 import { useForm } from "react-hook-form";
-import AddIcon from '@mui/icons-material/Add';
 import api from "../../api";
 import { UserContext } from "../context/context";
 
 
 
-export function AddPost({closeMenu}) {
+export function AddPost({closePopup}) {
     const { UpdatePageData, pageSize} = useContext(UserContext);
-    const [open, setOpen] = useState(false);
 
-    
-    const handleClickOpen = () => {
-      setOpen(true);
-    };
     const handleClose = () => {
-      setOpen(false);
-      closeMenu();
+      closePopup();
     };
 
     const { register, handleSubmit } = useForm();
     
     const onSubmit = data => {
-      setOpen(false);
       const NewData = {
         title: data.title, 
         text: data.text, 
@@ -36,15 +28,10 @@ export function AddPost({closeMenu}) {
 
       api.setUserNewPost(NewData)
       .then(data => UpdatePageData(0,pageSize))
-      closeMenu();
+      closePopup();
      };
   
   return (
-    <>
-    <MenuItem onClick={handleClickOpen} disableRipple>
-        Добавить пост
-    </MenuItem>
-    <Box className={open ? s.popup_aktive : s.invisible}>
               <Box className={s.popup_container}>
                 <Button ><CancelIcon onClick={handleClose} className={s.close}/> </Button>
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -60,7 +47,5 @@ export function AddPost({closeMenu}) {
                   <Button className={s.button} variant="contained" type="submit" >Добавить пост</Button>
                 </form>
               </Box>
-            </Box>
-    </>
   )
 }

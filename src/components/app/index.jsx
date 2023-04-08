@@ -9,7 +9,8 @@ import { PostList } from '../post-list';
 
 
 export function App() {
-  const pageSize=12;
+  const pageSize =12;
+
   const [pageData, setPageData] = useState([]);
   const [page, setPage] = useState(1);
   const [currentUser, setCurrentUser] = useState('');
@@ -47,6 +48,13 @@ export function App() {
       })
   }
 
+  function handlePostFelete(id) {
+    const from = (page - 1) * pageSize;
+    const to =(page - 1) * pageSize + pageSize;
+    api.deleteUserPost(id)
+    .then(data => handlePageData(from,to))
+  }
+
   return (
     <>
       <CssBaseline/>
@@ -59,7 +67,8 @@ export function App() {
         page, 
         onPage: setPage, 
         pageSize,
-        onPostLike:handlePostLike
+        onPostLike:handlePostLike,
+        onPostDelete: handlePostFelete
         }}>
       <Header/>      
       <PostList currentUser={currentUser}/>

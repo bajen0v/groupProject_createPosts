@@ -8,40 +8,30 @@ import { useForm } from 'react-hook-form';
 
 
 
-export function EditAvatar({closeMenu}) {
-  const {currentUser, onUpdateUserName} = useContext(UserContext);
-  const [open, setOpen] = useState(false);
-  const [avatar, setAvatar] = useState();
+export function EditAvatar({closePopup}) {
+  const {currentUser, onUpdateUserName, UpdatePageData, pageSize, page} = useContext(UserContext);
 
-
-
-
-  const handleClickOpen = () => {
-      setOpen(true);
-  };
   const handleClose = () => {
-      setOpen(false);
-      closeMenu();
+      closePopup();
   };
 
    
   const { register, handleSubmit } = useForm();
   const onSubmit = (data) => {
-    setOpen(false);
+    const from = (page - 1) * pageSize;
+    const to =(page - 1) * pageSize + pageSize;
+
     api.setUserAvatar (data)
         .then((updateUserFromServer) => {
           onUpdateUserName(updateUserFromServer)
       })
-    closeMenu();
+        .then(
+          UpdatePageData(from,to))
+        .catch(err => console.log(err))
+      closePopup();
   };
  
     return (
-      <>
-
-        <MenuItem onClick={handleClickOpen} disableRipple>
-        Сменить аватар
-        </MenuItem>
-        <Box className={open ? s.popup_aktive : s.invisible}>
         <Box className={s.popup_container}>
             <Button ><CancelIcon onClick={handleClose} className={s.close}/> </Button>
             <img src={currentUser.avatar} className={s.img}/>
@@ -49,11 +39,6 @@ export function EditAvatar({closeMenu}) {
                 <TextField className={s.input} label="Ссылка на изображение" {...register("avatar", { required: true })} sx={{ m: 1,  p: 0 }} /> 
                 <Button className={s.button} variant="contained" type="submit" sx={{ m: 2}}>Обновить Аватар</Button>
             </form>
-
         </Box>
-        </Box>
-                
-              
-       </>
     )
 }
