@@ -2,10 +2,10 @@
 class Api {
     #baseurl;
     #headers;
+    
     constructor({ baseUrl, headers}) {
         this.#baseurl = baseUrl;
         this.#headers = headers;
-       
     }
 
     #onResponse(res) {
@@ -20,37 +20,34 @@ class Api {
                 },
             body: JSON.stringify(data)
         })
-            .then(this.#onResponse)
+            .then(this.#onResponse).then((res) => {
+                this.#headers.authorization = res.token;
+                console.log('this.#headers', this.#headers)
+                return res;
+            });
     }
     
 
-    getPostList(token) {
+    getPostList() {
+        console.log('this.headers in getPostList', this.#headers);
         return fetch(`${this.#baseurl}/v2/group-11/posts`, {
-            headers: {
-                'Content-Type': 'application/json',
-                authorization: token, 
-                },
+            headers: {...this.#headers},
         })
             .then(this.#onResponse)
     }
 
     getUserInfo(userid, token) {
         return fetch(`${this.#baseurl}/users/${userid}`, {
-            headers: {
-                'Content-Type': 'application/json',
-                authorization: token, 
-                },
+            headers: {...this.#headers},
+
         })
             .then(this.#onResponse)
     }
 
-    setUserInfo(data, token) {
+    setUserInfo(data) {
         return fetch(`${this.#baseurl}/users/me`, {
             method: 'PATCH',
-            headers: {
-                    'Content-Type': 'application/json',
-                    authorization: token, 
-                    },
+            headers: {...this.#headers},
             body: JSON.stringify(data)
         })
             .then(this.#onResponse)
@@ -59,10 +56,7 @@ class Api {
     setUserAvatar(avatar, token) {
         return fetch(`${this.#baseurl}/users/me/avatar`, {
             method: 'PATCH',
-            headers: {
-                    'Content-Type': 'application/json',
-                    authorization: token, 
-                    },
+            headers: {...this.#headers},
             body: JSON.stringify(avatar)
         })
             .then(this.#onResponse)
@@ -72,10 +66,7 @@ class Api {
     setUserNewPost(data, token) {
         return fetch(`${this.#baseurl}/v2/group-11/posts`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                authorization: token, 
-                },
+            headers: {...this.#headers},
             body: JSON.stringify(data)
         })
             .then(this.#onResponse)
@@ -84,14 +75,19 @@ class Api {
     deleteUserPost(postid, token) {
         return fetch(`${this.#baseurl}/v2/group-11/posts/${postid}`, {
             method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                authorization: token, 
-                },
+            headers: {...this.#headers},
         })
             .then(this.#onResponse)
     }
 
+    changeLikePost(postID, like) {
+        console.log('like', like)
+        return fetch(`${this.#baseurl}/v2/group-11/posts/likes/${postID}`, {
+            method: like ? 'DELETE' : 'PUT',
+            headers: {...this.#headers},
+        })
+            .then(this.#onResponse)
+    }
   
 }
 
@@ -99,7 +95,7 @@ const api = new Api({
     baseUrl: 'https://api.react-learning.ru',
     headers: {
         'Content-Type': 'application/json',
-        authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDEwN2UwOWFhMzk3MTIxODM4ZjI4ZTQiLCJncm91cCI6Imdyb3VwLTExIiwiaWF0IjoxNjc4ODAyNDQ2LCJleHAiOjE3MTAzMzg0NDZ9.BSjB0YkM8SKyUHfrK25KEHQsmBpJi8zCuhddzkP4eT8'
+        authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDEwN2UwOGFhMzk3MTIxODM4ZjI4OWMiLCJncm91cCI6Imdyb3VwLTExIiwiaWF0IjoxNjc4ODAyNDQzLCJleHAiOjE3MTAzMzg0NDN9.T5rcouTKS7iJ0jHu95CaH73kwUXVYG4XEvPzxUbNHOs'
     },
 })
 

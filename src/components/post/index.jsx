@@ -18,7 +18,7 @@ import api from '../../api';
 import CancelIcon from '@mui/icons-material/Cancel';
 
 
-export function Post ({...props}) {
+export function Post ({onPostLike, ...props}) {
     const { currentUser, token, page, pageSize, UpdatePageData} = useContext(UserContext);
     const[me, setMe] = useState(false);
     const [open, setOpen] = useState(false);
@@ -44,7 +44,13 @@ export function Post ({...props}) {
         .then(data => UpdatePageData(from,to))
            
      }
+     
+     const isLiked = props.likes.some(id => id === currentUser._id)
+     
+     function handleClickButtonLike() {
     
+        onPostLike({...props})
+     }
 
     return (
     <>
@@ -65,13 +71,14 @@ export function Post ({...props}) {
                     </IconButton>
                     : <></>}
                         
-                        <IconButton aria-label="add to favorites">
+                        <IconButton onClick={handleClickButtonLike} aria-label="add to favorites">
                             <FavoriteIcon />
                         </IconButton>
                     </>
                     }
                     title={props.author.name}
                     subheader={props.author.about}
+                    
                 />
                 
                 <PostPoupFull {...props}/>

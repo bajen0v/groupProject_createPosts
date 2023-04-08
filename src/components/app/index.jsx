@@ -12,8 +12,8 @@ export function App() {
   const pageSize=12;
   const [pageData, setPageData] = useState([]);
   const [page, setPage] = useState(1);
-  const [currentUser, setCurrentUser] =useState('');
-  const [token, setToken]=useState('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDEwN2UwOWFhMzk3MTIxODM4ZjI4ZTQiLCJncm91cCI6Imdyb3VwLTExIiwiaWF0IjoxNjc4ODAyNDQ2LCJleHAiOjE3MTAzMzg0NDZ9.BSjB0YkM8SKyUHfrK25KEHQsmBpJi8zCuhddzkP4eT8');
+  const [currentUser, setCurrentUser] = useState('');
+  const [token, setToken] = useState('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDEwN2UwOWFhMzk3MTIxODM4ZjI4ZTQiLCJncm91cCI6Imdyb3VwLTExIiwiaWF0IjoxNjc4ODAyNDQ2LCJleHAiOjE3MTAzMzg0NDZ9.BSjB0YkM8SKyUHfrK25KEHQsmBpJi8zCuhddzkP4eT8');
   
   
   function handleUserInfo(data) {
@@ -33,6 +33,21 @@ export function App() {
     .catch(err => console.log(err))
   }
 
+  function handlePostLike(post){
+    const isLiked = post.likes.some(id => id === currentUser._id)
+    
+
+    api.changeLikePost(post._id, isLiked)
+      .then(updatePost => {
+        console.log('updatePost',updatePost)
+        const updateLikesState = pageData.map(pageState => {
+          console.log(pageState._id === updatePost._id)
+          return pageState._id === updatePost._id ? updatePost : pageState
+        })
+        setPageData(updateLikesState)
+      })
+  }
+
   return (
     <>
       <CssBaseline/>
@@ -45,9 +60,11 @@ export function App() {
         UpdatePageData: handlePageData, 
         page, 
         onPage: setPage, 
-        pageSize}}>
+        pageSize,
+        onPostLike:handlePostLike
+        }}>
       <Header/>      
-      <PostList/>
+      <PostList currentUser={currentUser}/>
       </UserContext.Provider>
       <Footer/>
     </>

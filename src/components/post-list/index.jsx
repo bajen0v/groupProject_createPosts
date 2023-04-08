@@ -9,14 +9,11 @@ import { UserContext } from '../context/context';
 
 
 export function PostList() {
-    const { token, pageData, UpdatePageData, page, onPage } = useContext(UserContext);
+    const { token, pageData, UpdatePageData, page, onPage, onPostLike, currentUser} = useContext(UserContext);
 
     const pageSize=12;
 
     const [postData, setPostData] = useState([]);
-
-    
-
 
     useEffect(() => {   
         api.getPostList(token)
@@ -35,9 +32,9 @@ export function PostList() {
 
       
     return (
-        <Container>
-            <Grid container spacing={4} className={s.content__posts}>
-                {pageData.map((dataItem) => <Post key={dataItem._id} {...dataItem} />)}
+        <Container >
+            <Grid container spacing={4} className={s.content__posts} >
+                {pageData.map((dataItem) => <Post key={dataItem._id} {...dataItem} onPostLike={onPostLike} currentUser={currentUser}/>)}
             </Grid> 
             <Box justifyContent={"center"} alignItems={"center"} display={"flex"} sx={{margin: "20px 0px"}}>
                 <Pagination
