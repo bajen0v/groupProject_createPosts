@@ -13,16 +13,13 @@ export function App() {
 
   const [pageData, setPageData] = useState([]);
   const [page, setPage] = useState(1);
-  const [currentUser, setCurrentUser] = useState('');
-  // const [token, setToken] = useState('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDEwN2UwOWFhMzk3MTIxODM4ZjI4ZTQiLCJncm91cCI6Imdyb3VwLTExIiwiaWF0IjoxNjc4ODAyNDQ2LCJleHAiOjE3MTAzMzg0NDZ9.BSjB0YkM8SKyUHfrK25KEHQsmBpJi8zCuhddzkP4eT8');
-  
+  const [currentUser, setCurrentUser] = useState('');  
   
   function handleUserInfo(data) {
         
       api.getLogIn(data)
       .then((data) => {
         setCurrentUser(data.data);
-        // setToken(data.token);
       })
       .catch(err => console.log(err)) 
     }
@@ -39,9 +36,7 @@ export function App() {
     
     api.changeLikePost(post._id, isLiked)
       .then(updatePost => {
-        console.log('updatePost',updatePost)
-        const updateLikesState = pageData.map(pageState => {
-          console.log(pageState._id === updatePost._id)
+          const updateLikesState = pageData.map(pageState => {
           return pageState._id === updatePost._id ? updatePost : pageState
         })
         setPageData(updateLikesState)
@@ -52,7 +47,7 @@ export function App() {
     const from = (page - 1) * pageSize;
     const to =(page - 1) * pageSize + pageSize;
     api.deleteUserPost(id)
-    .then(data => handlePageData(from,to))
+    .then(handlePageData(from,to))
   }
 
   return (

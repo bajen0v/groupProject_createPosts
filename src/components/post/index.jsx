@@ -42,7 +42,7 @@ export function Post ({onPostLike, ...props}) {
      }
      
      const isLiked = props.likes.some(id => id === currentUser._id)
-     
+
      function handleClickButtonLike() {
     
         onPostLike({...props})
@@ -66,10 +66,11 @@ export function Post ({onPostLike, ...props}) {
                         <DeleteIcon />
                     </IconButton>
                     : <></>}
-                        
-                        <IconButton onClick={handleClickButtonLike} aria-label="add to favorites">
-                            <FavoriteIcon />
-                        </IconButton>
+                    
+                    
+                    <IconButton onClick={handleClickButtonLike} aria-label="add to favorites">
+                        <FavoriteIcon htmlColor={isLiked ? 'red': null}/>
+                    </IconButton>
                     </>
                     }
                     title={props.author.name}

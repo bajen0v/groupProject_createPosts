@@ -41,3 +41,8 @@
     margin: auto;
     display: block;
   }
+
+  .redColor {
+    color: red;
+    stroke-width: 0;
+  }
