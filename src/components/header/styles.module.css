@@ -1,6 +1,8 @@
 .Typography {
     text-align: center;
     cursor: pointer;
+    color: inherit;
+    text-decoration: none;
 }
 
 .header {

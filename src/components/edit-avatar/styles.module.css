@@ -46,8 +46,8 @@
   }
 
   .img {
-    height: 300px;
-    width: 400px;
+    height: 40vh;
+    width: 50vw;
     object-fit: cover;
     margin: auto;
   }

@@ -4,7 +4,6 @@ import { useContext, useState } from 'react';
 import CancelIcon from '@mui/icons-material/Cancel';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { UserContext } from '../context/context';
-import api from '../../api';
 import { useForm } from 'react-hook-form';
 
 

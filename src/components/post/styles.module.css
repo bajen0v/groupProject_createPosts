@@ -46,3 +46,7 @@
     color: red;
     stroke-width: 0;
   }
+
+  .text {
+    text-decoration: none;
+  }
