@@ -66,7 +66,7 @@ export function App() {
         onPostDelete: handlePostFelete
         }}>
       <Header/>      
-      <PostList currentUser={currentUser}/>
+      <PostList />
       </UserContext.Provider>
       <Footer/>
     </>

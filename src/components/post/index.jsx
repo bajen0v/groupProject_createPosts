@@ -11,6 +11,7 @@ import { Date } from '../date';
 import { Tag } from '../tag';
 import PostPoupFull from '../post-popup';
 import DeleteIcon from '@mui/icons-material/Delete';
+import {Link} from '@mui/joy';
 import { useContext, useEffect, useState } from 'react';
 import s from './styles.module.css'
 import { UserContext } from '../context/context';
@@ -18,8 +19,9 @@ import api from '../../api';
 import CancelIcon from '@mui/icons-material/Cancel';
 
 
-export function Post ({onPostLike, ...props}) {
-    const { currentUser, page, pageSize, UpdatePageData, onPostDelete} = useContext(UserContext);
+
+export function Post ({ ...props}) {
+    const { currentUser, pageSize, UpdatePageData, onPostDelete, onPostLike} = useContext(UserContext);
     const[me, setMe] = useState(false);
     const [open, setOpen] = useState(false);
 
@@ -44,7 +46,6 @@ export function Post ({onPostLike, ...props}) {
      const isLiked = props.likes.some(id => id === currentUser._id)
 
      function handleClickButtonLike() {
-    
         onPostLike({...props})
      }
 
@@ -68,8 +69,29 @@ export function Post ({onPostLike, ...props}) {
                     : <></>}
                     
                     
-                    <IconButton onClick={handleClickButtonLike} aria-label="add to favorites">
+                    <IconButton sx={{borderRadius: '16px'}}onClick={handleClickButtonLike} aria-label="add to favorites">
                         <FavoriteIcon htmlColor={isLiked ? 'red': null}/>
+                        {props.likes.length !== 0 
+                        ? (<Box level="body3" 
+                                sx={isLiked ? {
+                                        paddingLeft: 0.5,            
+                                        color: 'red',
+                                        fontSize: 25,
+                                        fontWeight: 'bold',
+                                        borderRadius: '50%',} 
+                                    : {            
+                                        fontSize: 25,
+                                        paddingLeft: 0.5,
+                                        borderRadius: '50%',
+                                    }}>
+
+                            {/* sx={{
+                            fontWeight: 'md',
+                            ml: 'auto',
+                            color: 'text.secondary',
+                            '&:hover': { color: 'danger.plainColor' }, */}
+                        {props.likes.length}</Box>)  
+                        : null}            
                     </IconButton>
                     </>
                     }
@@ -78,7 +100,7 @@ export function Post ({onPostLike, ...props}) {
                     
                 />
                 
-                <PostPoupFull {...props}/>
+                <PostPoupFull { ...props}/>
                 <CardContent>
                     <Typography variant="h6" color="black">
                         {props.title}

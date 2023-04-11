@@ -36,8 +36,8 @@ export function Login() {
               <Box className={s.popup_container}>
                 <Button ><CancelIcon onClick={handleClose} className={s.close}/> </Button>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <TextField className={s.input} label="email" {...register("email", { required: true })} sx={{ m: 1,  p: 1 }} />
-                  <TextField className={s.input} label="пароль" {...register("password", { required: true })} sx={{ m: 1,  p: 1 }} />
+                  <TextField className={s.input} inputProps={{tabIndex:1}} label="email" {...register("email", { required: true })} sx={{ m: 1,  p: 1 }} />
+                  <TextField className={s.input} inputProps={{type:'password', tabIndex:2}} label="пароль" {...register("password", { required: true })} sx={{ m: 1,  p: 1 }} />
                   <Button className={s.input} variant="contained" type="submit" sx={{ m: 1,  p: 1 }} >Войти</Button>
                 </form>
               </Box>

@@ -1,3 +1,8 @@
+.wrapper {
+    margin: 0;
+    padding: 0;
+}
+
 .post_img:hover {
     cursor: pointer;
     opacity: 0.5;

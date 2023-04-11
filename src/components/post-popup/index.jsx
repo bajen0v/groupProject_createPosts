@@ -1,4 +1,6 @@
-import * as React from 'react';
+import { useContext, useState } from 'react';
+import { UserContext } from '../context/context';
+
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
@@ -8,11 +10,12 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { Avatar, CardMedia } from '@mui/material';
+import { Avatar, Box, CardMedia } from '@mui/material';
 import { Tag } from '../tag';
 import { Date } from '../date';
 
 import s from './styles.module.css'
+import api from '../../api';
 
 const PostPopup = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -53,7 +56,9 @@ PostPopupTitle.propTypes = {
 };
 
 export default function PostPoupFull({title, ...props}) {
-    const [open, setOpen] = React.useState(false);
+    const { currentUser, onPostLike} = useContext(UserContext);
+    const [open, setOpen] = useState(false);
+    
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -61,6 +66,13 @@ export default function PostPoupFull({title, ...props}) {
     const handleClose = () => {
         setOpen(false);
     };
+
+    const isLiked = props.likes.some(id => id === currentUser._id)
+
+    function handleClickButtonLike() {
+   
+       onPostLike({...props})
+    }
 
     return (
         <div>
@@ -73,6 +85,7 @@ export default function PostPoupFull({title, ...props}) {
                     className={s.post_img}
             />
             <PostPopup
+                currentUser={currentUser}
                 onClose={handleClose}
                 aria-labelledby="customized-dialog-title"
                 open={open}
@@ -81,7 +94,7 @@ export default function PostPoupFull({title, ...props}) {
                     <div className={s.header}>
                         <div className={s.authorInfo}>
                             <Avatar
-                                sx={{ width: 56, height: 56}}
+                                sx={{ width: 60, height: 60}}
                                 src={props.author.avatar}
                                 alt="Аватар"
                             />
@@ -105,8 +118,24 @@ export default function PostPoupFull({title, ...props}) {
                 </DialogContent>
                 <DialogContent>
                     <div className={s.tagIcon}>
-                        <IconButton aria-label="add to favorites">
-                            <FavoriteIcon />
+                        <IconButton onClick={handleClickButtonLike} aria-label="add to favorites">
+                            <FavoriteIcon htmlColor={isLiked ? 'red': null}/>
+                            {props.likes.length !== 0 
+                        ? (<Box level="body3" 
+                                sx={isLiked 
+                                    ? {
+                                        paddingLeft: 0.5,            
+                                        color: 'red',
+                                        fontSize: 25,
+                                        fontWeight: 'bold',
+                                        borderRadius: '50%',} 
+                                    : {            
+                                        fontSize: 25,
+                                        paddingLeft: 0.5,
+                                        borderRadius: '50%',
+                                    }}>
+                        {props.likes.length}</Box>)  
+                        : null}       
                         </IconButton>
                         <Tag tags={props.tags}/>
                     </div>                    

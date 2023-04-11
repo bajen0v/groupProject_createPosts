@@ -35,15 +35,15 @@ export function AddPost({closePopup}) {
               <Box className={s.popup_container}>
                 <Button ><CancelIcon onClick={handleClose} className={s.close}/> </Button>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <TextField className={s.input} label="Заголовок *" {...register("title", { required: true })} sx={{ m: 1,  p: 0 }} />
-                  <TextField className={s.input} label="Текст *" {...register("text", { required: true })} sx={{ m: 1,  p: 0 }} 
+                  <TextField className={s.input} inputProps={{tabIndex:1}} label="Заголовок *" {...register("title", { required: true })} sx={{ m: 1,  p: 0 }} />
+                  <TextField className={s.input} inputProps={{tabIndex:2}} label="Текст *" {...register("text", { required: true })} sx={{ m: 1,  p: 0 }} 
                     id="outlined-multiline-static"
                     multiline
                     rows={4}
                     defaultValue=""
                   />
-                  <TextField className={s.input} label="Ссылка на изображение"  {...register("image")} sx={{ m: 1,  p: 0 }}/>
-                  <TextField className={s.input} label="Тэги, вводите через запятую" {...register("tags")} sx={{ m: 1,  p: 0 }}/>
+                  <TextField className={s.input} inputProps={{tabIndex:3}} label="Ссылка на изображение"  {...register("image")} sx={{ m: 1,  p: 0 }}/>
+                  <TextField className={s.input} inputProps={{tabIndex:4}} label="Тэги, вводите через запятую" {...register("tags")} sx={{ m: 1,  p: 0 }}/>
                   <Button className={s.button} variant="contained" type="submit" >Добавить пост</Button>
                 </form>
               </Box>
