@@ -1,3 +1,23 @@
+.post_img {
+  height: 78svh;
+  object-fit: cover;
+}
+
+.postPage {
+  padding: 85px 40px 20px 40px;
+
+}
+
+.container {
+  position: relative;
+}
+
+.container .back_button {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+}
+
 .popup_aktive {
   width:100vw;
   height:100vh;
@@ -20,11 +40,12 @@
   flex-direction: column;
   border: 2px solid #D9E4E6;
   border-radius: 20px;
-  height: 500px;
-  width: 500px;
+  height: 150px;
+  width: 360px;
   background-color: #fff;
   padding: 15px;
   position: relative;
+  text-align: center
 }
 
 .close {
@@ -35,19 +56,8 @@
   font-size: large;
 }
 
-.input {
-  width: 440px;
-}
-
 .button {
   margin: auto;
   display: block;
-  margin-bottom: 15px;
 }
 
-.img {
-  height: 40vh;
-  width: 50vw;
-  object-fit: cover;
-  margin: auto;
-}

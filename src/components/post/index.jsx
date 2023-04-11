@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Button, ButtonGroup, Grid, TextField } from '@mui/material';
+import { Box, Button, ButtonGroup, CardMedia, Grid, TextField } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
@@ -11,12 +11,12 @@ import { Date } from '../date';
 import { Tag } from '../tag';
 import PostPoupFull from '../post-popup';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {Link} from '@mui/joy';
 import { useContext, useEffect, useState } from 'react';
 import s from './styles.module.css'
 import { UserContext } from '../context/context';
 import api from '../../api';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { Link } from 'react-router-dom';
 
 
 
@@ -100,17 +100,24 @@ export function Post ({ ...props}) {
                     
                 />
                 
-                <PostPoupFull { ...props}/>
-                <CardContent>
-                    <Typography variant="h6" color="black">
-                        {props.title}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" align="right">
-                        <Date created_at={props.created_at}/>
-                    </Typography>
-                    <Tag tags={props.tags}/>
-                </CardContent>   
-                             
+                <Link to={`/posts/${props._id}`} className={s.text}>
+                    <CardMedia
+                        component="img"
+                        height="194"
+                        image={props.image}
+                        alt="Картинка"
+                        className={s.post_img}
+                    />
+                    <CardContent>
+                        <Typography variant="h6" color="black">
+                            {props.title}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" align="right">
+                            <Date created_at={props.created_at}/>
+                        </Typography>
+                        <Tag tags={props.tags}/>
+                    </CardContent>   
+                </Link>      
             </Card>
 
         </Grid>
