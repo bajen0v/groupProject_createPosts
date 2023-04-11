@@ -85,6 +85,13 @@ class Api {
         })
             .then(this.#onResponse)
     }
+
+    getPostData(id) {
+        return fetch(`${this.#baseurl}/v2/group-11/posts/${id}`, {
+            headers: {...this.#headers},
+        })
+            .then(this.#onResponse)
+    }
   
 }
 

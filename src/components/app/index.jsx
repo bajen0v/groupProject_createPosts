@@ -5,6 +5,9 @@ import { UserContext } from '../context/context';
 import { Footer } from '../footer';
 import { Header } from '../header';
 import { PostList } from '../post-list';
+import { Route, Routes } from 'react-router-dom';
+import PostPage from '../PostPage';
+import { NotFound } from '../error-page';
 
 
 
@@ -43,7 +46,7 @@ export function App() {
       })
   }
 
-  function handlePostFelete(id) {
+  function handlePostDelete(id) {
     const from = (page - 1) * pageSize;
     const to =(page - 1) * pageSize + pageSize;
     api.deleteUserPost(id)
@@ -63,10 +66,14 @@ export function App() {
         onPage: setPage, 
         pageSize,
         onPostLike:handlePostLike,
-        onPostDelete: handlePostFelete
+        onPostDelete: handlePostDelete
         }}>
       <Header/>      
-      <PostList />
+      <Routes>
+          <Route  path='/' element={<PostList currentUser={currentUser}/>}/>
+          <Route path='/posts/:postID' element={<PostPage />} />
+          <Route path='*' element={<NotFound/>}/>
+      </Routes>  
       </UserContext.Provider>
       <Footer/>
     </>

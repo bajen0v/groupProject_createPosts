@@ -15,7 +15,10 @@ export function PostList() {
 
     useEffect(() => {   
         api.getPostList()
-        .then(data => setPostData(data))       
+        .then((data) => {
+            setPostData(data);
+            console.log(data)
+        })       
         .catch(err => console.log(err))
     },[]);
 
