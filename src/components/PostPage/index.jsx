@@ -24,7 +24,6 @@ export default function PostPage({likeNumber, setLikeNumber}) {
 
 
     useEffect(() => {  
-        console.log(currentUser)
         api.getPostData(postID)
                 .then (data => {
                     setPostPage(data);
