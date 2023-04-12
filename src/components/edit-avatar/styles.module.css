@@ -20,8 +20,8 @@
   flex-direction: column;
   border: 2px solid #D9E4E6;
   border-radius: 20px;
-  height: 500px;
-  width: 500px;
+  height: 70vh;
+  width: 70vw;
   background-color: #fff;
   padding: 15px;
   position: relative;
@@ -36,7 +36,7 @@
 }
 
 .input {
-  width: 440px;
+  width: 50vw;
 }
 
 .button {
@@ -46,7 +46,7 @@
 }
 
 .img {
-  height: 40vh;
+  height: 50vh;
   width: 50vw;
   object-fit: cover;
   margin: auto;
