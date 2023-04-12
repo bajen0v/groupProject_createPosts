@@ -49,6 +49,10 @@ export function Post ({ ...props}) {
         onPostLike({...props})
      }
 
+     const handleAuthorisation = () => {
+        alert('Необходима авторизация');
+    };
+
     return (
     <>
         <Grid sx={{display: 'flex'}} justifyContent="center" item xs={12} sm={6} md={4}>
@@ -69,7 +73,7 @@ export function Post ({ ...props}) {
                     : <></>}
                     
                     
-                    <IconButton sx={{borderRadius: '16px'}}onClick={handleClickButtonLike} aria-label="add to favorites">
+                    <IconButton sx={{borderRadius: '16px'}} onClick={currentUser ==='' ? handleAuthorisation : handleClickButtonLike} aria-label="add to favorites">
                         <FavoriteIcon htmlColor={isLiked ? 'red': null}/>
                         {props.likes.length !== 0 
                         ? (<Box level="body3" 

@@ -17,7 +17,6 @@ export function PostList() {
         api.getPostList()
         .then((data) => {
             setPostData(data);
-            console.log(data)
         })       
         .catch(err => console.log(err))
     },[]);

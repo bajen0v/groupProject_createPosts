@@ -12,30 +12,34 @@ import { UserContext } from '../context/context';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 
-export default function PostPage() {
+export default function PostPage({likeNumber, setLikeNumber}) {
     const { postID } = useParams();
-    const [postData, setPostData] = useState([]);
+    const [postPage, setPostPage] = useState([]);
     const [postAuthor, setPostAuthor] = useState([]);
-    const { currentUser, onPostDelete, onPostLike} = useContext(UserContext);
+    const { currentUser, onPostDelete, onPostLike } = useContext(UserContext);
     const [me, setMe] = useState(false);
     const [open, setOpen] = useState(null);
-    const [isLiked, setIsLiked] = useState(null);
+    const [isLiked, setIsLiked] = useState(false);
     const navigate = useNavigate();
 
-    useEffect(() => {   
+
+    useEffect(() => {  
+        console.log(currentUser)
         api.getPostData(postID)
-            .then (data => {
-                setPostData(data);
-                setPostAuthor(data.author);
-                if (data.author._id === currentUser._id) {
-                    setMe(true)
-                } 
-                if (data.likes.some(id => id === currentUser._id)) {
-                    setIsLiked(true)
-                }
-                })
-            .catch(err => console.log(err)) 
-     }, []);
+                .then (data => {
+                    setPostPage(data);
+                    setPostAuthor(data.author);
+                    if (data.author._id === currentUser._id) {
+                        setMe(true)
+                    };
+                    if (data.likes.some(id => id === currentUser._id)) {
+                        setIsLiked(true)
+                    };
+                    setLikeNumber(data.likes.length)
+                    })
+                .catch(err => console.log(err))
+     }, [likeNumber, currentUser ]);
+
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -46,16 +50,18 @@ export default function PostPage() {
     
      function DeletPost() {
         handleClose()
-        onPostDelete(postData._id)           
+        onPostDelete(postPage._id)           
      }
-     
-     
+         
 
      function handleClickButtonLike() {
-    
-        onPostLike(postData)
-        isLiked ? setIsLiked(false) : setIsLiked(true)
+        onPostLike(postPage)
+        setIsLiked(false)
      }
+
+     const handleAuthorisation = () => {
+        alert('Необходима авторизация');
+    };
 
 
     return (
@@ -65,7 +71,7 @@ export default function PostPage() {
                     <CardMedia
                             component="img"
                             height="194"
-                            image={postData.image}
+                            image={postPage.image}
                             alt="Картинка"
                             className={s.post_img}
                     />
@@ -83,18 +89,18 @@ export default function PostPage() {
                             action={
                                 <> {me 
                                 ? <>
-                                    <IconButton onClick={handleClickOpen} aria-label="add to favorites">
+                                    <IconButton onClick={handleClickOpen}>
                                         <DeleteIcon />
                                     </IconButton>
-                                    <IconButton onClick={handleClickOpen} aria-label="add to favorites">
+                                    <IconButton onClick={handleClickOpen}>
                                         <EditIcon />
                                     </IconButton>
                                    </> 
                                 : <></>
                                 }
                                 
-                                <IconButton onClick={handleClickButtonLike} aria-label="add to favorites">
-                                    <FavoriteIcon htmlColor={isLiked ? 'red': null}/>
+                                <IconButton onClick={currentUser ==='' ? handleAuthorisation : handleClickButtonLike} aria-label="add to favorites">
+                                    <FavoriteIcon htmlColor={isLiked ? 'red': null}/>{likeNumber !== 0 ? likeNumber : <></>}
                                 </IconButton>
                                 </>
                                 }
@@ -102,9 +108,9 @@ export default function PostPage() {
                             subheader={postAuthor.about}
                         />
                         <Typography variant="h6" color="black" onClick={handleClickOpen} className={s.title} textAlign='center'>
-                        {postData.title}
+                        {postPage.title}
                         </Typography>
-                        <Typography paragraph textAlign="justify">{postData.text}</Typography>
+                        <Typography paragraph textAlign="justify">{postPage.text}</Typography>
                     </Grid>
                 </Grid>
                 <Box className={open ? s.popup_aktive : s.invisible}>
