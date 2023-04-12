@@ -17,6 +17,7 @@ export function App() {
   const [pageData, setPageData] = useState([]);
   const [page, setPage] = useState(1);
   const [currentUser, setCurrentUser] = useState('');  
+  const [likeNumber, setLikeNumber] = useState(null);
   
   function handleUserInfo(data) {
         
@@ -43,6 +44,7 @@ export function App() {
           return pageState._id === updatePost._id ? updatePost : pageState
         })
         setPageData(updateLikesState)
+        setLikeNumber(updatePost.likes.length)
       })
   }
 
@@ -66,12 +68,12 @@ export function App() {
         onPage: setPage, 
         pageSize,
         onPostLike:handlePostLike,
-        onPostDelete: handlePostDelete
+        onPostDelete: handlePostDelete,
         }}>
       <Header/>      
       <Routes>
           <Route  path='/' element={<PostList currentUser={currentUser}/>}/>
-          <Route path='/posts/:postID' element={<PostPage />} />
+          <Route path='/posts/:postID' element={<PostPage likeNumber={likeNumber} setLikeNumber={setLikeNumber} />} />
           <Route path='*' element={<NotFound/>}/>
       </Routes>  
       </UserContext.Provider>
