@@ -121,21 +121,21 @@ export default function PostPoupFull({title, ...props}) {
                         <IconButton onClick={handleClickButtonLike} aria-label="add to favorites">
                             <FavoriteIcon htmlColor={isLiked ? 'red': null}/>
                             {props.likes.length !== 0 
-                        ? (<Box level="body3" 
-                                sx={isLiked 
-                                    ? {
-                                        paddingLeft: 0.5,            
-                                        color: 'red',
-                                        fontSize: 25,
-                                        fontWeight: 'bold',
-                                        borderRadius: '50%',} 
-                                    : {            
-                                        fontSize: 25,
-                                        paddingLeft: 0.5,
-                                        borderRadius: '50%',
-                                    }}>
-                        {props.likes.length}</Box>)  
-                        : null}       
+                            ?(<Box level="body3" 
+                                    sx={isLiked 
+                                        ? {
+                                            paddingLeft: 0.5,            
+                                            color: 'red',
+                                            fontSize: 25,
+                                            fontWeight: 'bold',
+                                            borderRadius: '50%',} 
+                                        : {            
+                                            fontSize: 25,
+                                            paddingLeft: 0.5,
+                                            borderRadius: '50%',
+                                        }}>{props.likes.length}
+                                </Box>)  
+                            : null}       
                         </IconButton>
                         <Tag tags={props.tags}/>
                     </div>                    

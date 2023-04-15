@@ -77,7 +77,8 @@ export function Post ({ ...props}) {
                         <FavoriteIcon htmlColor={isLiked ? 'red': null}/>
                         {props.likes.length !== 0 
                         ? (<Box level="body3" 
-                                sx={isLiked ? {
+                                sx={isLiked 
+                                    ? {
                                         paddingLeft: 0.5,            
                                         color: 'red',
                                         fontSize: 25,
@@ -88,12 +89,6 @@ export function Post ({ ...props}) {
                                         paddingLeft: 0.5,
                                         borderRadius: '50%',
                                     }}>
-
-                            {/* sx={{
-                            fontWeight: 'md',
-                            ml: 'auto',
-                            color: 'text.secondary',
-                            '&:hover': { color: 'danger.plainColor' }, */}
                         {props.likes.length}</Box>)  
                         : null}            
                     </IconButton>
