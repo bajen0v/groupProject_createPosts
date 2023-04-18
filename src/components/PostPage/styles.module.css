@@ -48,6 +48,35 @@
   text-align: center
 }
 
+.popup_edit_container {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #D9E4E6;
+  border-radius: 20px;
+  width: 360px;
+  background-color: #fff;
+  padding: 15px;
+  position: relative;
+  text-align: center
+}
+
+.popup_edit_invisible{
+  display: none;
+}
+
+.popup_edit_active {
+  width:100vw;
+  height:100vh;
+  top: 0;
+  left: 0;
+  background: rgb(0, 0, 0,0.4);
+  z-index: 1;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .close {
   position: absolute;
   height: 30px;

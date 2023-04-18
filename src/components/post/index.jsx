@@ -9,7 +9,6 @@ import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Date } from '../date';
 import { Tag } from '../tag';
-import PostPoupFull from '../post-popup';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useContext, useEffect, useState } from 'react';
 import s from './styles.module.css'

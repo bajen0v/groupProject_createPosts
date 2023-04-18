@@ -25,10 +25,11 @@ export default function PostPage({likeNumber, setLikeNumber}) {
 
     const [openEdit, setOpenEdit] = useState(null);
     const { register, handleSubmit } = useForm();
-    console.log(postID);
     
     const onSubmit = (newPostData) => {
-        console.log(newPostData);
+        for (let key in newPostData) { // проверка на пустые значения в объекте
+            if (!newPostData[key]) delete newPostData[key];
+        }
         api.editUserPost(newPostData, postPage._id)
             .then(data => setPostPage(data))
             .catch(err => console.log(err))
@@ -145,16 +146,16 @@ export default function PostPage({likeNumber, setLikeNumber}) {
                     </Box>
                 </Box>
 
-                <Box className={openEdit ? s.popup_aktive : s.invisible}>
-                    <Box className={s.popup_container}>
+                <Box className={openEdit ? s.popup_edit_active : s.popup_edit_invisible}>
+                    <Box className={s.popup_edit_container}>
                         <Button >
                             <CancelIcon onClick={handleCloseEdit} className={s.close}/> 
                         </Button>
 
-                        <form onSubmit={handleSubmit(onSubmit)}>                
-                            <TextField defaultValue={postPage.title} {...register("title")} sx={{ m: 1,  p: 0 }} /> 
-                            <TextField defaultValue={postPage.text} {...register("text")} sx={{ m: 1,  p: 0 }} />
-                            <TextField defaultValue={postPage.image} {...register("image")} sx={{ m: 1,  p: 0 }} />
+                        <form onSubmit={handleSubmit(onSubmit)}>               
+                            <TextField label='Заголовок поста' defaultValue={postPage.title} multiline maxRows={4} {...register("title")} margin="normal" /> 
+                            <TextField label='Текст поста' defaultValue={postPage.text} multiline maxRows={4} fullWidth {...register("text")} margin="normal" />
+                            <TextField label='Изображение' defaultValue={postPage.image} multiline maxRows={4} fullWidth {...register("image")} margin="normal" />
                             <Button variant="contained" type="submit" sx={{ m: 2 }}>Сохранить Изменения</Button>
                         </form>
                     </Box>
