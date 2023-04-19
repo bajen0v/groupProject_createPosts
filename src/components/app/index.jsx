@@ -50,8 +50,9 @@ export function App() {
   function handlePostDelete(id) {
     const from = (page - 1) * pageSize;
     const to =(page - 1) * pageSize + pageSize;
-    api.deleteUserPost(id)
-    .then(handlePageData(from,to))
+    api.deleteUserPostAndUpdate(id)
+    .then(data => setPageData(data.slice(from,to)))       
+    .catch(err => console.log(err))
   }
 
   return (

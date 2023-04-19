@@ -93,6 +93,11 @@ class Api {
             .then(this.#onResponse)
     }
 
+    async deleteUserPostAndUpdate(postid) {
+        await this.deleteUserPost(postid);
+        return this.getPostList()
+    }
+
     editUserPost(data, postID) {
         return fetch(`${this.#baseurl}/v2/group-11/posts/${postID}`, {
             method: 'PATCH',

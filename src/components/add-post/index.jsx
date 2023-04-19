@@ -28,6 +28,10 @@ export function AddPost({closePopup}) {
         image: data.image, 
         tags: data.tags.split(',')}
 
+        for (let key in NewData) { // проверка на пустые значения в объекте
+          if (!NewData[key]) delete NewData[key];
+      }
+
       api.setUserNewPost(NewData)
       .then(data => UpdatePageData(0,pageSize))
       closePopup();
