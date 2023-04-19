@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Button, ButtonGroup, CardMedia, Grid, TextField } from '@mui/material';
+import { Box, Button, ButtonGroup, CardMedia, Grid } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
@@ -7,20 +7,19 @@ import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { Date } from '../date';
-import { Tag } from '../tag';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useContext, useEffect, useState } from 'react';
-import s from './styles.module.css'
-import { UserContext } from '../context/context';
-import api from '../../api';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { Link } from 'react-router-dom';
 
+import { UserContext } from '../../context/user-context';
+import { Date } from '../date';
+import { Tag } from '../tag';
 
+import s from './styles.module.css'
 
 export function Post ({ ...props}) {
-    const { currentUser, pageSize, UpdatePageData, onPostDelete, onPostLike} = useContext(UserContext);
+    const { currentUser, onPostDelete, onPostLike } = useContext(UserContext);
     const[me, setMe] = useState(false);
     const [open, setOpen] = useState(false);
 

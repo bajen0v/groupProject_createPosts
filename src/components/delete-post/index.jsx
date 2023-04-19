@@ -2,13 +2,13 @@ import { Button, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
 import CancelIcon from '@mui/icons-material/Cancel';
-import s from './styles.module.css'
 import React from "react";
 import { useForm } from "react-hook-form";
 import AddIcon from '@mui/icons-material/Add';
+
 import api from "../../api";
 
-
+import s from './styles.module.css'
 
 export function AddPost() {
     const [open, setOpen] = useState(false);

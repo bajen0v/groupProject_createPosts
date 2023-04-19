@@ -1,15 +1,14 @@
 import { CssBaseline } from '@mui/material';
 import { useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
+
 import api from '../../api';
-import { UserContext } from '../context/context';
+import { UserContext } from '../../context/user-context';
 import { Footer } from '../footer';
 import { Header } from '../header';
 import { PostList } from '../post-list';
-import { Route, Routes } from 'react-router-dom';
-import PostPage from '../PostPage';
-import { NotFound } from '../error-page';
-
-
+import PostPage from '../../pages/post-page';
+import { NotFound } from '../../pages/not-found-page';
 
 export function App() {
   const pageSize =12;
