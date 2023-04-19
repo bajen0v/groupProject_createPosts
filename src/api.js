@@ -92,6 +92,15 @@ class Api {
         })
             .then(this.#onResponse)
     }
+
+    editUserPost(data, postID) {
+        return fetch(`${this.#baseurl}/v2/group-11/posts/${postID}`, {
+            method: 'PATCH',
+            headers: {...this.#headers},
+            body: JSON.stringify(data)
+        })
+            .then(this.#onResponse)
+    }
   
 }
 

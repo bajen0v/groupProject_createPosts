@@ -3,13 +3,14 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import EditIcon from '@mui/icons-material/Edit';
-import { Avatar, Box, Button, ButtonGroup, CardHeader, CardMedia, Grid, Typography } from '@mui/material';
+import { Avatar, Box, Button, ButtonGroup, CardHeader, CardMedia, Grid, TextField, Typography } from '@mui/material';
 import CancelIcon from '@mui/icons-material/Cancel';
 import s from './styles.module.css'
 import { useState, useContext, useEffect  } from 'react';
 import api from '../../api';
 import { UserContext } from '../context/context';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 
 
 export default function PostPage({likeNumber, setLikeNumber}) {
@@ -22,6 +23,18 @@ export default function PostPage({likeNumber, setLikeNumber}) {
     const [isLiked, setIsLiked] = useState(false);
     const navigate = useNavigate();
 
+    const [openEdit, setOpenEdit] = useState(null);
+    const { register, handleSubmit } = useForm();
+    
+    const onSubmit = (newPostData) => {
+        for (let key in newPostData) { // проверка на пустые значения в объекте
+            if (!newPostData[key]) delete newPostData[key];
+        }
+        api.editUserPost(newPostData, postPage._id)
+            .then(data => setPostPage(data))
+            .catch(err => console.log(err))
+            .finally(setOpenEdit(false))
+    }
 
     useEffect(() => {  
         api.getPostData(postID)
@@ -43,6 +56,14 @@ export default function PostPage({likeNumber, setLikeNumber}) {
     const handleClickOpen = () => {
         setOpen(true);
     };
+
+    const handleClickOpenEdit = () => {
+        setOpenEdit(true);
+    }
+    const handleCloseEdit = () => {
+        setOpenEdit(false);
+    }
+    
     const handleClose = () => {
         setOpen(false);
     };
@@ -91,7 +112,7 @@ export default function PostPage({likeNumber, setLikeNumber}) {
                                     <IconButton onClick={handleClickOpen}>
                                         <DeleteIcon />
                                     </IconButton>
-                                    <IconButton onClick={handleClickOpen}>
+                                    <IconButton onClick={handleClickOpenEdit}>
                                         <EditIcon />
                                     </IconButton>
                                    </> 
@@ -106,7 +127,7 @@ export default function PostPage({likeNumber, setLikeNumber}) {
                             title={postAuthor.name}
                             subheader={postAuthor.about}
                         />
-                        <Typography variant="h6" color="black" onClick={handleClickOpen} className={s.title} textAlign='center'>
+                        <Typography variant="h6" color="black" className={s.title} textAlign='center'>
                         {postPage.title}
                         </Typography>
                         <Typography paragraph textAlign="justify">{postPage.text}</Typography>
@@ -122,6 +143,21 @@ export default function PostPage({likeNumber, setLikeNumber}) {
                         </Link>
                         <Button  sx={{ m: 2}} onClick={handleClose}>Нет</Button>
                     </ButtonGroup>
+                    </Box>
+                </Box>
+
+                <Box className={openEdit ? s.popup_edit_active : s.popup_edit_invisible}>
+                    <Box className={s.popup_edit_container}>
+                        <Button >
+                            <CancelIcon onClick={handleCloseEdit} className={s.close}/> 
+                        </Button>
+
+                        <form onSubmit={handleSubmit(onSubmit)}>               
+                            <TextField label='Заголовок поста' defaultValue={postPage.title} multiline maxRows={4} {...register("title")} margin="normal" /> 
+                            <TextField label='Текст поста' defaultValue={postPage.text} multiline maxRows={4} fullWidth {...register("text")} margin="normal" />
+                            <TextField label='Изображение' defaultValue={postPage.image} multiline maxRows={4} fullWidth {...register("image")} margin="normal" />
+                            <Button variant="contained" type="submit" sx={{ m: 2 }}>Сохранить Изменения</Button>
+                        </form>
                     </Box>
                 </Box>
         </>
