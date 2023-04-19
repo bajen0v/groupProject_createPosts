@@ -5,13 +5,14 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import EditIcon from '@mui/icons-material/Edit';
 import { Avatar, Box, Button, ButtonGroup, CardHeader, CardMedia, Grid, TextField, Typography } from '@mui/material';
 import CancelIcon from '@mui/icons-material/Cancel';
-import s from './styles.module.css'
 import { useState, useContext, useEffect  } from 'react';
-import api from '../../api';
-import { UserContext } from '../context/context';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
+import api from '../../api';
+import { UserContext } from '../../context/user-context';
+
+import s from './styles.module.css'
 
 export default function PostPage({likeNumber, setLikeNumber}) {
     const { postID } = useParams();

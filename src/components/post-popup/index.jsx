@@ -1,6 +1,4 @@
 import { useContext, useState } from 'react';
-import { UserContext } from '../context/context';
-
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
@@ -11,11 +9,12 @@ import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Avatar, Box, CardMedia } from '@mui/material';
+
 import { Tag } from '../tag';
 import { Date } from '../date';
+import { UserContext } from '../../context/user-context';
 
 import s from './styles.module.css'
-import api from '../../api';
 
 const PostPopup = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {

@@ -1,8 +1,8 @@
 import { Button } from '@mui/material';
-import { ReactComponent as NotFoundIcon } from './ic-notfound.svg';
-
+import { ReactComponent as NotFoundIcon } from './img/ic-notfound.svg';
 
 import s from "./styles.module.css";
+
 export function NotFound() {
 
   return (

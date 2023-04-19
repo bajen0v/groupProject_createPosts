@@ -2,11 +2,11 @@ import { Container, Grid, Pagination } from '@mui/material';
 import { Box } from '@mui/system';
 import { useContext, useEffect, useState } from 'react';
 import api from '../../api';
-import s from './styles.module.css';
+
 import { Post } from '../post/index'
-import { UserContext } from '../context/context';
+import { UserContext } from '../../context/user-context';
 
-
+import s from './styles.module.css';
 
 export function PostList() {
     const { pageData, UpdatePageData, page, onPage, onPostLike, currentUser, pageSize} = useContext(UserContext);

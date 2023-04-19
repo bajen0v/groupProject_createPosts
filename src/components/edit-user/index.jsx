@@ -1,12 +1,12 @@
-import s from './styles.module.css'
+import { useForm } from 'react-hook-form';
 import {  Box,  Button, TextField } from "@mui/material";
 import { useContext } from 'react';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { UserContext } from '../context/context';
+
+import { UserContext } from '../../context/user-context';
 import api from '../../api';
-import { useForm } from 'react-hook-form';
 
-
+import s from './styles.module.css'
 
 export function EditUser({closePopup}) {
   const {currentUser, onUpdateUserName, UpdatePageData, pageSize, page} = useContext(UserContext);

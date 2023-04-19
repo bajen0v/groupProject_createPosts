@@ -1,12 +1,12 @@
-import s from './styles.module.css'
+import { useForm } from 'react-hook-form';
 import { Box,  Button,  TextField } from "@mui/material";
 import { useContext, useState } from 'react';
 import CancelIcon from '@mui/icons-material/Cancel';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { UserContext } from '../context/context';
-import api from '../../api';
-import { useForm } from 'react-hook-form';
 
+import { UserContext } from '../../context/user-context';
+
+import s from './styles.module.css'
 
 export function Login() {
   const {currentUser, onUpdateUserId} = useContext(UserContext);

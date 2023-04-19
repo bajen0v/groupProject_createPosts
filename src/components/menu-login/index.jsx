@@ -3,13 +3,15 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { Avatar, Box, CardHeader } from '@mui/material';
-import { UserContext } from '../context/context';
 import { useContext, useState } from 'react';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import s from './styles.module.css'
+
 import { EditUser } from '../edit-user';
 import { AddPost } from '../add-post';
 import { EditAvatar } from '../edit-avatar';
+import { UserContext } from '../../context/user-context';
+
+import s from './styles.module.css'
 
 export default function BasicMenu() {
 const {currentUser, onUpdateUserName} = useContext(UserContext);
