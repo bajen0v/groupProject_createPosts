@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Button, ButtonGroup, CardMedia, Grid } from '@mui/material';
+import { Box, Button, ButtonGroup, CardMedia, Grid, TextField } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
@@ -11,17 +11,21 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useContext, useEffect, useState } from 'react';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { Link } from 'react-router-dom';
+import EditIcon from '@mui/icons-material/Edit';
 
 import { UserContext } from '../../context/user-context';
 import { Date } from '../date';
 import { Tag } from '../tag';
 
 import s from './styles.module.css'
+import { useForm } from 'react-hook-form';
 
 export function Post ({ ...props}) {
-    const { currentUser, onPostDelete, onPostLike } = useContext(UserContext);
+    const { currentUser, onPostDelete, onPostLike, handleEditPost } = useContext(UserContext);
     const[me, setMe] = useState(false);
     const [open, setOpen] = useState(false);
+    const [openEdit, setOpenEdit] = useState(null);
+    const { register, handleSubmit } = useForm();
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -51,6 +55,18 @@ export function Post ({ ...props}) {
         alert('Необходима авторизация');
     };
 
+    const handleClickOpenEdit = () => {
+        setOpenEdit(true);
+    }
+    const handleCloseEdit = () => {
+        setOpenEdit(false);
+    }
+
+    const onSubmit = (newPostData) => {
+        setOpenEdit(false);
+        handleEditPost(newPostData, props._id);
+    }
+
     return (
     <>
         <Grid sx={{display: 'flex'}} justifyContent="center" item xs={12} sm={6} md={4}>
@@ -65,9 +81,14 @@ export function Post ({ ...props}) {
                     }
                     action={
                     <> {me 
-                    ?<IconButton onClick={handleClickOpen} aria-label="add to favorites">
-                        <DeleteIcon />
-                    </IconButton>
+                    ? <>
+                        <IconButton onClick={handleClickOpen} aria-label="add to favorites">
+                            <DeleteIcon />
+                        </IconButton>
+                        <IconButton onClick={handleClickOpenEdit}>
+                            <EditIcon />
+                        </IconButton>
+                    </>
                     : <></>}
                     
                     
@@ -126,6 +147,21 @@ export function Post ({ ...props}) {
                 <Button  sx={{ m: 2}} onClick={DeletPost}>Да</Button>
                 <Button  sx={{ m: 2}} onClick={handleClose}>Нет</Button>
              </ButtonGroup>
+            </Box>
+        </Box>
+        <Box className={openEdit ? s.popup_edit_active : s.popup_edit_invisible}>
+            <Box className={s.popup_edit_container}>
+                <Button >
+                    <CancelIcon onClick={handleCloseEdit} className={s.close}/> 
+                </Button>
+
+                <form onSubmit={handleSubmit(onSubmit)}>               
+                    <TextField label='Заголовок поста' defaultValue={props.title} multiline maxRows={4} {...register("title")} margin="normal" /> 
+                    <TextField label='Текст поста' defaultValue={props.text} multiline maxRows={4} fullWidth {...register("text")} margin="normal" />
+                    <TextField label='Изображение' defaultValue={props.image} multiline maxRows={4} fullWidth {...register("image")} margin="normal" />
+                    <TextField label='Теги' defaultValue={props.tags.join(', ')} multiline maxRows={4} fullWidth {...register("tags")} margin="normal" />
+                    <Button variant="contained" type="submit" sx={{ m: 2 }}>Сохранить Изменения</Button>
+                </form>
             </Box>
         </Box>
         </>
