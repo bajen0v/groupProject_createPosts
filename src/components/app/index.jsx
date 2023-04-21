@@ -17,6 +17,8 @@ export function App() {
   const [page, setPage] = useState(1);
   const [currentUser, setCurrentUser] = useState('');  
   const [likeNumber, setLikeNumber] = useState(null);
+
+  const [postPage, setPostPage] = useState([]);
   
   function handleUserInfo(data) {
         
@@ -50,9 +52,25 @@ export function App() {
   function handlePostDelete(id) {
     const from = (page - 1) * pageSize;
     const to =(page - 1) * pageSize + pageSize;
-    api.deleteUserPost(id)
-    .then(handlePageData(from,to))
+    api.deleteUserPostAndUpdate(id)
+    .then(data => setPageData(data.slice(from,to)))       
+    .catch(err => console.log(err))
   }
+
+  function handleEditPost(newPostData, postId) {
+    for (let key in newPostData) { // проверка на пустые значения в объекте
+      if (!newPostData[key]) delete newPostData[key];
+    }
+    newPostData.tags = newPostData.tags.split(', ') 
+    api.editUserPost(newPostData, postId)
+      .then(data => {
+        setPostPage(data)
+        const from = (page - 1) * pageSize;
+        const to =(page - 1) * pageSize + pageSize;
+        handlePageData(from, to)
+      })
+      .catch(err => console.log(err))
+}
 
   return (
     <>
@@ -68,10 +86,13 @@ export function App() {
         pageSize,
         onPostLike:handlePostLike,
         onPostDelete: handlePostDelete,
+        postPage,
+        setPostPage,
+        handleEditPost
         }}>
       <Header/>      
       <Routes>
-          <Route  path='/' element={<PostList currentUser={currentUser}/>}/>
+          <Route  path='/' element={<PostList currentUser={currentUser} handleEditPost={handleEditPost}/>}/>
           <Route path='/posts/:postID' element={<PostPage likeNumber={likeNumber} setLikeNumber={setLikeNumber} />} />
           <Route path='*' element={<NotFound/>}/>
       </Routes>  

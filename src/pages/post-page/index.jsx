@@ -16,9 +16,9 @@ import s from './styles.module.css'
 
 export default function PostPage({likeNumber, setLikeNumber}) {
     const { postID } = useParams();
-    const [postPage, setPostPage] = useState([]);
+    /* const [postPage, setPostPage] = useState([]); */
     const [postAuthor, setPostAuthor] = useState([]);
-    const { currentUser, onPostDelete, onPostLike } = useContext(UserContext);
+    const { currentUser, onPostDelete, onPostLike, postPage, setPostPage, handleEditPost } = useContext(UserContext);
     const [me, setMe] = useState(false);
     const [open, setOpen] = useState(null);
     const [isLiked, setIsLiked] = useState(false);
@@ -28,13 +28,15 @@ export default function PostPage({likeNumber, setLikeNumber}) {
     const { register, handleSubmit } = useForm();
     
     const onSubmit = (newPostData) => {
-        for (let key in newPostData) { // проверка на пустые значения в объекте
+        handleEditPost(newPostData, postPage._id);
+        setOpenEdit(false)
+        /* for (let key in newPostData) { 
             if (!newPostData[key]) delete newPostData[key];
         }
         api.editUserPost(newPostData, postPage._id)
             .then(data => setPostPage(data))
             .catch(err => console.log(err))
-            .finally(setOpenEdit(false))
+            .finally(setOpenEdit(false)) */
     }
 
     useEffect(() => {  
@@ -157,6 +159,7 @@ export default function PostPage({likeNumber, setLikeNumber}) {
                             <TextField label='Заголовок поста' defaultValue={postPage.title} multiline maxRows={4} {...register("title")} margin="normal" /> 
                             <TextField label='Текст поста' defaultValue={postPage.text} multiline maxRows={4} fullWidth {...register("text")} margin="normal" />
                             <TextField label='Изображение' defaultValue={postPage.image} multiline maxRows={4} fullWidth {...register("image")} margin="normal" />
+                            <TextField label='Теги' defaultValue={postPage.tags.join(', ')} multiline maxRows={4} fullWidth {...register("tags")} margin="normal" />
                             <Button variant="contained" type="submit" sx={{ m: 2 }}>Сохранить Изменения</Button>
                         </form>
                     </Box>
