@@ -1,5 +1,8 @@
 import dayjs from "dayjs";
-// import s from './styles.module.css'
+import relativeTime from 'dayjs/plugin/relativeTime';
+import 'dayjs/locale/ru';
+dayjs.locale('ru');
+dayjs.extend(relativeTime);
 
 export function Date({ created_at }) {
   
@@ -8,8 +11,8 @@ export function Date({ created_at }) {
   const today = dayjs().date()
   
   return dayCreated === today
-    ? "Сегодня " + dateCreated.format("hh:mm")
+    ? "Сегодня " + dateCreated.format("HH:mm")
     : today - dayCreated === 1
         ? "Вчера " + dateCreated.format("hh:mm") 
-        : dateCreated.format("DD MMM YYYY") + " г.";
+        : dateCreated.format("DD MMMM YYYY") + " г.";
 }

@@ -1,0 +1,31 @@
+.arrow {
+  color: white;
+}
+
+.popup_aktive {
+  width:100vw;
+  height:100vh;
+  top: 0;
+  left: 0;
+  background: rgb(0, 0, 0,0.4);
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.invisible {
+  display: none;
+}
+
+.popup_container {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #D9E4E6;
+  border-radius: 20px;
+  height: 280px;
+  width: 300px;
+  background-color: #fff;
+  padding: 15px;
+  position: relative;
+}

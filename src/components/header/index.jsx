@@ -1,25 +1,32 @@
+import { useContext } from 'react';
+import { AppBar,  Toolbar, Typography } from "@mui/material";
+import { Link } from 'react-router-dom';
+
+import { Login } from '../login';
+import { UserContext } from '../../context/user-context';
+import BasicMenu from '../menu-login';
+
 import s from './styles.module.css'
 
-import { AppBar, Button, Toolbar, Typography } from "@mui/material";
-import AddIcon from '@mui/icons-material/Add';
-
-
 export function Header() {
+  const {currentUser, UpdatePageData, onPage, pageSize} = useContext(UserContext);
+
+  function handleGeneralPage() {
+    onPage(1)
+    UpdatePageData(0,12)
+  }
     return (
+      <>
         <header className={s.header}>      
           <AppBar position="static">
            <Toolbar>
-            <Typography variant="h5" component="div" sx={{ flexGrow: 1 }} className={s.Typography}>
-              Блог обо всем на свете
-            </Typography>
-            <Button variant="contained" onClick={() => {alert('контакт есть');}}>
-             <AddIcon/>
-            </Button> 
-            <Button variant="contained" onClick={() => {alert('логин работает');}}>
-             Login
-            </Button> 
-           </Toolbar>
+              <Typography href="/" variant="h5" component="div" sx={{ flexGrow: 1 }} className={s.Typography} onClick={handleGeneralPage} title="Главная страница">
+                  <Link to={`/`} className={s.Typography}>Блог обо всем на свете</Link>
+              </Typography>
+              {currentUser ? <BasicMenu/> : <Login/>}
+            </Toolbar>
           </AppBar>
-        </header> 
+        </header>
+        </>
     )
 }
