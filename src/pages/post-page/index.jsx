@@ -149,7 +149,7 @@ export default function PostPage({likeNumber, setLikeNumber}) {
                     </Box>
                 </Box>
 
-                <Box className={openEdit ? s.popup_edit_active : s.popup_edit_invisible}>
+                <Box className={ openEdit ? s.popup_edit_active : s.popup_edit_invisible}>
                     <Box className={s.popup_edit_container}>
                         <Button >
                             <CancelIcon onClick={handleCloseEdit} className={s.close}/> 
@@ -159,7 +159,7 @@ export default function PostPage({likeNumber, setLikeNumber}) {
                             <TextField label='Заголовок поста' defaultValue={postPage.title} multiline maxRows={4} {...register("title")} margin="normal" /> 
                             <TextField label='Текст поста' defaultValue={postPage.text} multiline maxRows={4} fullWidth {...register("text")} margin="normal" />
                             <TextField label='Изображение' defaultValue={postPage.image} multiline maxRows={4} fullWidth {...register("image")} margin="normal" />
-                            <TextField label='Теги' defaultValue={postPage.tags.join(', ')} multiline maxRows={4} fullWidth {...register("tags")} margin="normal" />
+                            <TextField label='Теги' defaultValue={Array(postPage.tags).join(', ')} multiline maxRows={4} fullWidth {...register("tags")} margin="normal" />
                             <Button variant="contained" type="submit" sx={{ m: 2 }}>Сохранить Изменения</Button>
                         </form>
                     </Box>
