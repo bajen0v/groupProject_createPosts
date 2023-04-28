@@ -25,10 +25,7 @@ export default function PostPage({likeNumber, setLikeNumber }) {
     const [open, setOpen] = useState(null);
     const [isLiked, setIsLiked] = useState(false);
     const navigate = useNavigate();
-
-    
-    
-   
+    const [openEdit, setOpenEdit] = useState();  
 
     useEffect(() => {  
         setIsLoading(true)
