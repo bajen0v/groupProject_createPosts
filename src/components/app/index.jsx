@@ -17,6 +17,8 @@ export function App() {
   const [page, setPage] = useState(1);
   const [currentUser, setCurrentUser] = useState('');  
   const [likeNumber, setLikeNumber] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [footerFixed, setFooterFixed] = useState(true);
 
   const [postPage, setPostPage] = useState([]);
   
@@ -30,10 +32,13 @@ export function App() {
     }
 
   function handlePageData(from, to) {
-
+    setIsLoading(true)
+    setFooterFixed(true)
     api.getPostList()
     .then(data => setPageData(data.slice(from,to)))       
     .catch(err => console.log(err))
+    .finally(() => { setIsLoading(false)})
+    .finally(() => { setFooterFixed(false)})
   }
 
   function handlePostLike(post){
@@ -88,16 +93,18 @@ export function App() {
         onPostDelete: handlePostDelete,
         postPage,
         setPostPage,
-        handleEditPost
+        handleEditPost,
+        isLoading, 
+        setIsLoading: setIsLoading
         }}>
       <Header/>      
       <Routes>
-          <Route  path='/' element={<PostList currentUser={currentUser} handleEditPost={handleEditPost}/>}/>
+          <Route  path='/' element={<PostList currentUser={currentUser} handleEditPost={handleEditPost} SetFooterFixed={setFooterFixed}/>}/>
           <Route path='/posts/:postID' element={<PostPage likeNumber={likeNumber} setLikeNumber={setLikeNumber} />} />
           <Route path='*' element={<NotFound/>}/>
       </Routes>  
       </UserContext.Provider>
-      <Footer/>
+      <Footer footerFixed={footerFixed} SetFooterFixed={setFooterFixed}/>
     </>
   );
 };
