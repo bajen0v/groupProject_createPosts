@@ -7,7 +7,7 @@ import { Post } from '../post/index'
 import { UserContext } from '../../context/user-context';
 
 import s from './styles.module.css';
-import { Circle } from '../../isLoading';
+import { Circle } from '../../components/isLoading';
 
 export function PostList({SetFooterFixed}) {
     const { pageData, UpdatePageData, page, onPage, onPostLike, currentUser, pageSize, isLoading, setIsLoading } = useContext(UserContext);

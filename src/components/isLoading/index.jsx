@@ -2,7 +2,7 @@ import { CircularProgress, Container, Grid, Pagination } from '@mui/material';
 import { Box } from '@mui/system';
 
 
-import s from './styles.module.css';
+import s from './styles.module.css'
 
 export function Circle() {
         

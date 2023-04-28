@@ -13,9 +13,9 @@ import api from '../../api';
 import { UserContext } from '../../context/user-context';
 
 import s from './styles.module.css'
-import { Circle } from '../../isLoading';
+import { Circle } from '../../components/isLoading';
 
-export default function PostPage({likeNumber, setLikeNumber}) {
+export default function PostPage({likeNumber, setLikeNumber }) {
     const { postID } = useParams();
     /* const [postPage, setPostPage] = useState([]); */
     const [postAuthor, setPostAuthor] = useState([]);
