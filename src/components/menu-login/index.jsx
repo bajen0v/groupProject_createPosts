@@ -92,13 +92,13 @@ const [openEditAvatar, SetOpenEditAvatar] = useState(false)
         Сменить аватар
         </MenuItem>
       </Menu>
-      <Box className={openEditUser ? s.popup_aktive : s.invisible} >
+      <Box className={openEditUser ? s.popup_aktive : s.invisible} onMouseDown={popup}>
         <EditUser closePopup={popup} />
       </Box>
-      <Box className={openAddPost ? s.popup_aktive : s.invisible}>
+      <Box className={openAddPost ? s.popup_aktive : s.invisible} onMouseDown={popup}>
         <AddPost closePopup={popup}/>
       </Box>
-      <Box className={openEditAvatar ? s.popup_aktive : s.invisible}>
+      <Box className={openEditAvatar ? s.popup_aktive : s.invisible} onMouseDown={popup}>
         <EditAvatar closePopup={popup}/>
       </Box>
     </div>

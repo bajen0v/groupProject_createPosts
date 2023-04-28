@@ -139,8 +139,8 @@ export function Post ({ ...props}) {
             </Card>
 
         </Grid>
-        <Box className={open ? s.popup_aktive : s.invisible}>
-            <Box className={s.popup_container}>
+        <Box className={open ? s.popup_aktive : s.invisible} onMouseDown={handleClose}>
+            <Box className={s.popup_container}  onMouseDown={(e) => e.stopPropagation()}>
               <Button ><CancelIcon onClick={handleClose} className={s.close}/> </Button>
               <Typography variant="h5" color="black">Удалить?</Typography>
               <ButtonGroup className={s.button} variant="contained" disableElevation aria-label="outlined primary button group">
@@ -149,8 +149,8 @@ export function Post ({ ...props}) {
              </ButtonGroup>
             </Box>
         </Box>
-        <Box className={openEdit ? s.popup_edit_active : s.popup_edit_invisible}>
-            <Box className={s.popup_edit_container}>
+        <Box className={openEdit ? s.popup_edit_active : s.popup_edit_invisible} onMouseDown={handleCloseEdit}>
+            <Box className={s.popup_edit_container}  onMouseDown={(e) => e.stopPropagation()}>
                 <Button >
                     <CancelIcon onClick={handleCloseEdit} className={s.close}/> 
                 </Button>
