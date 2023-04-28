@@ -14,6 +14,7 @@ import { UserContext } from '../../context/user-context';
 
 import s from './styles.module.css'
 import { Circle } from '../../components/isLoading';
+import { EditPost } from '../page-edit';
 
 export default function PostPage({likeNumber, setLikeNumber }) {
     const { postID } = useParams();
@@ -25,20 +26,9 @@ export default function PostPage({likeNumber, setLikeNumber }) {
     const [isLiked, setIsLiked] = useState(false);
     const navigate = useNavigate();
 
-    const [openEdit, setOpenEdit] = useState(null);
-    const { register, handleSubmit } = useForm();
     
-    const onSubmit = (newPostData) => {
-        handleEditPost(newPostData, postPage._id);
-        setOpenEdit(false)
-        /* for (let key in newPostData) { 
-            if (!newPostData[key]) delete newPostData[key];
-        }
-        api.editUserPost(newPostData, postPage._id)
-            .then(data => setPostPage(data))
-            .catch(err => console.log(err))
-            .finally(setOpenEdit(false)) */
-    }
+    
+   
 
     useEffect(() => {  
         setIsLoading(true)
@@ -155,19 +145,7 @@ export default function PostPage({likeNumber, setLikeNumber }) {
             </Box>
 
             <Box className={ openEdit ? s.popup_edit_active : s.popup_edit_invisible} onMouseDown={handleCloseEdit}>
-                <Box className={s.popup_edit_container} onMouseDown={(e) => e.stopPropagation()}>
-                    <Button >
-                        <CancelIcon onClick={handleCloseEdit} className={s.close}/> 
-                    </Button>
-
-                    <form onSubmit={handleSubmit(onSubmit)}>               
-                        <TextField label='Заголовок поста' defaultValue={postPage.title} multiline maxRows={4} {...register("title")} margin="normal" /> 
-                        <TextField label='Текст поста' defaultValue={postPage.text} multiline maxRows={4} fullWidth {...register("text")} margin="normal" />
-                        <TextField label='Изображение' defaultValue={postPage.image} multiline maxRows={4} fullWidth {...register("image")} margin="normal" />
-                        <TextField label='Теги' defaultValue={Array(postPage.tags).join(', ')} multiline maxRows={4} fullWidth {...register("tags")} margin="normal" />
-                        <Button variant="contained" type="submit" sx={{ m: 2 }}>Сохранить Изменения</Button>
-                    </form>
-                </Box>
+               <EditPost closePopup={handleCloseEdit}/> 
             </Box></>}
             
         </>
