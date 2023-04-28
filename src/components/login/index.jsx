@@ -25,6 +25,9 @@ export function Login() {
       handleClose()
      };
 
+     const KeyDown = () => {
+      console.log('key')
+     }
   
 
     return (
@@ -32,8 +35,8 @@ export function Login() {
         <Button variant="contained" onClick={handleClickOpen}>
               { !!currentUser ? <LogoutIcon/> : 'Login'}
         </Button>
-        <Box className={open ? s.popup_aktive : s.invisible}>
-              <Box className={s.popup_container}>
+        <Box className={open ? s.popup_aktive : s.invisible} onMouseDown={handleClose}>
+              <Box className={s.popup_container} onMouseDown={(e) => e.stopPropagation()} >
                 <Button ><CancelIcon onClick={handleClose} className={s.close}/> </Button>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <TextField className={s.input} inputProps={{tabIndex:1}} label="email" {...register("email", { required: true })} sx={{ m: 1,  p: 1 }} />

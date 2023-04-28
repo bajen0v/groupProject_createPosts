@@ -32,7 +32,7 @@ export function EditUser({closePopup}) {
     };
  
     return (
-        <Box className={s.popup_container}>
+        <Box className={s.popup_container} onMouseDown={(e) => e.stopPropagation()}>
             <Button ><CancelIcon onClick={handleClose} className={s.close}/> </Button>
             <form onSubmit={handleSubmit(onSubmit)}>                
                 <TextField label="Имя" defaultValue={currentUser?.name} {...register("name", { required: true })} sx={{ m: 1,  p: 0 }} /> 

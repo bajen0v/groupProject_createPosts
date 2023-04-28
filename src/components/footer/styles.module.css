@@ -1,4 +1,13 @@
 .footer {
+    width: 100%;
+    padding: 5px;
+    background-color: #1976d2;
+    color: #fff;
+    text-align: center;
+    height: auto;
+}
+
+.footer__fixed {
     bottom: 0px;
     width: 100%;
     height: auto;
@@ -6,4 +15,5 @@
     background-color: #1976d2;
     color: #fff;
     text-align: center;
+    position: fixed;
 }

@@ -34,7 +34,7 @@ export function EditAvatar({closePopup}) {
   };
  
     return (
-        <Box className={s.popup_container}>
+        <Box className={s.popup_container}onMouseDown={(e) => e.stopPropagation()}>
             <Button ><CancelIcon onClick={handleClose} className={s.close}/> </Button>
             <img src={currentUser.avatar} className={s.img}/>
             <form onSubmit={handleSubmit(onSubmit)}>                

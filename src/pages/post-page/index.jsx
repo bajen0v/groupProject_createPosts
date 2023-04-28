@@ -13,12 +13,13 @@ import api from '../../api';
 import { UserContext } from '../../context/user-context';
 
 import s from './styles.module.css'
+import { Circle } from '../../components/isLoading';
 
-export default function PostPage({likeNumber, setLikeNumber}) {
+export default function PostPage({likeNumber, setLikeNumber }) {
     const { postID } = useParams();
     /* const [postPage, setPostPage] = useState([]); */
     const [postAuthor, setPostAuthor] = useState([]);
-    const { currentUser, onPostDelete, onPostLike, postPage, setPostPage, handleEditPost } = useContext(UserContext);
+    const { currentUser, onPostDelete, onPostLike, postPage, setPostPage, handleEditPost, isLoading, setIsLoading } = useContext(UserContext);
     const [me, setMe] = useState(false);
     const [open, setOpen] = useState(null);
     const [isLiked, setIsLiked] = useState(false);
@@ -40,6 +41,7 @@ export default function PostPage({likeNumber, setLikeNumber}) {
     }
 
     useEffect(() => {  
+        setIsLoading(true)
         api.getPostData(postID)
                 .then (data => {
                     setPostPage(data);
@@ -53,6 +55,7 @@ export default function PostPage({likeNumber, setLikeNumber}) {
                     setLikeNumber(data.likes.length)
                     })
                 .catch(err => console.log(err))
+                .finally(() => { setIsLoading(false)})
      }, [likeNumber, currentUser ]);
 
 
@@ -89,81 +92,84 @@ export default function PostPage({likeNumber, setLikeNumber}) {
 
     return (
         <>
-            <Grid container spacing={2} className={s.postPage}>
-                    <Grid item xs={12} md={8} className={s.container}>
-                    <CardMedia
-                            component="img"
-                            height="194"
-                            image={postPage.image}
-                            alt="Картинка"
-                            className={s.post_img}
-                    />
-                    <Button variant="contained" onClick={() => navigate(-1)} className={s.back_button}>Назад</Button>
-                    </Grid>
-                    <Grid item  md={4}>
-                    <CardHeader
-                            avatar={
-                                <Avatar
-                                    sx={{ width: 56, height: 56}}
-                                    src={postAuthor.avatar}
-                                    alt="Аватар"
-                                />
-                            }
-                            action={
-                                <> {me 
-                                ? <>
-                                    <IconButton onClick={handleClickOpen}>
-                                        <DeleteIcon />
-                                    </IconButton>
-                                    <IconButton onClick={handleClickOpenEdit}>
-                                        <EditIcon />
-                                    </IconButton>
-                                   </> 
-                                : <></>
-                                }
-                                
-                                <IconButton onClick={currentUser ==='' ? handleAuthorisation : handleClickButtonLike} aria-label="add to favorites">
-                                    <FavoriteIcon htmlColor={isLiked ? 'red': null}/>{likeNumber !== 0 ? likeNumber : <></>}
-                                </IconButton>
-                                </>
-                                }
-                            title={postAuthor.name}
-                            subheader={postAuthor.about}
-                        />
-                        <Typography variant="h6" color="black" className={s.title} textAlign='center'>
-                        {postPage.title}
-                        </Typography>
-                        <Typography paragraph textAlign="justify">{postPage.text}</Typography>
-                    </Grid>
+        {isLoading
+        ? <Circle />
+        : <><Grid container spacing={2} className={s.postPage}>
+                <Grid item xs={12} md={8} className={s.container}>
+                <CardMedia
+                        component="img"
+                        height="194"
+                        image={postPage.image}
+                        alt="Картинка"
+                        className={s.post_img}
+                />
+                <Button variant="contained" onClick={() => navigate(-1)} className={s.back_button}>Назад</Button>
                 </Grid>
-                <Box className={open ? s.popup_aktive : s.invisible}>
-                    <Box className={s.popup_container}>
-                    <Button ><CancelIcon onClick={handleClose} className={s.close}/> </Button>
-                    <Typography variant="h5" color="black">Удалить?</Typography>
-                    <ButtonGroup className={s.button} variant="contained" disableElevation aria-label="outlined primary button group">
-                       <Link to={`/`}>
-                            <Button  sx={{ m: 2}} onClick={DeletPost}>Да</Button>
-                        </Link>
-                        <Button  sx={{ m: 2}} onClick={handleClose}>Нет</Button>
-                    </ButtonGroup>
-                    </Box>
+                <Grid item  md={4}>
+                <CardHeader
+                        avatar={
+                            <Avatar
+                                sx={{ width: 56, height: 56}}
+                                src={postAuthor.avatar}
+                                alt="Аватар"
+                            />
+                        }
+                        action={
+                            <> {me 
+                            ? <>
+                                <IconButton onClick={handleClickOpen}>
+                                    <DeleteIcon />
+                                </IconButton>
+                                <IconButton onClick={handleClickOpenEdit}>
+                                    <EditIcon />
+                                </IconButton>
+                            </> 
+                            : <></>
+                            }
+                            
+                            <IconButton onClick={currentUser ==='' ? handleAuthorisation : handleClickButtonLike} aria-label="add to favorites">
+                                <FavoriteIcon htmlColor={isLiked ? 'red': null}/>{likeNumber !== 0 ? likeNumber : <></>}
+                            </IconButton>
+                            </>
+                            }
+                        title={postAuthor.name}
+                        subheader={postAuthor.about}
+                    />
+                    <Typography variant="h6" color="black" className={s.title} textAlign='center'>
+                    {postPage.title}
+                    </Typography>
+                    <Typography paragraph textAlign="justify">{postPage.text}</Typography>
+                </Grid>
+            </Grid>
+            <Box className={open ? s.popup_aktive : s.invisible} onMouseDown={handleClose}>
+                <Box className={s.popup_container} onMouseDown={(e) => e.stopPropagation()}>
+                <Button ><CancelIcon onClick={handleClose} className={s.close}/> </Button>
+                <Typography variant="h5" color="black">Удалить?</Typography>
+                <ButtonGroup className={s.button} variant="contained" disableElevation aria-label="outlined primary button group">
+                <Link to={`/`}>
+                        <Button  sx={{ m: 2}} onClick={DeletPost}>Да</Button>
+                    </Link>
+                    <Button  sx={{ m: 2}} onClick={handleClose}>Нет</Button>
+                </ButtonGroup>
                 </Box>
+            </Box>
 
-                <Box className={ openEdit ? s.popup_edit_active : s.popup_edit_invisible}>
-                    <Box className={s.popup_edit_container}>
-                        <Button >
-                            <CancelIcon onClick={handleCloseEdit} className={s.close}/> 
-                        </Button>
+            <Box className={ openEdit ? s.popup_edit_active : s.popup_edit_invisible} onMouseDown={handleCloseEdit}>
+                <Box className={s.popup_edit_container} onMouseDown={(e) => e.stopPropagation()}>
+                    <Button >
+                        <CancelIcon onClick={handleCloseEdit} className={s.close}/> 
+                    </Button>
 
-                        <form onSubmit={handleSubmit(onSubmit)}>               
-                            <TextField label='Заголовок поста' defaultValue={postPage.title} multiline maxRows={4} {...register("title")} margin="normal" /> 
-                            <TextField label='Текст поста' defaultValue={postPage.text} multiline maxRows={4} fullWidth {...register("text")} margin="normal" />
-                            <TextField label='Изображение' defaultValue={postPage.image} multiline maxRows={4} fullWidth {...register("image")} margin="normal" />
-                            <TextField label='Теги' defaultValue={Array(postPage.tags).join(', ')} multiline maxRows={4} fullWidth {...register("tags")} margin="normal" />
-                            <Button variant="contained" type="submit" sx={{ m: 2 }}>Сохранить Изменения</Button>
-                        </form>
-                    </Box>
+                    <form onSubmit={handleSubmit(onSubmit)}>               
+                        <TextField label='Заголовок поста' defaultValue={postPage.title} multiline maxRows={4} {...register("title")} margin="normal" /> 
+                        <TextField label='Текст поста' defaultValue={postPage.text} multiline maxRows={4} fullWidth {...register("text")} margin="normal" />
+                        <TextField label='Изображение' defaultValue={postPage.image} multiline maxRows={4} fullWidth {...register("image")} margin="normal" />
+                        <TextField label='Теги' defaultValue={Array(postPage.tags).join(', ')} multiline maxRows={4} fullWidth {...register("tags")} margin="normal" />
+                        <Button variant="contained" type="submit" sx={{ m: 2 }}>Сохранить Изменения</Button>
+                    </form>
                 </Box>
+            </Box></>}
+            
         </>
     )
 }

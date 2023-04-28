@@ -1,4 +1,4 @@
-import { Container, Grid, Pagination } from '@mui/material';
+import { CircularProgress, Container, Grid, Pagination } from '@mui/material';
 import { Box } from '@mui/system';
 import { useContext, useEffect, useState } from 'react';
 import api from '../../api';
@@ -7,9 +7,10 @@ import { Post } from '../post/index'
 import { UserContext } from '../../context/user-context';
 
 import s from './styles.module.css';
+import { Circle } from '../../components/isLoading';
 
-export function PostList() {
-    const { pageData, UpdatePageData, page, onPage, onPostLike, currentUser, pageSize } = useContext(UserContext);
+export function PostList({SetFooterFixed}) {
+    const { pageData, UpdatePageData, page, onPage, onPostLike, currentUser, pageSize, isLoading, setIsLoading } = useContext(UserContext);
 
     const [postData, setPostData] = useState([]);
 
@@ -19,6 +20,7 @@ export function PostList() {
             setPostData(data);
         })       
         .catch(err => console.log(err))
+        .finally(() => { SetFooterFixed(false) })
     },[]);
 
     useEffect(() => {   
@@ -30,8 +32,10 @@ export function PostList() {
         window.scrollTo(0,0)  
     },[page]);
     
-    return (
-        <Container >
+    return ( <>
+        {isLoading
+        ? <Circle />
+        : <Container >
             <Grid container spacing={4} className={s.content__posts} >
                 {pageData.map((dataItem) => <Post key={dataItem._id} {...dataItem} onPostLike={onPostLike} currentUser={currentUser} />)}
             </Grid> 
@@ -43,6 +47,7 @@ export function PostList() {
                 onChange={(_, num) => onPage(num)}
                 />
             </Box>
-        </ Container>
+        </ Container>}  
+        </>
     )
 }
