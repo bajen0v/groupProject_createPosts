@@ -19,7 +19,7 @@ export function App() {
   const [likeNumber, setLikeNumber] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [footerFixed, setFooterFixed] = useState(true);
-
+  const [LoginOpen, setLoginOpen] = useState(false);
   const [postPage, setPostPage] = useState([]);
   
   function handleUserInfo(data) {
@@ -77,6 +77,10 @@ export function App() {
       .catch(err => console.log(err))
 }
 
+  const handleLoginOpen = (event) => {
+    setLoginOpen(event);
+  };
+
   return (
     <>
       <CssBaseline/>
@@ -95,7 +99,9 @@ export function App() {
         setPostPage,
         handleEditPost,
         isLoading, 
-        setIsLoading: setIsLoading
+        setIsLoading: setIsLoading,
+        LoginOpen,
+        needLogin: handleLoginOpen,
         }}>
       <Header/>      
       <Routes>

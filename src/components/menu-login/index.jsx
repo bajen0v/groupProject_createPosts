@@ -5,27 +5,27 @@ import MenuItem from '@mui/material/MenuItem';
 import { Avatar, Box, CardHeader } from '@mui/material';
 import { useContext, useState } from 'react';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-
 import { EditUser } from '../edit-user';
 import { AddPost } from '../add-post';
 import { EditAvatar } from '../edit-avatar';
 import { UserContext } from '../../context/user-context';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 import s from './styles.module.css'
 
 export default function BasicMenu() {
-const {currentUser, onUpdateUserName} = useContext(UserContext);
-const [openEditUser, SetOpenEditUser] = useState(false)
-const [openAddPost, SetOpenAddPost] = useState(false)
-const [openEditAvatar, SetOpenEditAvatar] = useState(false)
+  const { currentUser, onUpdateUserName, UpdatePageData, page, pageSize } = useContext(UserContext);
+  const [openEditUser, SetOpenEditUser] = useState(false);
+  const [openAddPost, SetOpenAddPost] = useState(false);
+  const [openEditAvatar, SetOpenEditAvatar] = useState(false);
 
-    const [anchorEl, setAnchorEl] = useState(null);
-    const open = Boolean(anchorEl);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
 
-    const handleEditUser = () => {
-      setAnchorEl(null);
-      SetOpenEditUser(true)
-    };
+  const handleEditUser = () => {
+    setAnchorEl(null);
+    SetOpenEditUser(true)
+  };
 
     const handleAddPost = () => {
       setAnchorEl(null);
@@ -49,6 +49,13 @@ const [openEditAvatar, SetOpenEditAvatar] = useState(false)
       SetOpenAddPost(false)
       SetOpenEditAvatar(false)
     };
+
+  const handleLogOut = () => {
+    const from = (page - 1) * pageSize;
+    const to =(page - 1) * pageSize + pageSize;
+    onUpdateUserName('');
+    UpdatePageData(from, to);
+  }
 
 
   return (
@@ -90,6 +97,9 @@ const [openEditAvatar, SetOpenEditAvatar] = useState(false)
         </MenuItem>
         <MenuItem onClick={handleEditAvatar} disableRipple>
         Сменить аватар
+        </MenuItem>
+        <MenuItem onClick={handleLogOut} disableRipple>
+          <LogoutIcon />
         </MenuItem>
       </Menu>
       <Box className={openEditUser ? s.popup_aktive : s.invisible} onMouseDown={popup}>
