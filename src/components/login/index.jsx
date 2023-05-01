@@ -9,14 +9,14 @@ import { UserContext } from '../../context/user-context';
 import s from './styles.module.css'
 
 export function Login() {
-  const {currentUser, onUpdateUserId} = useContext(UserContext);
-  const [open, setOpen] = useState(false);
+  const { currentUser, onUpdateUserId, LoginOpen, needLogin } = useContext(UserContext);
+  
     
-  const handleClickOpen = () => {
-      setOpen(true);
+  const handleOpen = () => {
+    needLogin(true);
   };
   const handleClose = () => {
-      setOpen(false);
+    needLogin(false);
   };
 
     const { register, handleSubmit } = useForm();
@@ -32,10 +32,10 @@ export function Login() {
 
     return (
       <>
-        <Button variant="contained" onClick={handleClickOpen}>
-              { !!currentUser ? <LogoutIcon/> : 'Login'}
+        <Button variant="contained" onClick={handleOpen}>
+          Login
         </Button>
-        <Box className={open ? s.popup_aktive : s.invisible} onMouseDown={handleClose}>
+        <Box className={LoginOpen ? s.popup_aktive : s.invisible} onMouseDown={handleClose}>
               <Box className={s.popup_container} onMouseDown={(e) => e.stopPropagation()} >
                 <Button ><CancelIcon onClick={handleClose} className={s.close}/> </Button>
                 <form onSubmit={handleSubmit(onSubmit)}>

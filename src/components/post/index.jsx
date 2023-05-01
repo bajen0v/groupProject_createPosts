@@ -21,7 +21,7 @@ import s from './styles.module.css'
 import { useForm } from 'react-hook-form';
 
 export function Post ({ ...props}) {
-    const { currentUser, onPostDelete, onPostLike, handleEditPost } = useContext(UserContext);
+    const { currentUser, onPostDelete, onPostLike, handleEditPost, needLogin } = useContext(UserContext);
     const[me, setMe] = useState(false);
     const [open, setOpen] = useState(false);
     const [openEdit, setOpenEdit] = useState(null);
@@ -41,8 +41,8 @@ export function Post ({ ...props}) {
      });
 
      function DeletPost() {
-        handleClose()
-        onPostDelete(props._id)           
+        handleClose();
+        onPostDelete(props._id);         
      }
      
      const isLiked = props.likes.some(id => id === currentUser._id)
@@ -52,7 +52,7 @@ export function Post ({ ...props}) {
      }
 
      const handleAuthorisation = () => {
-        alert('Необходима авторизация');
+        needLogin(true);
     };
 
     const handleClickOpenEdit = () => {

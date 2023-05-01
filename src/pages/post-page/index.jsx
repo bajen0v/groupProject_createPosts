@@ -20,7 +20,7 @@ export default function PostPage({likeNumber, setLikeNumber }) {
     const { postID } = useParams();
     /* const [postPage, setPostPage] = useState([]); */
     const [postAuthor, setPostAuthor] = useState([]);
-    const { currentUser, onPostDelete, onPostLike, postPage, setPostPage, handleEditPost, isLoading, setIsLoading } = useContext(UserContext);
+    const { currentUser, onPostDelete, onPostLike, postPage, setPostPage, handleEditPost, isLoading, setIsLoading, needLogin } = useContext(UserContext);
     const [me, setMe] = useState(false);
     const [open, setOpen] = useState(null);
     const [isLiked, setIsLiked] = useState(false);
@@ -73,7 +73,7 @@ export default function PostPage({likeNumber, setLikeNumber }) {
      }
 
      const handleAuthorisation = () => {
-        alert('Необходима авторизация');
+        needLogin(true);
     };
 
 
