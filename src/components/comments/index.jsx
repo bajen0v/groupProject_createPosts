@@ -3,9 +3,10 @@ import CardHeader from '@mui/material/CardHeader';
 import Avatar from '@mui/material/Avatar';
 import { UserContext } from '../../context/user-context';
 import { useContext, useEffect, useState } from 'react';
-import { IconButton } from '@mui/material';
+import { IconButton, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import api from '../../api';
+import { Date } from '../date';
 
 export function Comments ({setPostComments, ...props}) {
     const { currentUser, postPage } = useContext(UserContext);
@@ -41,9 +42,16 @@ export function Comments ({setPostComments, ...props}) {
                 </>
                 : <></>}</>}
             title={props.author.name}
-            subheader={props.text}
-        />
+            subheader={
+            <>
+                <Typography variant="body2" color="text.secondary" align="left">
+                    {props.text}
+                </Typography>
+                <Typography variant="body2" color="text.secondary" align="left">
+                    <Date created_at={props.created_at}/>
+                </Typography></>
+            }
+            />
     </>
-
     );
 }
