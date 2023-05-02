@@ -61,7 +61,7 @@ class Api {
     }
 
 
-    setUserNewPost(data, token) {
+    setUserNewPost(data) {
         return fetch(`${this.#baseurl}/v2/group-11/posts`, {
             method: 'POST',
             headers: {...this.#headers},
@@ -103,6 +103,23 @@ class Api {
             method: 'PATCH',
             headers: {...this.#headers},
             body: JSON.stringify(data)
+        })
+            .then(this.#onResponse)
+    }
+
+    setComments (data, postID) {
+        return fetch(`${this.#baseurl}/v2/group-11/posts/comments/${postID}`, {
+            method: 'POST',
+            headers: {...this.#headers},
+            body: JSON.stringify(data)
+        })
+            .then(this.#onResponse)
+    }
+
+    deleteComment (postID, commentID) {
+        return fetch(`${this.#baseurl}/v2/group-11/posts/comments/${postID}/${commentID}`, {
+            method: 'DELETE',
+            headers: {...this.#headers},
         })
             .then(this.#onResponse)
     }

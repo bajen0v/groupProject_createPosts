@@ -7,7 +7,6 @@ import { Avatar, Box, Button, ButtonGroup, CardHeader, CardMedia, Grid, TextFiel
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useState, useContext, useEffect  } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
 
 import api from '../../api';
 import { UserContext } from '../../context/user-context';
@@ -15,6 +14,10 @@ import { UserContext } from '../../context/user-context';
 import s from './styles.module.css'
 import { Circle } from '../../components/isLoading';
 import { EditPost } from '../page-edit';
+import { Comments } from '../../components/comments';
+import PostAddIcon from '@mui/icons-material/PostAdd';
+import { AddComment } from '@mui/icons-material';
+import { Add_comments } from '../../components/add-comments';
 
 export default function PostPage({likeNumber, setLikeNumber }) {
     const { postID } = useParams();
@@ -25,7 +28,8 @@ export default function PostPage({likeNumber, setLikeNumber }) {
     const [open, setOpen] = useState(null);
     const [isLiked, setIsLiked] = useState(false);
     const navigate = useNavigate();
-    const [openEdit, setOpenEdit] = useState();  
+    const [openEdit, setOpenEdit] = useState(); 
+    const [postComments, setPostComments] = useState([]); 
 
     useEffect(() => {  
         setIsLoading(true)
@@ -33,6 +37,7 @@ export default function PostPage({likeNumber, setLikeNumber }) {
                 .then (data => {
                     setPostPage(data);
                     setPostAuthor(data.author);
+                    setPostComments(data.comments);
                     if (data.author._id === currentUser._id) {
                         setMe(true)
                     };
@@ -43,7 +48,8 @@ export default function PostPage({likeNumber, setLikeNumber }) {
                     })
                 .catch(err => console.log(err))
                 .finally(() => { setIsLoading(false)})
-     }, [likeNumber, currentUser ]);
+                .finally(() => { console.log(postComments)})
+     }, [ likeNumber, currentUser ]);
 
 
     const handleClickOpen = () => {
@@ -125,7 +131,13 @@ export default function PostPage({likeNumber, setLikeNumber }) {
                     <Typography variant="h6" color="black" className={s.title} textAlign='center'>
                     {postPage.title}
                     </Typography>
-                    <Typography paragraph textAlign="justify">{postPage.text}</Typography>
+                    <Typography paragraph textAlign="justify" >{postPage.text}</Typography>
+                    <Add_comments setPostComments={setPostComments}/>
+                    {postComments === 0 
+                    ? <></> 
+                    : <>
+                        {postComments.map((element) => <Comments key={element._id} {...element} setPostComments={setPostComments}/>)}
+                    </>}
                 </Grid>
             </Grid>
             <Box className={open ? s.popup_aktive : s.invisible} onMouseDown={handleClose}>

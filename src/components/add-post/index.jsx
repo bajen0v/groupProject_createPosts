@@ -42,11 +42,11 @@ export function AddPost({ closePopup }) {
   return (
     <Box className={s.popup_container} onMouseDown={(e) => e.stopPropagation()}>
       <ButtonGroup className={s.button__group}>
-        <IconButton>
-          <RestartAltIcon onClick={handleReset}/>
+        <IconButton onClick={handleReset}>
+          <RestartAltIcon />
         </IconButton>
-        <IconButton>
-          <CancelIcon onClick={handleClose}/>
+        <IconButton onClick={handleClose}>
+          <CancelIcon />
         </IconButton>
       </ButtonGroup>
                 <form onSubmit={handleSubmit(onSubmit)}>
