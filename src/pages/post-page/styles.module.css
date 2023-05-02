@@ -91,3 +91,9 @@
   display: block;
 }
 
+.text {
+  border-color: black;
+  height: 20vh;
+}
+
+

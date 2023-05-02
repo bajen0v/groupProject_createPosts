@@ -12,7 +12,8 @@ import { useContext, useEffect, useState } from 'react';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { Link } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
-
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import ForumIcon from '@mui/icons-material/Forum';
 import { UserContext } from '../../context/user-context';
 import { Date } from '../date';
 import { Tag } from '../tag';
@@ -134,8 +135,12 @@ export function Post ({ ...props}) {
                             <Date created_at={props.created_at}/>
                         </Typography>
                         <Tag tags={props.tags}/>
-                    </CardContent>   
-                </Link>      
+                    </CardContent> 
+                    
+                </Link>   
+                {props.comments.length == 0 
+                    ? <ChatBubbleOutlineIcon/>
+                    : <ForumIcon />}     
             </Card>
 
         </Grid>
