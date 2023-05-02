@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Button, ButtonGroup, CardMedia, Grid, TextField } from '@mui/material';
+import { Box, Button, ButtonGroup, CardActions, CardMedia, Grid, TextField } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
@@ -13,11 +13,10 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { Link } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
-import ForumIcon from '@mui/icons-material/Forum';
+import ChatIcon from '@mui/icons-material/Chat';
 import { UserContext } from '../../context/user-context';
 import { Date } from '../date';
 import { Tag } from '../tag';
-
 import s from './styles.module.css'
 import { useForm } from 'react-hook-form';
 
@@ -72,7 +71,7 @@ export function Post ({ ...props}) {
     <>
         <Grid sx={{display: 'flex'}} justifyContent="center" item xs={12} sm={6} md={4}>
             <Card className={s.card} sx={{ width: 345 }} >
-                <CardHeader
+                <CardHeader sx={{ height: 100}}
                     avatar={
                         <Avatar
                             sx={{ width: 56, height: 56}}
@@ -115,8 +114,15 @@ export function Post ({ ...props}) {
                     </>
                     }
                     title={props.author.name}
-                    subheader={props.author.about}
-                    
+                    subheader={
+                        <>
+                            <Typography variant="body2" color="text.secondary" align="left">
+                                {props.author.about}
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary" align="left">
+                                <Date created_at={props.created_at}/>
+                            </Typography></>
+                        }
                 />
                 
                 <Link to={`/posts/${props._id}`} className={s.text}>
@@ -128,19 +134,17 @@ export function Post ({ ...props}) {
                         className={s.post_img}
                     />
                     <CardContent>
-                        <Typography variant="h6" color="black">
+                        <Typography variant="h6" color="black" textAlign='center'>
                             {props.title}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary" align="right">
-                            <Date created_at={props.created_at}/>
                         </Typography>
                         <Tag tags={props.tags}/>
                     </CardContent> 
-                    
-                </Link>   
-                {props.comments.length == 0 
-                    ? <ChatBubbleOutlineIcon/>
-                    : <ForumIcon />}     
+                </Link>
+                <CardActions disableSpacing className={s.chat}>
+                    {props.comments.length == 0 
+                        ? <IconButton className={s.chat}><ChatBubbleOutlineIcon /></IconButton>
+                        : <IconButton className={s.chat}><ChatIcon />{props.comments.length}</IconButton>} 
+                </CardActions>   
             </Card>
 
         </Grid>

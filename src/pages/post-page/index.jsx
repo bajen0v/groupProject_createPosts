@@ -7,16 +7,12 @@ import { Avatar, Box, Button, ButtonGroup, CardHeader, CardMedia, Grid, TextFiel
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useState, useContext, useEffect  } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-
 import api from '../../api';
 import { UserContext } from '../../context/user-context';
-
 import s from './styles.module.css'
 import { Circle } from '../../components/isLoading';
 import { EditPost } from '../page-edit';
 import { Comments } from '../../components/comments';
-import PostAddIcon from '@mui/icons-material/PostAdd';
-import { AddComment } from '@mui/icons-material';
 import { Add_comments } from '../../components/add-comments';
 
 export default function PostPage({likeNumber, setLikeNumber }) {
@@ -48,7 +44,6 @@ export default function PostPage({likeNumber, setLikeNumber }) {
                     })
                 .catch(err => console.log(err))
                 .finally(() => { setIsLoading(false)})
-                .finally(() => { console.log(postComments)})
      }, [ likeNumber, currentUser ]);
 
 
@@ -98,7 +93,7 @@ export default function PostPage({likeNumber, setLikeNumber }) {
                 />
                 <Button variant="contained" onClick={() => navigate(-1)} className={s.back_button}>Назад</Button>
                 </Grid>
-                <Grid item  md={4}>
+                <Grid item xs={12} md={4} >
                 <CardHeader
                         avatar={
                             <Avatar
@@ -132,11 +127,11 @@ export default function PostPage({likeNumber, setLikeNumber }) {
                     {postPage.title}
                     </Typography>
                     <Typography paragraph textAlign="justify" >{postPage.text}</Typography>
-                    <Add_comments setPostComments={setPostComments}/>
+                    <Add_comments setPostComments={setPostComments} />
                     {postComments === 0 
                     ? <></> 
                     : <>
-                        {postComments.map((element) => <Comments key={element._id} {...element} setPostComments={setPostComments}/>)}
+                        {postComments.reverse().map((element) => <Comments key={element._id} {...element} setPostComments={setPostComments}/>)}
                     </>}
                 </Grid>
             </Grid>

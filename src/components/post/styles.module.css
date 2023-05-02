@@ -79,3 +79,14 @@
   .text {
     text-decoration: none;
   }
+
+  .card {
+    position: relative;
+    height: 450px;
+  }
+
+  .chat {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+  }
