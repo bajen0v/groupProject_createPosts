@@ -9,7 +9,7 @@ import BasicMenu from '../menu-login';
 import s from './styles.module.css'
 
 export function Header() {
-  const {currentUser, UpdatePageData, onPage, pageSize} = useContext(UserContext);
+  const { currentUser, UpdatePageData, onPage } = useContext(UserContext);
 
   function handleGeneralPage() {
     onPage(1)
@@ -27,6 +27,6 @@ export function Header() {
             </Toolbar>
           </AppBar>
         </header>
-        </>
+      </>
     )
 }

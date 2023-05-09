@@ -32,13 +32,13 @@ export function EditUser({closePopup}) {
     };
  
     return (
-        <Box className={s.popup_container} onMouseDown={(e) => e.stopPropagation()}>
-            <Button ><CancelIcon onClick={handleClose} className={s.close}/> </Button>
-            <form onSubmit={handleSubmit(onSubmit)}>                
-                <TextField label="Имя" defaultValue={currentUser?.name} {...register("name", { required: true })} sx={{ m: 1,  p: 0 }} /> 
-                <TextField label="О себе" defaultValue={currentUser?.about} {...register("about", { required: true })} sx={{ m: 1,  p: 0 }} />
-                <Button variant="contained" type="submit" sx={{ m: 2}}>Сохранить Изменения</Button>
-            </form>
-        </Box>
+      <Box className={s.popup_container} onMouseDown={(e) => e.stopPropagation()}>
+        <Button ><CancelIcon onClick={handleClose} className={s.close}/> </Button>
+        <form onSubmit={handleSubmit(onSubmit)}>                
+          <TextField label="Имя" defaultValue={currentUser?.name} {...register("name", { required: true })} sx={{ m: 1,  p: 0 }} /> 
+          <TextField label="О себе" defaultValue={currentUser?.about} {...register("about", { required: true })} sx={{ m: 1,  p: 0 }} />
+          <Button variant="contained" type="submit" sx={{ m: 2}}>Сохранить Изменения</Button>
+        </form>
+      </Box>
     )
 }

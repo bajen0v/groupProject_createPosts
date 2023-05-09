@@ -4,10 +4,12 @@ import { useContext } from "react";
 import CancelIcon from '@mui/icons-material/Cancel';
 import React from "react";
 import { useForm } from "react-hook-form";
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
+
 import api from "../../api";
 import { UserContext } from "../../context/user-context";
+
 import s from './styles.module.css';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
 
 export function AddPost({ closePopup }) {
   const { UpdatePageData, pageSize} = useContext(UserContext);
@@ -49,18 +51,18 @@ export function AddPost({ closePopup }) {
           <CancelIcon />
         </IconButton>
       </ButtonGroup>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                  <TextField className={s.input} inputProps={{tabIndex:1}} label="Заголовок *" {...register("title", { required: true })} sx={{ m: 1,  p: 0 }} />
-                  <TextField className={s.input} inputProps={{tabIndex:2}} label="Текст *" {...register("text", { required: true })} sx={{ m: 1,  p: 0 }} 
-                    id="outlined-multiline-static"
-                    multiline
-                    rows={4}
-                    defaultValue=""
-                  />
-                  <TextField className={s.input} inputProps={{tabIndex:3}} label="Ссылка на изображение"  {...register("image")} sx={{ m: 1,  p: 0 }}/>
-                  <TextField className={s.input} inputProps={{tabIndex:4}} label="Тэги, вводите через запятую" {...register("tags")} sx={{ m: 1,  p: 0 }}/>
-                  <Button className={s.button} variant="contained" type="submit" >Добавить пост</Button>
-                </form>
-              </Box>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <TextField className={s.input} inputProps={{tabIndex:1}} label="Заголовок *" {...register("title", { required: true })} sx={{ m: 1,  p: 0 }} />
+        <TextField className={s.input} inputProps={{tabIndex:2}} label="Текст *" {...register("text", { required: true })} sx={{ m: 1,  p: 0 }} 
+          id="outlined-multiline-static"
+          multiline
+          rows={4}
+          defaultValue=""
+        />
+        <TextField className={s.input} inputProps={{tabIndex:3}} label="Ссылка на изображение"  {...register("image")} sx={{ m: 1,  p: 0 }}/>
+        <TextField className={s.input} inputProps={{tabIndex:4}} label="Тэги, вводите через запятую" {...register("tags")} sx={{ m: 1,  p: 0 }}/>
+        <Button className={s.button} variant="contained" type="submit" >Добавить пост</Button>
+      </form>
+    </Box>
   )
 }

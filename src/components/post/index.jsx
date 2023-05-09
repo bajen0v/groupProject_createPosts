@@ -14,11 +14,13 @@ import { Link } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import ChatIcon from '@mui/icons-material/Chat';
+import { useForm } from 'react-hook-form';
+
 import { UserContext } from '../../context/user-context';
 import { Date } from '../date';
 import { Tag } from '../tag';
+
 import s from './styles.module.css'
-import { useForm } from 'react-hook-form';
 
 export function Post ({ ...props}) {
     const { currentUser, onPostDelete, onPostLike, handleEditPost, needLogin } = useContext(UserContext);
@@ -37,21 +39,21 @@ export function Post ({ ...props}) {
     useEffect(() => {   
         if (props.author._id === currentUser._id) {
         setMe(true)
-    } 
-     });
+        } 
+    });
 
-     function DeletPost() {
+    function DeletPost() {
         handleClose();
         onPostDelete(props._id);         
-     }
-     
-     const isLiked = props.likes.some(id => id === currentUser._id)
+    }
+    
+    const isLiked = props.likes.some(id => id === currentUser._id)
 
-     function handleClickButtonLike() {
+    function handleClickButtonLike() {
         onPostLike({...props})
-     }
+    }
 
-     const handleAuthorisation = () => {
+    const handleAuthorisation = () => {
         needLogin(true);
     };
 
@@ -150,12 +152,12 @@ export function Post ({ ...props}) {
         </Grid>
         <Box className={open ? s.popup_aktive : s.invisible} onMouseDown={handleClose}>
             <Box className={s.popup_container}  onMouseDown={(e) => e.stopPropagation()}>
-              <Button ><CancelIcon onClick={handleClose} className={s.close}/> </Button>
-              <Typography variant="h5" color="black">Удалить?</Typography>
-              <ButtonGroup className={s.button} variant="contained" disableElevation aria-label="outlined primary button group">
-                <Button  sx={{ m: 2}} onClick={DeletPost}>Да</Button>
-                <Button  sx={{ m: 2}} onClick={handleClose}>Нет</Button>
-             </ButtonGroup>
+                <Button ><CancelIcon onClick={handleClose} className={s.close}/> </Button>
+                <Typography variant="h5" color="black">Удалить?</Typography>
+                <ButtonGroup className={s.button} variant="contained" disableElevation aria-label="outlined primary button group">
+                    <Button  sx={{ m: 2}} onClick={DeletPost}>Да</Button>
+                    <Button  sx={{ m: 2}} onClick={handleClose}>Нет</Button>
+                </ButtonGroup>
             </Box>
         </Box>
         <Box className={openEdit ? s.popup_edit_active : s.popup_edit_invisible} onMouseDown={handleCloseEdit}>
