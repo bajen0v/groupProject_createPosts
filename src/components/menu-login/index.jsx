@@ -5,11 +5,12 @@ import MenuItem from '@mui/material/MenuItem';
 import { Avatar, Box, CardHeader } from '@mui/material';
 import { useContext, useState } from 'react';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import LogoutIcon from '@mui/icons-material/Logout';
+
 import { EditUser } from '../edit-user';
 import { AddPost } from '../add-post';
 import { EditAvatar } from '../edit-avatar';
 import { UserContext } from '../../context/user-context';
-import LogoutIcon from '@mui/icons-material/Logout';
 
 import s from './styles.module.css'
 
@@ -27,28 +28,28 @@ export default function BasicMenu() {
     SetOpenEditUser(true)
   };
 
-    const handleAddPost = () => {
-      setAnchorEl(null);
-      SetOpenAddPost(true)
-    };
+  const handleAddPost = () => {
+    setAnchorEl(null);
+    SetOpenAddPost(true)
+  };
 
-    const handleEditAvatar = () => {
-      setAnchorEl(null);
-      SetOpenEditAvatar(true)
-    };
+  const handleEditAvatar = () => {
+    setAnchorEl(null);
+    SetOpenEditAvatar(true)
+  };
 
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-      setAnchorEl(null);
-    };
+  const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
-    const popup = () => {
-      SetOpenEditUser(false)
-      SetOpenAddPost(false)
-      SetOpenEditAvatar(false)
-    };
+  const popup = () => {
+    SetOpenEditUser(false)
+    SetOpenAddPost(false)
+    SetOpenEditAvatar(false)
+  };
 
   const handleLogOut = () => {
     const from = (page - 1) * pageSize;
@@ -56,7 +57,6 @@ export default function BasicMenu() {
     onUpdateUserName('');
     UpdatePageData(from, to);
   }
-
 
   return (
     <div>
@@ -78,25 +78,25 @@ export default function BasicMenu() {
           'aria-labelledby': 'basic-button',
         }}
       >
-         <CardHeader
-                    avatar={
-                        <Avatar
-                            sx={{ width: 56, height: 56}}
-                            src={currentUser.avatar}
-                            alt="Аватар"
-                        />
-                    }
-                    title={currentUser.name}
-                    subheader={currentUser.about}
-                />
+        <CardHeader
+          avatar={
+            <Avatar
+              sx={{ width: 56, height: 56}}
+              src={currentUser.avatar}
+              alt="Аватар"
+            />
+          }
+          title={currentUser.name}
+          subheader={currentUser.about}
+        />
         <MenuItem onClick={handleEditUser} disableRipple>
-        Редактировать данные
+          Редактировать данные
         </MenuItem>
         <MenuItem onClick={handleAddPost} disableRipple>
-        Добавить пост
+          Добавить пост
         </MenuItem>
         <MenuItem onClick={handleEditAvatar} disableRipple>
-        Сменить аватар
+          Сменить аватар
         </MenuItem>
         <MenuItem onClick={handleLogOut} disableRipple>
           <LogoutIcon />

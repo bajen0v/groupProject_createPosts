@@ -1,10 +1,8 @@
 import dayjs from "dayjs";
 import relativeTime from 'dayjs/plugin/relativeTime';
-import objectSupport from 'dayjs/plugin/objectSupport';
 import 'dayjs/locale/ru';
 dayjs.locale('ru');
 dayjs.extend(relativeTime);
-// dayjs.extend(objectSupport)
 
 export function Date({ created_at }) {
   const dateCreated = dayjs(created_at);

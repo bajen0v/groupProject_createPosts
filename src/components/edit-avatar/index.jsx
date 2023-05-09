@@ -1,4 +1,3 @@
-import s from './styles.module.css'
 import {  Box,  Button, TextField} from "@mui/material";
 import { useContext } from 'react';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -7,8 +6,7 @@ import { useForm } from 'react-hook-form';
 import { UserContext } from '../../context/user-context';
 import api from '../../api';
 
-
-
+import s from './styles.module.css'
 
 export function EditAvatar({closePopup}) {
   const {currentUser, onUpdateUserName, UpdatePageData, pageSize, page} = useContext(UserContext);
