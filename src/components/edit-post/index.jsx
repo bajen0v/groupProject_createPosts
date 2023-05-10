@@ -7,7 +7,7 @@ import { UserContext } from '../../context/user-context';
 
 import s from './styles.module.css'
 
-export function EditPost({ closePopup }) {
+export function EditPost({ closePopup, id, title, text, image, tags }) {
   const { postPage, handleEditPost } = useContext(UserContext);
 
   const { register, handleSubmit } = useForm();
@@ -17,7 +17,7 @@ export function EditPost({ closePopup }) {
   };
 
   const onSubmit = (newPostData) => {
-    handleEditPost(newPostData, postPage._id);
+    handleEditPost(newPostData, id ? id : postPage._id);
     closePopup()
   }
 
@@ -28,10 +28,10 @@ export function EditPost({ closePopup }) {
       </Button>
 
       <form onSubmit={handleSubmit(onSubmit)}>               
-        <TextField label='Заголовок поста' defaultValue={postPage.title} multiline maxRows={4} {...register("title")} margin="normal" /> 
-        <TextField label='Текст поста' defaultValue={postPage.text} multiline maxRows={4} fullWidth {...register("text")} margin="normal" />
-        <TextField label='Изображение' defaultValue={postPage.image} multiline maxRows={4} fullWidth {...register("image")} margin="normal" />
-        <TextField label='Теги' defaultValue={Array(postPage.tags).join(', ')} multiline maxRows={4} fullWidth {...register("tags")} margin="normal" />
+        <TextField label='Заголовок поста' defaultValue={title ? title : postPage.title} multiline maxRows={4} {...register("title")} margin="normal" /> 
+        <TextField label='Текст поста' defaultValue={text ? text : postPage.text} multiline maxRows={4} fullWidth {...register("text")} margin="normal" />
+        <TextField label='Изображение' defaultValue={image? image : postPage.image} multiline maxRows={4} fullWidth {...register("image")} margin="normal" />
+        <TextField label='Теги' defaultValue={tags ? Array(tags).join(', ') : Array(postPage.tags).join(', ')} multiline maxRows={4} fullWidth {...register("tags")} margin="normal" />
         <Button variant="contained" type="submit" sx={{ m: 2 }}>Сохранить Изменения</Button>
       </form>
     </Box>

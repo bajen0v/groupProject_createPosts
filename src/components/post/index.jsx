@@ -23,7 +23,7 @@ import { EditPost } from '../edit-post';
 import s from './styles.module.css'
 
 export function Post ({ ...props}) {
-    const { currentUser, onPostDelete, onPostLike, handleEditPost, needLogin } = useContext(UserContext);
+    const { currentUser, onPostDelete, onPostLike, needLogin } = useContext(UserContext);
     const[me, setMe] = useState(false);
     const [open, setOpen] = useState(false);
     const [openEdit, setOpenEdit] = useState(null);
@@ -61,11 +61,6 @@ export function Post ({ ...props}) {
     }
     const handleCloseEdit = () => {
         setOpenEdit(false);
-    }
-
-    const onSubmit = (newPostData) => {
-        setOpenEdit(false);
-        handleEditPost(newPostData, props._id);
     }
 
     return (
@@ -160,7 +155,7 @@ export function Post ({ ...props}) {
             </Box>
         </Box>
         <Box className={openEdit ? s.popup_edit_active : s.popup_edit_invisible} onMouseDown={handleCloseEdit}>
-            <EditPost closePopup={handleCloseEdit}/>
+            <EditPost closePopup={handleCloseEdit} id={props._id} title={props.title} text={props.text} image={props.image} tags={props.tags}/>
         </Box>
         </>
     );
