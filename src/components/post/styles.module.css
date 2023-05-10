@@ -29,18 +29,6 @@
     text-align: center
   }
 
-  .popup_edit_container {
-    display: flex;
-    flex-direction: column;
-    border: 2px solid #D9E4E6;
-    border-radius: 20px;
-    width: 360px;
-    background-color: #fff;
-    padding: 15px;
-    position: relative;
-    text-align: center
-  }
-  
   .popup_edit_invisible{
     display: none;
   }

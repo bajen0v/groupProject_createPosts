@@ -75,7 +75,7 @@ export function App() {
         handlePageData(from, to)
       })
       .catch(err => console.log(err))
-}
+  }
 
   const handleLoginOpen = (event) => {
     setLoginOpen(event);

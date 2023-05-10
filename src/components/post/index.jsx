@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Button, ButtonGroup, CardActions, CardMedia, Grid, TextField } from '@mui/material';
+import { Box, Button, ButtonGroup, CardActions, CardMedia, Grid } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
@@ -14,11 +14,11 @@ import { Link } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import ChatIcon from '@mui/icons-material/Chat';
-import { useForm } from 'react-hook-form';
 
 import { UserContext } from '../../context/user-context';
 import { Date } from '../date';
 import { Tag } from '../tag';
+import { EditPost } from '../edit-post';
 
 import s from './styles.module.css'
 
@@ -27,7 +27,6 @@ export function Post ({ ...props}) {
     const[me, setMe] = useState(false);
     const [open, setOpen] = useState(false);
     const [openEdit, setOpenEdit] = useState(null);
-    const { register, handleSubmit } = useForm();
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -161,19 +160,7 @@ export function Post ({ ...props}) {
             </Box>
         </Box>
         <Box className={openEdit ? s.popup_edit_active : s.popup_edit_invisible} onMouseDown={handleCloseEdit}>
-            <Box className={s.popup_edit_container}  onMouseDown={(e) => e.stopPropagation()}>
-                <Button >
-                    <CancelIcon onClick={handleCloseEdit} className={s.close}/> 
-                </Button>
-
-                <form onSubmit={handleSubmit(onSubmit)}>               
-                    <TextField label='Заголовок поста' defaultValue={props.title} multiline maxRows={4} {...register("title")} margin="normal" /> 
-                    <TextField label='Текст поста' defaultValue={props.text} multiline maxRows={4} fullWidth {...register("text")} margin="normal" />
-                    <TextField label='Изображение' defaultValue={props.image} multiline maxRows={4} fullWidth {...register("image")} margin="normal" />
-                    <TextField label='Теги' defaultValue={props.tags.join(', ')} multiline maxRows={4} fullWidth {...register("tags")} margin="normal" />
-                    <Button variant="contained" type="submit" sx={{ m: 2 }}>Сохранить Изменения</Button>
-                </form>
-            </Box>
+            <EditPost closePopup={handleCloseEdit}/>
         </Box>
         </>
     );
