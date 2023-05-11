@@ -12,7 +12,7 @@ import { UserContext } from "../../context/user-context";
 import s from './styles.module.css';
 
 export function AddPost({ closePopup }) {
-  const { UpdatePageData, pageSize} = useContext(UserContext);
+  const { onPage } = useContext(UserContext);
 
   const handleClose = () => {
     closePopup();
@@ -36,7 +36,7 @@ export function AddPost({ closePopup }) {
       }
 
       api.setUserNewPost(NewData)
-      .then((data) => UpdatePageData(0,pageSize))
+      .then((data) => onPage(1))
       closePopup();
       reset();
      };

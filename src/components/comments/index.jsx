@@ -9,8 +9,8 @@ import { UserContext } from '../../context/user-context';
 import api from '../../api';
 import { Date } from '../date';
 
-export function Comments ({setPostComments, ...props}) {
-    const { currentUser, postPage } = useContext(UserContext);
+export function Comments ({ ...props }) {
+    const { currentUser, setPostPage } = useContext(UserContext);
     const[me, setMe] = useState(false);
     useEffect(() => {   
         if (props.author._id === currentUser._id) {
@@ -20,7 +20,7 @@ export function Comments ({setPostComments, ...props}) {
      
     const handleDeleteComments = () => {
         api.deleteComment(props.post, props._id)
-            .then(data => setPostComments(data.comments))       
+            .then(data => setPostPage(data))       
             .catch(err => console.log(err))
     }
 

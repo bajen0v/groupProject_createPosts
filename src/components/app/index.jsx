@@ -1,5 +1,5 @@
 import { CssBaseline } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import api from '../../api';
@@ -16,26 +16,44 @@ export function App() {
   const [pageData, setPageData] = useState([]);
   const [page, setPage] = useState(1);
   const [currentUser, setCurrentUser] = useState('');  
-  const [likeNumber, setLikeNumber] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [footerFixed, setFooterFixed] = useState(true);
   const [LoginOpen, setLoginOpen] = useState(false);
   const [postPage, setPostPage] = useState([]);
+  const [count, setCount] = useState();
+
+  useEffect(() => {
+    localStorage.getItem('token') ? AgainMe(): setCurrentUser('');
+
+    function AgainMe () {
+      api.getUserMe(localStorage.getItem('token'))
+        .then(data => setCurrentUser(data))
+    }
+  },[])
   
+  
+  
+
   function handleUserInfo(data) {
         
       api.getLogIn(data)
       .then((data) => {
         setCurrentUser(data.data);
+        localStorage.setItem('token', data.token);
       })
       .catch(err => console.log(err)) 
     }
 
-  function handlePageData(from, to) {
+  function handlePageData() {
+    const from = (page - 1) * pageSize;
+    const to =(page - 1) * pageSize + pageSize;
     setIsLoading(true)
     setFooterFixed(true)
     api.getPostList()
-    .then(data => setPageData(data.slice(from,to)))       
+    .then(data => {
+      setCount(Math.ceil(data.length / pageSize))
+      setPageData(data.slice(from,to))
+    })       
     .catch(err => console.log(err))
     .finally(() => { setIsLoading(false)})
     .finally(() => { setFooterFixed(false)})
@@ -50,7 +68,7 @@ export function App() {
           return pageState._id === updatePost._id ? updatePost : pageState
         })
         setPageData(updateLikesState)
-        setLikeNumber(updatePost.likes.length)
+        setPostPage(updatePost)
       })
   }
 
@@ -70,9 +88,7 @@ export function App() {
     api.editUserPost(newPostData, postId)
       .then(data => {
         setPostPage(data)
-        const from = (page - 1) * pageSize;
-        const to =(page - 1) * pageSize + pageSize;
-        handlePageData(from, to)
+        handlePageData()
       })
       .catch(err => console.log(err))
   }
@@ -105,8 +121,8 @@ export function App() {
         }}>
       <Header/>      
       <Routes>
-          <Route  path='/' element={<PostList currentUser={currentUser} handleEditPost={handleEditPost} SetFooterFixed={setFooterFixed}/>}/>
-          <Route path='/posts/:postID' element={<PostPage likeNumber={likeNumber} setLikeNumber={setLikeNumber} />} />
+          <Route  path='/' element={<PostList count={count} />}/>
+          <Route path='/posts/:postID' element={<PostPage  />} />
           <Route path='*' element={<NotFound/>}/>
       </Routes>  
       </UserContext.Provider>

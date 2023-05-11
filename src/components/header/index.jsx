@@ -9,11 +9,10 @@ import BasicMenu from '../menu-login';
 import s from './styles.module.css'
 
 export function Header() {
-  const { currentUser, UpdatePageData, onPage } = useContext(UserContext);
+  const { currentUser, onPage } = useContext(UserContext);
 
   function handleGeneralPage() {
     onPage(1)
-    UpdatePageData(0,12)
   }
     return (
       <>

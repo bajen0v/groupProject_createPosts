@@ -56,6 +56,7 @@ export default function BasicMenu() {
     const to =(page - 1) * pageSize + pageSize;
     onUpdateUserName('');
     UpdatePageData(from, to);
+    localStorage.setItem('token', null)
   }
 
   return (
