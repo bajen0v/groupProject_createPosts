@@ -12,7 +12,7 @@ import { UserContext } from "../../context/user-context";
 import s from './styles.module.css';
 
 export function AddPost({ closePopup }) {
-  const { onPage } = useContext(UserContext);
+  const { onPage, UpdatePageData } = useContext(UserContext);
 
   const handleClose = () => {
     closePopup();
@@ -25,18 +25,15 @@ export function AddPost({ closePopup }) {
   const { register, handleSubmit, reset } = useForm();
     
   const onSubmit = (data) => {
-    const NewData = {
-      title: data.title, 
-      text: data.text, 
-      image: data.image, 
-      tags: data.tags.split(','),
-    }
-        for (let key in NewData) { // проверка на пустые значения в объекте
-          if (!NewData[key]) delete NewData[key];
+    data.tags = data.tags.split(',')
+        for (let key in data) { // проверка на пустые значения в объекте
+          if (!data[key]) delete data[key];
       }
 
-      api.setUserNewPost(NewData)
-      .then((data) => onPage(1))
+      api.setUserNewPost(data)
+      .then((data) => {
+        onPage(1)
+        UpdatePageData()})
       closePopup();
       reset();
      };

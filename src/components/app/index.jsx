@@ -81,10 +81,11 @@ export function App() {
   }
 
   function handleEditPost(newPostData, postId) {
+    newPostData.tags = newPostData.tags.split(', ') 
     for (let key in newPostData) { // проверка на пустые значения в объекте
       if (!newPostData[key]) delete newPostData[key];
     }
-    newPostData.tags = newPostData.tags.split(', ') 
+
     api.editUserPost(newPostData, postId)
       .then(data => {
         setPostPage(data)
