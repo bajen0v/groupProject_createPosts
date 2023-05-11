@@ -17,35 +17,30 @@ import { Add_comments } from '../../components/add-comments';
 
 import s from './styles.module.css'
 
-export default function PostPage({likeNumber, setLikeNumber }) {
+export default function PostPage() {
     const { postID } = useParams();
-    const [postAuthor, setPostAuthor] = useState([]);
     const { currentUser, onPostDelete, onPostLike, postPage, setPostPage, isLoading, setIsLoading, needLogin } = useContext(UserContext);
     const [me, setMe] = useState(false);
     const [open, setOpen] = useState(null);
     const [isLiked, setIsLiked] = useState(false);
     const navigate = useNavigate();
     const [openEdit, setOpenEdit] = useState(); 
-    const [postComments, setPostComments] = useState([]); 
 
     useEffect(() => {  
         setIsLoading(true)
         api.getPostData(postID)
             .then (data => {
                 setPostPage(data);
-                setPostAuthor(data.author);
-                setPostComments(data.comments);
                 if (data.author._id === currentUser._id) {
                     setMe(true)
                 };
                 if (data.likes.some(id => id === currentUser._id)) {
                     setIsLiked(true)
                 };
-                setLikeNumber(data.likes.length)
                 })
             .catch(err => console.log(err))
             .finally(() => { setIsLoading(false)})
-    }, [ likeNumber, currentUser ]);
+    }, [ currentUser ]);
 
 
     const handleClickOpen = () => {
@@ -71,7 +66,7 @@ export default function PostPage({likeNumber, setLikeNumber }) {
 
     function handleClickButtonLike() {
         onPostLike(postPage)
-        setIsLiked(false)
+        isLiked ? setIsLiked(false) : setIsLiked(true)
     }
 
     const handleAuthorisation = () => {
@@ -100,7 +95,7 @@ export default function PostPage({likeNumber, setLikeNumber }) {
                                 avatar={
                                     <Avatar
                                         sx={{ width: 56, height: 56}}
-                                        src={postAuthor.avatar}
+                                        src={postPage?.author?.avatar}
                                         alt="Аватар"
                                     />
                                 }
@@ -118,12 +113,12 @@ export default function PostPage({likeNumber, setLikeNumber }) {
                                     }
                                     
                                     <IconButton onClick={currentUser ==='' ? handleAuthorisation : handleClickButtonLike} aria-label="add to favorites">
-                                        <FavoriteIcon htmlColor={isLiked ? 'red': null}/>{likeNumber !== 0 ? likeNumber : <></>}
+                                        <FavoriteIcon htmlColor={isLiked ? 'red': null}/>{postPage?.likes?.length !== 0 ? postPage?.likes?.length : <></>}
                                     </IconButton>
                                     </>
                                     }
-                                title={postAuthor.name}
-                                subheader={postAuthor.about}
+                                title={postPage?.author?.name}
+                                subheader={postPage?.author?.about}
                             />
                             <Typography variant="h6" color="black" className={s.title} textAlign='center'>
                                 {postPage.title}
@@ -131,11 +126,11 @@ export default function PostPage({likeNumber, setLikeNumber }) {
                             <Typography paragraph textAlign="justify" >
                                 {postPage.text}
                             </Typography>
-                            <Add_comments setPostComments={setPostComments} />
-                            {postComments === 0 
+                            <Add_comments />
+                            {postPage?.comments === 0 
                             ? <></> 
                             : <>
-                                {postComments.reverse().map((element) => <Comments key={element._id} {...element} setPostComments={setPostComments}/>)}
+                                {postPage?.comments?.reverse().map((element) => <Comments key={element._id} {...element} />)}
                             </>}
                         </Grid>
                     </Grid>

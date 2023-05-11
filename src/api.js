@@ -50,7 +50,7 @@ class Api {
             .then(this.#onResponse)
     }
     
-    setUserAvatar(avatar, token) {
+    setUserAvatar(avatar) {
         return fetch(`${this.#baseurl}/users/me/avatar`, {
             method: 'PATCH',
             headers: {...this.#headers},
@@ -121,6 +121,19 @@ class Api {
             headers: {...this.#headers},
         })
             .then(this.#onResponse)
+    }
+
+    getUserMe (token) {
+        return fetch(`${this.#baseurl}/v2/group-11/users/me`, {
+            method: 'GET',
+            headers: {
+                authorization: token,
+              },
+        })
+            .then(this.#onResponse).then((res) => {
+                this.#headers.authorization = token;
+                return res;
+        });
     }
   
 }

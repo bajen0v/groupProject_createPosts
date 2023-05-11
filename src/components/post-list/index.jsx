@@ -9,27 +9,12 @@ import { Circle } from '../../components/isLoading';
 
 import s from './styles.module.css';
 
-export function PostList({SetFooterFixed}) {
-    const { pageData, UpdatePageData, page, onPage, onPostLike, currentUser, pageSize, isLoading  } = useContext(UserContext);
-
-    const [postData, setPostData] = useState([]);
+export function PostList({SetFooterFixed, count}) {
+    const { pageData, UpdatePageData, page, onPage, onPostLike, currentUser, isLoading  } = useContext(UserContext);
 
     useEffect(() => {   
-        api.getPostList()
-        .then((data) => {
-            setPostData(data);
-        })       
-        .catch(err => console.log(err))
-        .finally(() => { SetFooterFixed(false) })
-    },[]);
-
-    useEffect(() => {   
-        const from = (page - 1) * pageSize;
-        const to =(page - 1) * pageSize + pageSize;
-
-        UpdatePageData(from,to)
-                  
-        window.scrollTo(0,0)  
+      UpdatePageData() 
+      window.scrollTo(0,0)  
     },[page]);
     
     return ( 
@@ -43,7 +28,7 @@ export function PostList({SetFooterFixed}) {
                 <Box justifyContent={"center"} alignItems={"center"} display={"flex"} sx={{margin: "20px 0px"}}>
                     <Pagination
                     color="primary"
-                    count={Math.ceil(postData.length / pageSize)}
+                    count={count}
                     page={page}
                     onChange={(_, num) => onPage(num)}
                     />

@@ -12,7 +12,7 @@ import { UserContext } from '../../context/user-context';
 import s from './styles.module.css';
 
 export function Add_comments ({setPostComments}) {
-  const { currentUser, needLogin } = useContext(UserContext);
+  const { currentUser, needLogin, setPostPage } = useContext(UserContext);
   const { postID } = useParams();
   const { register, handleSubmit, reset } = useForm();
     
@@ -20,7 +20,7 @@ export function Add_comments ({setPostComments}) {
     currentUser === ''
     ? needLogin(true)
     : api.setComments(data, postID)
-        .then((data) => setPostComments(data.comments))
+        .then((data) => setPostPage(data))
         reset();
      };
 
