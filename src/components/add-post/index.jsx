@@ -1,43 +1,44 @@
-import { Button, ButtonGroup, IconButton, TextField } from "@mui/material";
-import { Box } from "@mui/system";
-import { useContext } from "react";
-import CancelIcon from '@mui/icons-material/Cancel';
-import React from "react";
-import { useForm } from "react-hook-form";
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
+/* eslint-disable react/prop-types */
+import { Button, ButtonGroup, IconButton, TextField } from '@mui/material'
+import { Box } from '@mui/system'
+import { useContext } from 'react'
+import CancelIcon from '@mui/icons-material/Cancel'
+import { useForm } from 'react-hook-form'
+import RestartAltIcon from '@mui/icons-material/RestartAlt'
 
-import api from "../../api";
-import { UserContext } from "../../context/user-context";
+import api from '../../api'
+import { UserContext } from '../../context/user-context'
 
-import s from './styles.module.css';
+import s from './styles.module.css'
 
-export function AddPost({ closePopup }) {
-  const { onPage, UpdatePageData } = useContext(UserContext);
+export function AddPost ({ closePopup }) {
+  const { onPage, UpdatePageData } = useContext(UserContext)
 
   const handleClose = () => {
-    closePopup();
-  };
+    closePopup()
+  }
 
   const handleReset = () => {
-    reset();
+    reset()
   }
-  
-  const { register, handleSubmit, reset } = useForm();
-    
+
+  const { register, handleSubmit, reset } = useForm()
+
   const onSubmit = (data) => {
     data.tags = data.tags.split(',')
-        for (let key in data) { // проверка на пустые значения в объекте
-          if (!data[key]) delete data[key];
-      }
+    for (const key in data) { // проверка на пустые значения в объекте
+      if (!data[key]) delete data[key]
+    }
 
-      api.setUserNewPost(data)
+    api.setUserNewPost(data)
       .then((data) => {
         onPage(1)
-        UpdatePageData()})
-      closePopup();
-      reset();
-     };
-  
+        UpdatePageData()
+      })
+    closePopup()
+    reset()
+  }
+
   return (
     <Box className={s.popup_container} onMouseDown={(e) => e.stopPropagation()}>
       <ButtonGroup className={s.button__group}>
@@ -49,15 +50,15 @@ export function AddPost({ closePopup }) {
         </IconButton>
       </ButtonGroup>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <TextField className={s.input} inputProps={{tabIndex:1}} label="Заголовок *" {...register("title", { required: true })} sx={{ m: 1,  p: 0 }} />
-        <TextField className={s.input} inputProps={{tabIndex:2}} label="Текст *" {...register("text", { required: true })} sx={{ m: 1,  p: 0 }} 
+        <TextField className={s.input} inputProps={{ tabIndex: 1 }} label="Заголовок *" {...register('title', { required: true })} sx={{ m: 1, p: 0 }} />
+        <TextField className={s.input} inputProps={{ tabIndex: 2 }} label="Текст *" {...register('text', { required: true })} sx={{ m: 1, p: 0 }}
           id="outlined-multiline-static"
           multiline
           rows={4}
           defaultValue=""
         />
-        <TextField className={s.input} inputProps={{tabIndex:3}} label="Ссылка на изображение"  {...register("image")} sx={{ m: 1,  p: 0 }}/>
-        <TextField className={s.input} inputProps={{tabIndex:4}} label="Тэги, вводите через запятую" {...register("tags")} sx={{ m: 1,  p: 0 }}/>
+        <TextField className={s.input} inputProps={{ tabIndex: 3 }} label="Ссылка на изображение" {...register('image')} sx={{ m: 1, p: 0 }}/>
+        <TextField className={s.input} inputProps={{ tabIndex: 4 }} label="Тэги, вводите через запятую" {...register('tags')} sx={{ m: 1, p: 0 }}/>
         <Button className={s.button} variant="contained" type="submit" >Добавить пост</Button>
       </form>
     </Box>

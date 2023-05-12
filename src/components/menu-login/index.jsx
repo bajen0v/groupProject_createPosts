@@ -1,61 +1,60 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import { Avatar, Box, CardHeader } from '@mui/material';
-import { useContext, useState } from 'react';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import LogoutIcon from '@mui/icons-material/Logout';
+import Button from '@mui/material/Button'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import { Avatar, Box, CardHeader } from '@mui/material'
+import { useContext, useState } from 'react'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import LogoutIcon from '@mui/icons-material/Logout'
 
-import { EditUser } from '../edit-user';
-import { AddPost } from '../add-post';
-import { EditAvatar } from '../edit-avatar';
-import { UserContext } from '../../context/user-context';
+import { EditUser } from '../edit-user'
+import { AddPost } from '../add-post'
+import { EditAvatar } from '../edit-avatar'
+import { UserContext } from '../../context/user-context'
 
 import s from './styles.module.css'
 
-export default function BasicMenu() {
-  const { currentUser, onUpdateUserName, UpdatePageData, page, pageSize } = useContext(UserContext);
-  const [openEditUser, SetOpenEditUser] = useState(false);
-  const [openAddPost, SetOpenAddPost] = useState(false);
-  const [openEditAvatar, SetOpenEditAvatar] = useState(false);
+export default function BasicMenu () {
+  const { currentUser, onUpdateUserName, UpdatePageData, page, pageSize } = useContext(UserContext)
+  const [openEditUser, SetOpenEditUser] = useState(false)
+  const [openAddPost, SetOpenAddPost] = useState(false)
+  const [openEditAvatar, SetOpenEditAvatar] = useState(false)
 
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
+  const [anchorEl, setAnchorEl] = useState(null)
+  const open = Boolean(anchorEl)
 
   const handleEditUser = () => {
-    setAnchorEl(null);
+    setAnchorEl(null)
     SetOpenEditUser(true)
-  };
+  }
 
   const handleAddPost = () => {
-    setAnchorEl(null);
+    setAnchorEl(null)
     SetOpenAddPost(true)
-  };
+  }
 
   const handleEditAvatar = () => {
-    setAnchorEl(null);
+    setAnchorEl(null)
     SetOpenEditAvatar(true)
-  };
+  }
 
   const handleClick = (event) => {
-      setAnchorEl(event.currentTarget);
-  };
+    setAnchorEl(event.currentTarget)
+  }
   const handleClose = () => {
-    setAnchorEl(null);
-  };
+    setAnchorEl(null)
+  }
 
   const popup = () => {
     SetOpenEditUser(false)
     SetOpenAddPost(false)
     SetOpenEditAvatar(false)
-  };
+  }
 
   const handleLogOut = () => {
-    const from = (page - 1) * pageSize;
-    const to =(page - 1) * pageSize + pageSize;
-    onUpdateUserName('');
-    UpdatePageData(from, to);
+    const from = (page - 1) * pageSize
+    const to = (page - 1) * pageSize + pageSize
+    onUpdateUserName('')
+    UpdatePageData(from, to)
     localStorage.setItem('token', null)
   }
 
@@ -76,13 +75,13 @@ export default function BasicMenu() {
         open={open}
         onClose={handleClose}
         MenuListProps={{
-          'aria-labelledby': 'basic-button',
+          'aria-labelledby': 'basic-button'
         }}
       >
         <CardHeader
           avatar={
             <Avatar
-              sx={{ width: 56, height: 56}}
+              sx={{ width: 56, height: 56 }}
               src={currentUser.avatar}
               alt="Аватар"
             />
@@ -113,5 +112,5 @@ export default function BasicMenu() {
         <EditAvatar closePopup={popup}/>
       </Box>
     </div>
-  );
+  )
 }
