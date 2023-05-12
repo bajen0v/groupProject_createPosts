@@ -1,0 +1,15 @@
+.content__posts {
+    padding-top: 90px;
+    padding-bottom: 40px;
+    min-height: 90vh;
+}
+
+.invisible {
+    display: none;
+  }
+
+  .mypost {
+    padding-top: 30px;
+  }
+
+  

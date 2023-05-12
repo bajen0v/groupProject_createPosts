@@ -9,11 +9,11 @@ import { Header } from '../header'
 import { PostList } from '../post-list'
 import PostPage from '../../pages/post-page'
 import { NotFound } from '../../pages/not-found-page'
-import { MyPost } from '../my-post'
+import { MyPost } from '../../pages/my-post'
+import { TagPage } from '../../pages/tag-page'
 
 export function App () {
   const pageSize = 12
-
   const [pageData, setPageData] = useState([])
   const [page, setPage] = useState(1)
   const [currentUser, setCurrentUser] = useState('')
@@ -23,6 +23,7 @@ export function App () {
   const [postPage, setPostPage] = useState([])
   const [myPostPage, setMyPostPage] = useState([])
   const [count, setCount] = useState()
+  const [postData, setPostData] = useState()
 
   useEffect(() => {
     localStorage.getItem('token') ? AgainMe() : setCurrentUser('')
@@ -51,6 +52,7 @@ export function App () {
       .then(data => {
         setCount(Math.ceil(data.length / pageSize))
         setMyPostPage(data.filter(e => e.author._id === currentUser._id))
+        setPostData(data)
         setPageData(data.slice(from, to))
       })
       .catch(err => console.log(err))
@@ -69,7 +71,11 @@ export function App () {
         const updatemystate = myPostPage.map(pageState => {
           return pageState._id === updatePost._id ? updatePost : pageState
         })
+        const updateAll = postData.map(pageState => {
+          return pageState._id === updatePost._id ? updatePost : pageState
+        })
         setPageData(updateLikesState)
+        setPostData(updateAll)
         setMyPostPage(updatemystate)
         setPostPage(updatePost)
       })
@@ -82,6 +88,7 @@ export function App () {
       .then(data => {
         setMyPostPage(data.filter(e => e.author._id === currentUser._id))
         setPageData(data.slice(from, to))
+        setPostData(data)
       })
       .catch(err => console.log(err))
   }
@@ -127,13 +134,16 @@ export function App () {
         LoginOpen,
         needLogin: handleLoginOpen,
         myPostPage,
-        setMyPostPage
+        setMyPostPage,
+        postData,
+        setPostData
       }}>
       <Header/>
       <Routes>
           <Route path='/' element={<PostList count={count} />}/>
           <Route path='/posts/:postID' element={<PostPage />} />
           <Route path='/mypost' element={<MyPost SetFooterFixed={setFooterFixed}/>} />
+          <Route path='/sort/:tag' element={<TagPage />} />
           <Route path='*' element={<NotFound/>}/>
       </Routes>
       </UserContext.Provider>
