@@ -71,6 +71,7 @@ export function App () {
         })
         setPageData(updateLikesState)
         setMyPostPage(updatemystate)
+        setPostPage(updatePost)
       })
   }
 
