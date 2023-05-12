@@ -12,6 +12,7 @@ import { EditAvatar } from '../edit-avatar'
 import { UserContext } from '../../context/user-context'
 
 import s from './styles.module.css'
+import { Link } from 'react-router-dom'
 
 export default function BasicMenu () {
   const { currentUser, onUpdateUserName, UpdatePageData, page, pageSize } = useContext(UserContext)
@@ -95,6 +96,11 @@ export default function BasicMenu () {
         <MenuItem onClick={handleAddPost} disableRipple>
           Добавить пост
         </MenuItem>
+        <Link to={'/mypost'} className={s.text}>
+          <MenuItem disableRipple onClick={handleClose} >
+            Мои посты
+          </MenuItem>
+        </Link>
         <MenuItem onClick={handleEditAvatar} disableRipple>
           Сменить аватар
         </MenuItem>

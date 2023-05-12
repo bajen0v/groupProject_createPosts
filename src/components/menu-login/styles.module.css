@@ -29,3 +29,8 @@
   padding: 15px;
   position: relative;
 }
+
+.text {
+  text-decoration: none;
+  color: black;
+}

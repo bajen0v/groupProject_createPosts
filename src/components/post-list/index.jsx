@@ -10,7 +10,7 @@ import s from './styles.module.css'
 
 // eslint-disable-next-line react/prop-types
 export function PostList ({ count }) {
-  const { pageData, UpdatePageData, page, onPage, onPostLike, currentUser, isLoading } = useContext(UserContext)
+  const { pageData, UpdatePageData, page, onPage, isLoading } = useContext(UserContext)
 
   useEffect(() => {
     UpdatePageData()
@@ -23,7 +23,7 @@ export function PostList ({ count }) {
               ? <Circle />
               : <Container >
                 <Grid container spacing={4} className={s.content__posts} >
-                    {pageData.map((dataItem) => <Post key={dataItem._id} {...dataItem} onPostLike={onPostLike} currentUser={currentUser} />)}
+                    {pageData.map((dataItem) => <Post key={dataItem._id} {...dataItem} />)}
                 </Grid>
                 <Box justifyContent={'center'} alignItems={'center'} display={'flex'} sx={{ margin: '20px 0px' }}>
                     <Pagination

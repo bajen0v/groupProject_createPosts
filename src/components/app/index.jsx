@@ -9,6 +9,7 @@ import { Header } from '../header'
 import { PostList } from '../post-list'
 import PostPage from '../../pages/post-page'
 import { NotFound } from '../../pages/not-found-page'
+import { MyPost } from '../my-post'
 
 export function App () {
   const pageSize = 12
@@ -20,6 +21,7 @@ export function App () {
   const [footerFixed, setFooterFixed] = useState(true)
   const [LoginOpen, setLoginOpen] = useState(false)
   const [postPage, setPostPage] = useState([])
+  const [myPostPage, setMyPostPage] = useState([])
   const [count, setCount] = useState()
 
   useEffect(() => {
@@ -48,6 +50,7 @@ export function App () {
     api.getPostList()
       .then(data => {
         setCount(Math.ceil(data.length / pageSize))
+        setMyPostPage(data.filter(e => e.author._id === currentUser._id))
         setPageData(data.slice(from, to))
       })
       .catch(err => console.log(err))
@@ -63,8 +66,11 @@ export function App () {
         const updateLikesState = pageData.map(pageState => {
           return pageState._id === updatePost._id ? updatePost : pageState
         })
+        const updatemystate = myPostPage.map(pageState => {
+          return pageState._id === updatePost._id ? updatePost : pageState
+        })
         setPageData(updateLikesState)
-        setPostPage(updatePost)
+        setMyPostPage(updatemystate)
       })
   }
 
@@ -72,7 +78,10 @@ export function App () {
     const from = (page - 1) * pageSize
     const to = (page - 1) * pageSize + pageSize
     api.deleteUserPostAndUpdate(id)
-      .then(data => setPageData(data.slice(from, to)))
+      .then(data => {
+        setMyPostPage(data.filter(e => e.author._id === currentUser._id))
+        setPageData(data.slice(from, to))
+      })
       .catch(err => console.log(err))
   }
 
@@ -102,6 +111,7 @@ export function App () {
         onUpdateUserId: handleUserInfo,
         onUpdateUserName: setCurrentUser,
         pageData,
+        setPageData,
         UpdatePageData: handlePageData,
         page,
         onPage: setPage,
@@ -114,12 +124,15 @@ export function App () {
         isLoading,
         setIsLoading,
         LoginOpen,
-        needLogin: handleLoginOpen
+        needLogin: handleLoginOpen,
+        myPostPage,
+        setMyPostPage
       }}>
       <Header/>
       <Routes>
           <Route path='/' element={<PostList count={count} />}/>
           <Route path='/posts/:postID' element={<PostPage />} />
+          <Route path='/mypost' element={<MyPost SetFooterFixed={setFooterFixed}/>} />
           <Route path='*' element={<NotFound/>}/>
       </Routes>
       </UserContext.Provider>
