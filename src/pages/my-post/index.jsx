@@ -1,7 +1,7 @@
 import { Button, Container, Grid } from '@mui/material'
 import { useContext, useEffect } from 'react'
 
-import { Post } from '../post/index'
+import { Post } from '../../components/post/index'
 import { UserContext } from '../../context/user-context'
 import { Circle } from '../../components/isLoading'
 

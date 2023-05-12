@@ -129,13 +129,13 @@ export function Post ({ ...props }) {
                         alt="Картинка"
                         className={s.post_img}
                     />
+                </Link>
                     <CardContent>
                         <Typography variant="h6" color="black" textAlign='center' className={s.post__title}>
                             {props.title}
                         </Typography>
                         <Tag tags={props.tags}/>
                     </CardContent>
-                </Link>
                 <CardActions disableSpacing className={s.chat}>
                     {props.comments.length === 0
                       ? <IconButton className={s.chat}><ChatBubbleOutlineIcon /></IconButton>
