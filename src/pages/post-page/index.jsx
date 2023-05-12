@@ -15,6 +15,7 @@ import { Comments } from '../../components/comments'
 import { AddComments } from '../../components/add-comments'
 
 import s from './styles.module.css'
+import { Tag } from '../../components/tag'
 
 export default function PostPage () {
   const { postID } = useParams()
@@ -84,6 +85,7 @@ export default function PostPage () {
                                 alt="Картинка"
                                 className={s.post_img}
                             />
+                            <Tag tags={postPage.tags}/>
                             <Button variant="contained" onClick={() => navigate(-1)} className={s.back_button}>Назад</Button>
                             </Grid>
                             <Grid item xs={12} md={4} >
