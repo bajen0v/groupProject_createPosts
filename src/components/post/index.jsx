@@ -130,7 +130,7 @@ export function Post ({ ...props}) {
                         className={s.post_img}
                     />
                     <CardContent>
-                        <Typography variant="h6" color="black" textAlign='center'>
+                        <Typography variant="h6" color="black" textAlign='center' className={s.post__title}>
                             {props.title}
                         </Typography>
                         <Tag tags={props.tags}/>

@@ -78,3 +78,8 @@
     bottom: 0px;
     right: 0px;
   }
+
+  .post__title {
+    height: 60px;
+    overflow: hidden;
+  }
