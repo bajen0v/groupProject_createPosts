@@ -6,6 +6,7 @@
     border-radius: 10px;
     display: inline-block;
     font-size: 10px;
+    text-decoration: none;
 }
 
 .tag__name:hover {
