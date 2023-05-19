@@ -36,7 +36,7 @@ export function Post ({ ...props }) {
   }
 
   useEffect(() => {
-    if (props.author._id === currentUser._id) {
+    if (props.author._id === currentUser?._id) {
       setMe(true)
     }
   })
@@ -46,7 +46,7 @@ export function Post ({ ...props }) {
     onPostDelete(props._id)
   }
 
-  const isLiked = props.likes.some(id => id === currentUser._id)
+  const isLiked = props.likes.some(id => id === currentUser?._id)
 
   function handleClickButtonLike () {
     onPostLike({ ...props })
@@ -69,11 +69,11 @@ export function Post ({ ...props }) {
             <Card className={s.card} sx={{ width: 345 }} >
                 <CardHeader sx={{ height: 100 }}
                     avatar={
-                        <Avatar
+                        <Link to={`/userPosts/${props.author._id}`} className={s.text} title='Посты автора'><Avatar
                             sx={{ width: 56, height: 56 }}
                             src={props.author.avatar}
                             alt="Аватар"
-                        />
+                        /></Link>
                     }
                     action={
                     <> {me
@@ -121,7 +121,7 @@ export function Post ({ ...props }) {
                         }
                 />
 
-                <Link to={`/posts/${props._id}`} className={s.text}>
+                <Link to={`/posts/${props._id}`} className={s.text} title='Показать подробнее'>
                     <CardMedia
                         component="img"
                         height="194"

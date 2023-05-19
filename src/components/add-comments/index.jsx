@@ -20,7 +20,10 @@ export function AddComments () {
     currentUser === ''
       ? needLogin(true)
       : api.setComments(data, postID)
-        .then((data) => setPostPage(data))
+        .then((data) => {
+          data.comments.reverse()
+          setPostPage(data)
+        })
     reset()
   }
 
@@ -29,7 +32,7 @@ export function AddComments () {
             avatar={
             <Avatar
             sx={{ width: 56, height: 56 }}
-            src={currentUser.avatar}
+            src={currentUser?.avatar}
             alt="Аватар"
             />
             }
