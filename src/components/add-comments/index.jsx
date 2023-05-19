@@ -21,7 +21,6 @@ export function AddComments () {
       ? needLogin(true)
       : api.setComments(data, postID)
         .then((data) => {
-          data.comments.reverse()
           setPostPage(data)
         })
     reset()

@@ -21,7 +21,6 @@ export function Comments ({ ...props }) {
   const handleDeleteComments = () => {
     api.deleteComment(props.post, props._id)
       .then(data => {
-        data.comments.reverse()
         setPostPage(data)
       })
       .catch(err => console.log(err))

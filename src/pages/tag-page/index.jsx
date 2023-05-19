@@ -19,6 +19,9 @@ export function TagPage () {
     setIsLoading(true)
     api.getPostList()
       .then(data => {
+        /* data.forEach(element => {
+          element.tags.forEach(tagelement => { console.log(tagelement.toLowerCase().trim()) })
+        }) */
         setPostData(data)
       })
       .catch(err => console.log(err))
@@ -27,7 +30,7 @@ export function TagPage () {
 
   useEffect(() => {
     setTagPage(postData?.filter(e => e.tags.includes(tag)))
-  }, [postData])
+  }, [postData, tag])
 
   return (
         <>

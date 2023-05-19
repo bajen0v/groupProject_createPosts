@@ -12,20 +12,17 @@ import api from '../../api'
 export function UserPosts () {
   const navigate = useNavigate()
   const { userID } = useParams()
-  const { currentUser, isLoading, setIsLoading, myPostPage, setMyPostPage } = useContext(UserContext)
+  const { currentUser, isLoading, setIsLoading, userPostPage, setUserPostPage } = useContext(UserContext)
 
   useEffect(() => {
-    console.log(userID)
     setIsLoading(true)
     api.getPostList()
       .then(data => {
-        console.log(data)
-        console.log(data.filter(e => e.author._id === userID))
-        setMyPostPage(data.filter(e => e.author._id === userID))
+        setUserPostPage(data.filter(e => e.author._id === userID))
       })
       .catch(err => console.log(err))
       .finally(() => { setIsLoading(false) })
-  }, [userID, currentUser])
+  }, [currentUser, userID])
 
   return (
         <>
@@ -34,7 +31,7 @@ export function UserPosts () {
               : <Container className={s.content__posts}>
                 <Button variant="contained" onClick={() => navigate(-1)}>Назад</Button>
                 <Grid container spacing={4} className={s.mypost}>
-                    {myPostPage.map((dataItem) => <Post key={dataItem._id} {...dataItem} />)}
+                    {userPostPage?.map((dataItem) => <Post key={dataItem._id} {...dataItem} />)}
                 </Grid>
             </ Container>}
         </>
