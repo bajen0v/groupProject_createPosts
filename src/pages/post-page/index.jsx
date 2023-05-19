@@ -30,7 +30,6 @@ export default function PostPage () {
     setIsLoading(true)
     api.getPostData(postID)
       .then(data => {
-        data.comments.reverse()
         setPostPage(data)
         if (data.author._id === currentUser?._id) {
           setMe(true)

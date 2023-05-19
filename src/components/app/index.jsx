@@ -20,7 +20,7 @@ export function App () {
   const [isLoading, setIsLoading] = useState(true)
   const [LoginOpen, setLoginOpen] = useState(false)
   const [postPage, setPostPage] = useState([])
-  const [myPostPage, setMyPostPage] = useState([])
+  const [userPostPage, setUserPostPage] = useState([])
   const [count, setCount] = useState()
   const [postData, setPostData] = useState()
 
@@ -40,7 +40,7 @@ export function App () {
     api.getPostList()
       .then(data => {
         setCount(Math.ceil(data.length / pageSize))
-        setMyPostPage(data.filter(e => e.author._id === currentUser._id))
+        setUserPostPage(data.filter(e => e.author._id === currentUser._id))
         setPostData(data)
         setPageData(data.slice(from, to))
       })
@@ -56,16 +56,15 @@ export function App () {
         const updateLikesState = pageData.map(pageState => {
           return pageState._id === updatePost._id ? updatePost : pageState
         })
-        const updatemystate = myPostPage.map(pageState => {
+        const updatemystate = userPostPage.map(pageState => {
           return pageState._id === updatePost._id ? updatePost : pageState
         })
-        const updateAll = postData.map(pageState => {
+        const updateAll = postData?.map(pageState => {
           return pageState._id === updatePost._id ? updatePost : pageState
         })
         setPageData(updateLikesState)
         setPostData(updateAll)
-        setMyPostPage(updatemystate)
-        updatePost.comments.reverse()
+        setUserPostPage(updatemystate)
         setPostPage(updatePost)
       })
   }
@@ -75,7 +74,7 @@ export function App () {
     const to = (page - 1) * pageSize + pageSize
     api.deleteUserPostAndUpdate(id)
       .then(data => {
-        setMyPostPage(data.filter(e => e.author._id === currentUser._id))
+        setUserPostPage(data.filter(e => e.author._id === currentUser._id))
         setPageData(data.slice(from, to))
         setPostData(data)
       })
@@ -121,8 +120,8 @@ export function App () {
         setIsLoading,
         LoginOpen,
         needLogin: handleLoginOpen,
-        myPostPage,
-        setMyPostPage,
+        userPostPage,
+        setUserPostPage,
         postData,
         setPostData
       }}>
