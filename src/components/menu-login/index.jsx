@@ -15,7 +15,7 @@ import s from './styles.module.css'
 import { Link } from 'react-router-dom'
 
 export default function BasicMenu () {
-  const { currentUser, onUpdateUserName, UpdatePageData, page, pageSize } = useContext(UserContext)
+  const { currentUser, UpdatePageData, page, pageSize, setCurrentUser, needLogin } = useContext(UserContext)
   const [openEditUser, SetOpenEditUser] = useState(false)
   const [openAddPost, SetOpenAddPost] = useState(false)
   const [openEditAvatar, SetOpenEditAvatar] = useState(false)
@@ -54,9 +54,10 @@ export default function BasicMenu () {
   const handleLogOut = () => {
     const from = (page - 1) * pageSize
     const to = (page - 1) * pageSize + pageSize
-    onUpdateUserName('')
+    setCurrentUser('')
     UpdatePageData(from, to)
-    localStorage.setItem('token', null)
+    localStorage.removeItem('token')
+    needLogin(false)
   }
 
   return (
@@ -68,7 +69,7 @@ export default function BasicMenu () {
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-        <Avatar src={currentUser.avatar} alt= {currentUser.name[0]}/><KeyboardArrowDownIcon className={s.arrow} />
+        <Avatar src={currentUser?.avatar} alt= {currentUser?.name[0]}/><KeyboardArrowDownIcon className={s.arrow} />
       </Button>
       <Menu
         id="basic-menu"
@@ -96,7 +97,7 @@ export default function BasicMenu () {
         <MenuItem onClick={handleAddPost} disableRipple>
           Добавить пост
         </MenuItem>
-        <Link to={'/mypost'} className={s.text}>
+        <Link to={`/userPosts/${currentUser._id}`} className={s.text}>
           <MenuItem disableRipple onClick={handleClose} >
             Мои посты
           </MenuItem>

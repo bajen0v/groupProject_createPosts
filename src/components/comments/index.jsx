@@ -13,14 +13,17 @@ export function Comments ({ ...props }) {
   const { currentUser, setPostPage } = useContext(UserContext)
   const [me, setMe] = useState(false)
   useEffect(() => {
-    if (props.author._id === currentUser._id) {
+    if (props.author._id === currentUser?._id) {
       setMe(true)
     }
   })
 
   const handleDeleteComments = () => {
     api.deleteComment(props.post, props._id)
-      .then(data => setPostPage(data))
+      .then(data => {
+        data.comments.reverse()
+        setPostPage(data)
+      })
       .catch(err => console.log(err))
   }
 

@@ -1,14 +1,16 @@
 import { useForm } from 'react-hook-form'
 import { Box, Button, TextField } from '@mui/material'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import CancelIcon from '@mui/icons-material/Cancel'
 
 import { UserContext } from '../../context/user-context'
 
 import s from './styles.module.css'
+import api from '../../api'
 
 export function Login () {
-  const { onUpdateUserId, LoginOpen, needLogin } = useContext(UserContext)
+  const { LoginOpen, needLogin, setCurrentUser } = useContext(UserContext)
+  const [errorMessage, setErrorMessage] = useState()
 
   const handleOpen = () => {
     needLogin(true)
@@ -19,8 +21,20 @@ export function Login () {
 
   const { register, handleSubmit } = useForm()
   const onSubmit = data => {
-    onUpdateUserId(data)
-    handleClose()
+    handleUserInfo(data)
+  }
+
+  function handleUserInfo (data) {
+    api.getLogIn(data)
+      .then((data) => {
+        setCurrentUser(data.data)
+        localStorage.setItem('token', data.token)
+      })
+      .catch(err => {
+        !err
+          ? handleClose()
+          : setErrorMessage(err.message)
+      })
   }
 
   return (
@@ -36,6 +50,7 @@ export function Login () {
               <TextField className={s.input} inputProps={{ type: 'password', tabIndex: 2 }} label="пароль" {...register('password', { required: true })} sx={{ m: 1, p: 1 }} />
               <Button className={s.input} variant="contained" type="submit" sx={{ m: 1, p: 1 }} >Войти</Button>
             </form>
+            <p className={s.error}>{errorMessage}</p>
           </Box>
         </Box>
       </>

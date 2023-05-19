@@ -20,7 +20,7 @@ export function PostList ({ count }) {
   return (
         <>
             {isLoading
-              ? <Circle />
+              ? <Circle sx={{ height: 90 }} />
               : <Container >
                 <Grid container spacing={4} className={s.content__posts} >
                     {pageData.map((dataItem) => <Post key={dataItem._id} {...dataItem} />)}

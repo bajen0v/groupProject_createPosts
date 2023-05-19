@@ -30,16 +30,19 @@ export default function PostPage () {
     setIsLoading(true)
     api.getPostData(postID)
       .then(data => {
+        data.comments.reverse()
         setPostPage(data)
-        if (data.author._id === currentUser._id) {
+        if (data.author._id === currentUser?._id) {
           setMe(true)
         };
-        if (data.likes.some(id => id === currentUser._id)) {
+        if (data.likes.some(id => id === currentUser?._id)) {
           setIsLiked(true)
         };
       })
       .catch(err => console.log(err))
       .finally(() => { setIsLoading(false) })
+      .finally(!currentUser && setMe(false))
+      .finally(!currentUser && setIsLiked(false))
   }, [currentUser])
 
   const handleClickOpen = () => {
@@ -128,7 +131,7 @@ export default function PostPage () {
                             {postPage?.comments === 0
                               ? <></>
                               : <>
-                                {postPage?.comments?.reverse().map((element) => <Comments key={element._id} {...element} />)}
+                                {postPage?.comments?.map((element) => <Comments key={element._id} {...element} />)}
                             </>}
                         </Grid>
                     </Grid>
