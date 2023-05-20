@@ -10,7 +10,7 @@ import api from '../../api'
 import s from './styles.module.css'
 
 export function EditUser ({ closePopup }) {
-  const { currentUser, onUpdateUserName, UpdatePageData, pageSize, page } = useContext(UserContext)
+  const { currentUser, setCurrentUser, UpdatePageData, pageSize, page } = useContext(UserContext)
 
   const handleClose = () => {
     closePopup()
@@ -23,7 +23,7 @@ export function EditUser ({ closePopup }) {
 
     api.setUserInfo(data)
       .then((updateUserFromServer) => {
-        onUpdateUserName(updateUserFromServer)
+        setCurrentUser(updateUserFromServer)
       })
       .then(
         UpdatePageData(from, to))
