@@ -158,6 +158,14 @@ class Api {
         return res
       })
   }
+
+  getAllUsers () {
+    return fetch(`${this.#baseurl}/users`, {
+      method: 'GET',
+      headers: { ...this.#headers }
+    })
+      .then(this.#onResponse)
+  }
 }
 
 const api = new Api({
