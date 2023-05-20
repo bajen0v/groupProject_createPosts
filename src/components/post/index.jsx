@@ -78,10 +78,10 @@ export function Post ({ ...props }) {
                     action={
                     <> {me
                       ? <>
-                        <IconButton onClick={handleClickOpen} aria-label="add to favorites">
+                        <IconButton onClick={handleClickOpen} aria-label="add to favorites" title='удалить'>
                             <DeleteIcon />
                         </IconButton>
-                        <IconButton onClick={handleClickOpenEdit}>
+                        <IconButton onClick={handleClickOpenEdit} title='редактировать'>
                             <EditIcon />
                         </IconButton>
                     </>

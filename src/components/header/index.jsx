@@ -19,7 +19,7 @@ export function Header () {
         <header className={s.header}>
           <AppBar position="static">
            <Toolbar>
-              <Typography href="/" variant="h5" component="div" sx={{ flexGrow: 1 }} className={s.Typography} onClick={handleGeneralPage} title="Главная страница">
+              <Typography href="/" variant="h5" component="div" sx={{ flexGrow: 1 }} className={s.Typography} onClick={handleGeneralPage} title="Перейти на первую страницу">
                   <Link to={'/'} className={s.Typography}>Блог обо всем на свете</Link>
               </Typography>
               {currentUser ? <BasicMenu/> : <Login/>}
