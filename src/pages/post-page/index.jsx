@@ -128,10 +128,10 @@ export default function PostPage () {
                                 action={
                                     <> {me
                                       ? <>
-                                        <IconButton onClick={handleClickOpen}>
+                                        <IconButton onClick={handleClickOpen} title='удалить'>
                                             <DeleteIcon />
                                         </IconButton>
-                                        <IconButton onClick={handleClickOpenEdit}>
+                                        <IconButton onClick={handleClickOpenEdit} title='редактировать'>
                                             <EditIcon />
                                         </IconButton>
                                     </>
