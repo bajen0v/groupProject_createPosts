@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Button, ButtonGroup, IconButton, TextField } from '@mui/material'
 import { Box } from '@mui/system'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import CancelIcon from '@mui/icons-material/Cancel'
 import { useForm } from 'react-hook-form'
 import RestartAltIcon from '@mui/icons-material/RestartAlt'
@@ -13,6 +13,7 @@ import s from './styles.module.css'
 
 export function AddPost ({ closePopup }) {
   const { onPage, UpdatePageData } = useContext(UserContext)
+  const [errorMessage, setErrorMessage] = useState()
 
   const handleClose = () => {
     closePopup()
@@ -34,9 +35,13 @@ export function AddPost ({ closePopup }) {
       .then((data) => {
         onPage(1)
         UpdatePageData()
+        closePopup()
+        reset()
+        setErrorMessage()
       })
-    closePopup()
-    reset()
+      .catch(err => {
+        setErrorMessage(err.message)
+      })
   }
 
   return (
@@ -59,6 +64,7 @@ export function AddPost ({ closePopup }) {
         />
         <TextField className={s.input} inputProps={{ tabIndex: 3 }} label="Ссылка на изображение" {...register('image')} sx={{ m: 1, p: 0 }}/>
         <TextField className={s.input} inputProps={{ tabIndex: 4 }} label="Тэги, вводите через запятую" {...register('tags')} sx={{ m: 1, p: 0 }}/>
+        <p className={s.error}>{errorMessage}</p>
         <Button className={s.button} variant="contained" type="submit" >Добавить пост</Button>
       </form>
     </Box>

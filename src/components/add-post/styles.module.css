@@ -20,7 +20,7 @@
     flex-direction: column;
     border: 2px solid #D9E4E6;
     border-radius: 20px;
-    height: 480px;
+    height: 550px;
     width: 360px;
     background-color: #fff;
     padding: 20px;
@@ -45,4 +45,8 @@
     top: 10px;
     left: 260px;
     font-size: large;
+  }
+
+  .error {
+    color: black;
   }
