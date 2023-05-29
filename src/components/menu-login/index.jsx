@@ -15,7 +15,7 @@ import s from './styles.module.css'
 import { Link } from 'react-router-dom'
 
 export default function BasicMenu () {
-  const { currentUser, UpdatePageData, page, pageSize, setCurrentUser, needLogin } = useContext(UserContext)
+  const { currentUser, setCurrentUser, handleLoginOpen } = useContext(UserContext)
   const [openEditUser, SetOpenEditUser] = useState(false)
   const [openAddPost, SetOpenAddPost] = useState(false)
   const [openEditAvatar, SetOpenEditAvatar] = useState(false)
@@ -52,12 +52,9 @@ export default function BasicMenu () {
   }
 
   const handleLogOut = () => {
-    const from = (page - 1) * pageSize
-    const to = (page - 1) * pageSize + pageSize
     setCurrentUser('')
-    UpdatePageData(from, to)
     localStorage.removeItem('token')
-    needLogin(false)
+    handleLoginOpen(false)
   }
 
   return (
@@ -94,6 +91,9 @@ export default function BasicMenu () {
         <MenuItem onClick={handleEditUser} disableRipple>
           Редактировать данные
         </MenuItem>
+        <MenuItem onClick={handleEditAvatar} disableRipple>
+          Сменить аватар
+        </MenuItem>
         <MenuItem onClick={handleAddPost} disableRipple>
           Добавить пост
         </MenuItem>
@@ -102,9 +102,6 @@ export default function BasicMenu () {
             Мои посты
           </MenuItem>
         </Link>
-        <MenuItem onClick={handleEditAvatar} disableRipple>
-          Сменить аватар
-        </MenuItem>
         <MenuItem onClick={handleLogOut} disableRipple>
           <LogoutIcon />
         </MenuItem>

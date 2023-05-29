@@ -71,6 +71,7 @@
   .card {
     position: relative;
     height: 450px;
+    margin: 20px;
   }
 
   .chat {

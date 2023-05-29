@@ -1,4 +1,4 @@
-import { Button, Container, Grid } from '@mui/material'
+import { Box, Button, Grid } from '@mui/material'
 import { useContext, useEffect, useState } from 'react'
 
 import { Post } from '../../components/post/index'
@@ -7,41 +7,29 @@ import { Circle } from '../../components/isLoading'
 
 import s from './styles.module.css'
 import { useNavigate, useParams } from 'react-router-dom'
-import api from '../../api'
 
 export function TagPage () {
   const navigate = useNavigate()
   const { tag } = useParams()
-  const { currentUser, isLoading, setIsLoading, postData, setPostData } = useContext(UserContext)
+  const { isLoading, postData, AskForPostData } = useContext(UserContext)
   const [tagPage, setTagPage] = useState()
 
   useEffect(() => {
-    setIsLoading(true)
-    api.getPostList()
-      .then(data => {
-        /* data.forEach(element => {
-          element.tags.forEach(tagelement => { console.log(tagelement.toLowerCase().trim()) })
-        }) */
-        setPostData(data)
-      })
-      .catch(err => console.log(err))
-      .finally(() => { setIsLoading(false) })
-  }, [currentUser])
-
-  useEffect(() => {
-    setTagPage(postData?.filter(e => e.tags.includes(tag)))
+    postData
+      ? setTagPage(postData?.filter(e => e.tags.includes(tag)))
+      : AskForPostData()
   }, [postData, tag])
 
   return (
         <>
             {isLoading
               ? <Circle />
-              : <Container className={s.content__posts}>
+              : <Box className={s.content__posts}>
                   <Button variant="contained" onClick={() => navigate(-1)}>Назад</Button>
                   <Grid container spacing={4} className={s.mypost} >
-                      {tagPage?.map((dataItem) => <Post key={dataItem._id} {...dataItem} />)}
+                      {tagPage?.map((dataItem) => <Post key={dataItem._id} {...dataItem} item xs={12} sm={3} md={3}/>)}
                   </Grid>
-            </ Container>}
+            </ Box>}
         </>
   )
 }

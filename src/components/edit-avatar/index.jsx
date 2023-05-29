@@ -10,7 +10,7 @@ import api from '../../api'
 import s from './styles.module.css'
 
 export function EditAvatar ({ closePopup }) {
-  const { currentUser, setCurrentUser, UpdatePageData, pageSize, page } = useContext(UserContext)
+  const { currentUser, setCurrentUser, postData, setPostData } = useContext(UserContext)
 
   const handleClose = () => {
     closePopup()
@@ -18,15 +18,18 @@ export function EditAvatar ({ closePopup }) {
 
   const { register, handleSubmit } = useForm()
   const onSubmit = (data) => {
-    const from = (page - 1) * pageSize
-    const to = (page - 1) * pageSize + pageSize
-
     api.setUserAvatar(data)
       .then((updateUserFromServer) => {
         setCurrentUser(updateUserFromServer)
+        const NewPostData = postData.map(post => {
+          if (post.author._id === updateUserFromServer._id) {
+            post.author.avatar = updateUserFromServer.avatar
+            return post
+          }
+          return post
+        })
+        setPostData(NewPostData)
       })
-      .then(
-        UpdatePageData(from, to))
       .catch(err => console.log(err))
     closePopup()
   }
