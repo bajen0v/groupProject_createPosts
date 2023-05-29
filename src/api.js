@@ -29,12 +29,7 @@ class Api {
     return fetch(`${this.#baseurl}/v2/group-11/posts`, {
       headers: { ...this.#headers }
     })
-      .then(this.#onResponse).then((data) => {
-        data.forEach(element => {
-          element.tags = element.tags.map(el => el.toLowerCase().trim())
-        })
-        return data
-      })
+      .then(this.#onResponse)
   }
 
   getUserInfo (userid) {
@@ -85,22 +80,14 @@ class Api {
       method: like ? 'DELETE' : 'PUT',
       headers: { ...this.#headers }
     })
-      .then(this.#onResponse).then((data) => {
-        data.comments.reverse()
-        data.tags = data.tags.map(el => el.toLowerCase().trim())
-        return data
-      })
+      .then(this.#onResponse)
   }
 
   getPostData (id) {
     return fetch(`${this.#baseurl}/v2/group-11/posts/${id}`, {
       headers: { ...this.#headers }
     })
-      .then(this.#onResponse).then((data) => {
-        data.comments.reverse()
-        data.tags = data.tags.map(el => el.toLowerCase().trim())
-        return data
-      })
+      .then(this.#onResponse)
   }
 
   async deleteUserPostAndUpdate (postid) {
@@ -114,11 +101,7 @@ class Api {
       headers: { ...this.#headers },
       body: JSON.stringify(data)
     })
-      .then(this.#onResponse).then((data) => {
-        data.comments.reverse()
-        data.tags = data.tags.map(el => el.toLowerCase().trim())
-        return data
-      })
+      .then(this.#onResponse)
   }
 
   setComments (data, postID) {
@@ -127,11 +110,7 @@ class Api {
       headers: { ...this.#headers },
       body: JSON.stringify(data)
     })
-      .then(this.#onResponse).then((data) => {
-        data.comments.reverse()
-        data.tags = data.tags.map(el => el.toLowerCase().trim())
-        return data
-      })
+      .then(this.#onResponse)
   }
 
   deleteComment (postID, commentID) {
@@ -139,11 +118,7 @@ class Api {
       method: 'DELETE',
       headers: { ...this.#headers }
     })
-      .then(this.#onResponse).then((data) => {
-        data.comments.reverse()
-        data.tags = data.tags.map(el => el.toLowerCase().trim())
-        return data
-      })
+      .then(this.#onResponse)
   }
 
   getUserMe (token) {

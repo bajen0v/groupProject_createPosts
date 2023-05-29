@@ -1,7 +1,9 @@
 .content__posts {
-    padding-top: 90px;
-    padding-bottom: 40px;
-    min-height: 90vh;
+  padding-top: 90px;
+  padding-bottom: 40px;
+  min-height: 90vh;
+  padding-left: 90px;
+  padding-right: 90px;
 }
 
 .invisible {
@@ -15,3 +17,16 @@
   .Circle {
     min-height: 90vh;
   }
+
+  .card {
+    height: 80vh;
+    margin: 20px;
+  }
+
+  .back_button {
+    position: absolute;
+    top: 10%;
+    left: 1%;
+  }
+
+

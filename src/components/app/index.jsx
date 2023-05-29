@@ -13,16 +13,14 @@ import { UserPosts } from '../../pages/User-posts'
 import { TagPage } from '../../pages/tag-page'
 
 export function App () {
-  const pageSize = 12
-  const [pageData, setPageData] = useState([])
-  const [page, setPage] = useState(1)
   const [currentUser, setCurrentUser] = useState('')
   const [isLoading, setIsLoading] = useState(true)
   const [LoginOpen, setLoginOpen] = useState(false)
   const [postPage, setPostPage] = useState([])
-  const [userPostPage, setUserPostPage] = useState([])
-  const [count, setCount] = useState()
   const [postData, setPostData] = useState()
+  const [page, setPage] = useState(1)
+  const [allUsers, setAllUsers] = useState()
+  const [allTags, setAllTags] = useState([])
 
   useEffect(() => {
     localStorage.getItem('token') ? AgainMe() : setCurrentUser('')
@@ -33,52 +31,66 @@ export function App () {
     }
   }, [])
 
-  function handlePageData () {
-    const from = (page - 1) * pageSize
-    const to = (page - 1) * pageSize + pageSize
+  function AskForPostData () {
     setIsLoading(true)
     api.getPostList()
       .then(data => {
-        setCount(Math.ceil(data.length / pageSize))
-        setUserPostPage(data.filter(e => e.author._id === currentUser._id))
+        data.forEach(element => {
+          element.tags = element.tags.map(el => el.toLowerCase().trim())
+        })
         setPostData(data)
-        setPageData(data.slice(from, to))
       })
       .catch(err => console.log(err))
       .finally(() => { setIsLoading(false) })
   }
+
+  useEffect(() => {
+    let allTagsArray = []
+    postData?.forEach(post => {
+      post.tags.forEach(tag => {
+        if (tag !== '') { allTagsArray.push(tag) }
+      })
+    })
+    allTagsArray = allTagsArray?.filter((number, index, numbers) => {
+      return numbers.indexOf(number) === index
+    })
+    setAllTags(allTagsArray)
+  }, [postData])
+
+  useEffect(() => {
+    api.getAllUsers()
+      .then((data) => {
+        setAllUsers(data)
+      })
+      .catch(err => console.log(err))
+  }, [])
 
   function handlePostLike (post) {
     const isLiked = post.likes.some(id => id === currentUser?._id)
 
     api.changeLikePost(post._id, isLiked)
       .then(updatePost => {
-        const updateLikesState = pageData.map(pageState => {
-          return pageState._id === updatePost._id ? updatePost : pageState
-        })
-        const updatemystate = userPostPage.map(pageState => {
-          return pageState._id === updatePost._id ? updatePost : pageState
-        })
+        updatePost.comments.reverse()
+        updatePost.tags = updatePost.tags.map(el => el.toLowerCase().trim())
         const updateAll = postData?.map(pageState => {
           return pageState._id === updatePost._id ? updatePost : pageState
         })
-        setPageData(updateLikesState)
         setPostData(updateAll)
-        setUserPostPage(updatemystate)
         setPostPage(updatePost)
       })
   }
 
   function handlePostDelete (id) {
-    const from = (page - 1) * pageSize
-    const to = (page - 1) * pageSize + pageSize
+    setIsLoading(true)
     api.deleteUserPostAndUpdate(id)
       .then(data => {
-        setUserPostPage(data.filter(e => e.author._id === currentUser._id))
-        setPageData(data.slice(from, to))
+        data.forEach(element => {
+          element.tags = element.tags.map(el => el.toLowerCase().trim())
+        })
         setPostData(data)
       })
       .catch(err => console.log(err))
+      .finally(() => { setIsLoading(false) })
   }
 
   function handleEditPost (newPostData, postId) {
@@ -86,13 +98,26 @@ export function App () {
     for (const key in newPostData) { // проверка на пустые значения в объекте
       if (!newPostData[key]) delete newPostData[key]
     }
-
+    setIsLoading(true)
     api.editUserPost(newPostData, postId)
-      .then(data => {
-        setPostPage(data)
-        handlePageData()
+      .then((updateState) => {
+        updateState.comments.reverse()
+        updateState.tags = updateState.tags.map(el => el.toLowerCase().trim())
+        setPostPage(updateState)
+        const NewPostData = postData.map(post => {
+          if (post._id === updateState._id) {
+            post = updateState
+            return post
+          }
+          return post
+        })
+        NewPostData.forEach(element => {
+          element.tags = element.tags.map(el => el.toLowerCase().trim())
+        })
+        setPostData(NewPostData)
       })
       .catch(err => console.log(err))
+      .finally(() => { setIsLoading(false) })
   }
 
   const handleLoginOpen = (event) => {
@@ -105,29 +130,26 @@ export function App () {
       <UserContext.Provider value={{
         currentUser,
         setCurrentUser,
-        pageData,
-        setPageData,
-        UpdatePageData: handlePageData,
-        page,
-        onPage: setPage,
-        pageSize,
-        onPostLike: handlePostLike,
-        onPostDelete: handlePostDelete,
+        handlePostLike,
+        handlePostDelete,
         postPage,
         setPostPage,
         handleEditPost,
         isLoading,
         setIsLoading,
         LoginOpen,
-        needLogin: handleLoginOpen,
-        userPostPage,
-        setUserPostPage,
+        handleLoginOpen,
         postData,
-        setPostData
+        setPostData,
+        page,
+        setPage,
+        allUsers,
+        allTags,
+        AskForPostData
       }}>
-      <Header/>
+      <Header />
       <Routes>
-          <Route path='/' element={<PostList count={count} />}/>
+          <Route path='/' element={<PostList />}/>
           <Route path='/posts/:postID' element={<PostPage />} />
           <Route path='/userPosts/:userID' element={<UserPosts />} />
           <Route path='/sort/:tag' element={<TagPage />} />

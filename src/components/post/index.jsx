@@ -23,7 +23,7 @@ import { EditPost } from '../edit-post'
 import s from './styles.module.css'
 
 export function Post ({ ...props }) {
-  const { currentUser, onPostDelete, onPostLike, needLogin } = useContext(UserContext)
+  const { currentUser, handlePostDelete, handlePostLike, needLogin } = useContext(UserContext)
   const [me, setMe] = useState(false)
   const [open, setOpen] = useState(false)
   const [openEdit, setOpenEdit] = useState(null)
@@ -39,17 +39,18 @@ export function Post ({ ...props }) {
     if (props.author._id === currentUser?._id) {
       setMe(true)
     }
-  })
+    !currentUser && setMe(false)
+  }, [currentUser])
 
   function DeletPost () {
     handleClose()
-    onPostDelete(props._id)
+    handlePostDelete(props._id)
   }
 
   const isLiked = props.likes.some(id => id === currentUser?._id)
 
   function handleClickButtonLike () {
-    onPostLike({ ...props })
+    handlePostLike({ ...props })
   }
 
   const handleAuthorisation = () => {
@@ -66,7 +67,7 @@ export function Post ({ ...props }) {
   return (
     <>
         <Grid sx={{ display: 'flex' }} justifyContent="center" item xs={12} sm={6} md={4}>
-            <Card className={s.card} sx={{ width: 345 }} >
+            <Card className={s.card} sx={{ width: 450 }} >
                 <CardHeader sx={{ height: 100 }}
                     avatar={
                         <Link to={`/userPosts/${props.author._id}`} className={s.text} title='Посты автора'><Avatar

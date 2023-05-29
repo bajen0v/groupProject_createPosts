@@ -11,7 +11,7 @@ import s from './styles.module.css'
 export function EditPost ({ closePopup, id, title, text, image, tags }) {
   const { postPage, handleEditPost } = useContext(UserContext)
 
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit, reset } = useForm()
 
   const handleCloseEdit = () => {
     closePopup()
@@ -20,6 +20,7 @@ export function EditPost ({ closePopup, id, title, text, image, tags }) {
   const onSubmit = (newPostData) => {
     handleEditPost(newPostData, id || postPage._id)
     closePopup()
+    reset()
   }
 
   return (

@@ -12,7 +12,7 @@ import { UserContext } from '../../context/user-context'
 import s from './styles.module.css'
 
 export function AddPost ({ closePopup }) {
-  const { onPage, UpdatePageData } = useContext(UserContext)
+  const { setPage, postData, setPostData, setIsLoading } = useContext(UserContext)
   const [errorMessage, setErrorMessage] = useState()
 
   const handleClose = () => {
@@ -30,11 +30,12 @@ export function AddPost ({ closePopup }) {
     for (const key in data) { // проверка на пустые значения в объекте
       if (!data[key]) delete data[key]
     }
-
+    setIsLoading(true)
     api.setUserNewPost(data)
-      .then((data) => {
-        onPage(1)
-        UpdatePageData()
+      .then((NewPost) => {
+        const NewPosts = [NewPost, ...postData]
+        setPostData(NewPosts)
+        setPage(1)
         closePopup()
         reset()
         setErrorMessage()
@@ -42,6 +43,7 @@ export function AddPost ({ closePopup }) {
       .catch(err => {
         setErrorMessage(err.message)
       })
+      .finally(setIsLoading(false))
   }
 
   return (

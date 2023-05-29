@@ -5,12 +5,12 @@ import { useContext } from 'react'
 import CancelIcon from '@mui/icons-material/Cancel'
 
 import { UserContext } from '../../context/user-context'
-import api from '../../api'
 
 import s from './styles.module.css'
+import api from '../../api'
 
 export function EditUser ({ closePopup }) {
-  const { currentUser, setCurrentUser, UpdatePageData, pageSize, page } = useContext(UserContext)
+  const { currentUser, setCurrentUser, postData, setPostData } = useContext(UserContext)
 
   const handleClose = () => {
     closePopup()
@@ -18,15 +18,18 @@ export function EditUser ({ closePopup }) {
 
   const { register, handleSubmit } = useForm()
   const onSubmit = (data) => {
-    const from = (page - 1) * pageSize
-    const to = (page - 1) * pageSize + pageSize
-
     api.setUserInfo(data)
       .then((updateUserFromServer) => {
         setCurrentUser(updateUserFromServer)
+        const NewPostData = postData.map(post => {
+          if (post.author._id === updateUserFromServer._id) {
+            post.author.name = updateUserFromServer.name
+            return post
+          }
+          return post
+        })
+        setPostData(NewPostData)
       })
-      .then(
-        UpdatePageData(from, to))
       .catch(err => console.log(err))
     closePopup()
   }

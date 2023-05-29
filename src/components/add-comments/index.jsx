@@ -12,15 +12,16 @@ import { UserContext } from '../../context/user-context'
 import s from './styles.module.css'
 
 export function AddComments () {
-  const { currentUser, needLogin, setPostPage } = useContext(UserContext)
+  const { currentUser, handleLoginOpen, setPostPage } = useContext(UserContext)
   const { postID } = useParams()
   const { register, handleSubmit, reset } = useForm()
 
   const onSubmit = (data) => {
     currentUser === ''
-      ? needLogin(true)
+      ? handleLoginOpen(true)
       : api.setComments(data, postID)
         .then((data) => {
+          data.comments.reverse()
           setPostPage(data)
         })
     reset()

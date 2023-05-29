@@ -9,14 +9,14 @@ import s from './styles.module.css'
 import api from '../../api'
 
 export function Login () {
-  const { LoginOpen, needLogin, setCurrentUser } = useContext(UserContext)
+  const { LoginOpen, handleLoginOpen, setCurrentUser } = useContext(UserContext)
   const [errorMessage, setErrorMessage] = useState()
 
   const handleOpen = () => {
-    needLogin(true)
+    handleLoginOpen(true)
   }
   const handleClose = () => {
-    needLogin(false)
+    handleLoginOpen(false)
   }
 
   const { register, handleSubmit } = useForm()

@@ -2,7 +2,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import IconButton from '@mui/material/IconButton'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import EditIcon from '@mui/icons-material/Edit'
-import { Avatar, Box, Button, ButtonGroup, CardHeader, CardMedia, Grid, Typography } from '@mui/material'
+import { Avatar, AvatarGroup, Box, Button, ButtonGroup, CardHeader, CardMedia, Grid, Typography } from '@mui/material'
 import CancelIcon from '@mui/icons-material/Cancel'
 import { useState, useContext, useEffect } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
@@ -20,19 +20,20 @@ import { Tag } from '../../components/tag'
 
 export default function PostPage () {
   const { postID } = useParams()
-  const { currentUser, onPostDelete, onPostLike, postPage, setPostPage, isLoading, setIsLoading, needLogin } = useContext(UserContext)
+  const { currentUser, handlePostDelete, handlePostLike, postPage, setPostPage, isLoading, setIsLoading, handleLoginOpen, allUsers } = useContext(UserContext)
   const [me, setMe] = useState(false)
   const [open, setOpen] = useState(null)
   const [isLiked, setIsLiked] = useState(false)
   const navigate = useNavigate()
   const [openEdit, setOpenEdit] = useState()
   const [whoLikes, setWhoLikes] = useState()
-  const [showLikes, setShowLikes] = useState(false)
 
   useEffect(() => {
     setIsLoading(true)
     api.getPostData(postID)
       .then((postdata) => {
+        postdata.comments.reverse()
+        postdata.tags = postdata.tags.map(el => el.toLowerCase().trim())
         setPostPage(postdata)
         if (postdata.author._id === currentUser?._id) {
           setMe(true)
@@ -42,25 +43,24 @@ export default function PostPage () {
         };
       })
       .catch(err => console.log(err))
-      .finally(() => { setIsLoading(false) })
-      .finally(!currentUser && setMe(false))
-      .finally(!currentUser && setIsLiked(false))
+      .finally(() => {
+        setIsLoading(false)
+        !currentUser && setMe(false)
+        !currentUser && setIsLiked(false)
+      })
   }, [currentUser])
 
   useEffect(() => {
-    api.getAllUsers()
-      .then((allUsers) => {
-        const whoLikesArray = []
-        postPage?.likes?.forEach(element => {
-          allUsers.forEach(user => {
-            if (user._id === element) {
-              whoLikesArray.push(user.name)
-            }
-          })
-        })
-        setWhoLikes(whoLikesArray.join(', '))
+    const whoLikesArray = []
+    postPage?.likes?.forEach(element => {
+      allUsers?.forEach(user => {
+        if (user._id === element) {
+          whoLikesArray.push(user)
+        }
       })
-      .catch(err => console.log(err))
+    })
+
+    setWhoLikes(whoLikesArray)
   }, [postPage])
 
   const handleClickOpen = () => {
@@ -80,23 +80,16 @@ export default function PostPage () {
 
   function DeletPost () {
     handleClose()
-    onPostDelete(postPage._id)
+    handlePostDelete(postPage._id)
   }
 
   function handleClickButtonLike () {
-    onPostLike(postPage)
+    handlePostLike(postPage)
     isLiked ? setIsLiked(false) : setIsLiked(true)
   }
 
   const handleAuthorisation = () => {
-    needLogin(true)
-  }
-
-  function handleShowLike () {
-    setShowLikes(true)
-  }
-  function handleDontShowLike () {
-    setShowLikes(false)
+    handleLoginOpen(true)
   }
 
   return (
@@ -138,7 +131,7 @@ export default function PostPage () {
                                       : <></>
                                     }
 
-                                    <IconButton onClick={currentUser === '' ? handleAuthorisation : handleClickButtonLike} aria-label="add to favorites" onMouseOver={handleShowLike} onMouseOut={handleDontShowLike}>
+                                    <IconButton onClick={currentUser === '' ? handleAuthorisation : handleClickButtonLike} aria-label="add to favorites">
                                         <FavoriteIcon htmlColor={isLiked ? 'red' : null}/>{postPage?.likes?.length !== 0 ? postPage?.likes?.length : <></>}
                                     </IconButton>
                                     </>
@@ -146,9 +139,14 @@ export default function PostPage () {
                                 title={postPage?.author?.name}
                                 subheader={postPage?.author?.about}
                             />
-                            <Box className={showLikes ? s.show : s.invisible}>
+                            <Box >
                               {whoLikes
-                                ? <p className={s.likes}>Понравилось: {whoLikes}</p>
+                                ? <>
+                                <AvatarGroup max={6}>
+                                {whoLikes?.map((element) =>
+                                <Avatar key={element._id} src={element.avatar} onClick={() => navigate(`/userPosts/${element._id}`)} title={element.name + ' (' + element.about + ')'}/>)}
+                                </AvatarGroup>
+                                </>
                                 : <HeartBrokenIcon/>
                               }
                             </Box>
